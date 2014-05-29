@@ -1,6 +1,6 @@
 <?php
 
-namespace Ibram\Core\BaseBundle\Component\HttpKernel;
+namespace SanSIS\Core\BaseBundle\Component\HttpKernel;
 
 use \Symfony\Component\Config\Loader\LoaderInterface;
 

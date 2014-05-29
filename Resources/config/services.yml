@@ -1,8 +1,8 @@
 parameters:
-  Ibram_core_base.service_data_class: Ibram\Core\BaseBundle\ServiceLayer\ServiceData
+  SanSIS_core_base.service_data_class: SanSIS\Core\BaseBundle\ServiceLayer\ServiceData
 
 services:
-  Ibram_core_base.service_data_injector:
-    class: %Ibram_core_base.service_data_class%
+  SanSIS_core_base.service_data_injector:
+    class: %SanSIS_core_base.service_data_class%
     public: true
     arguments: ['@service_container']

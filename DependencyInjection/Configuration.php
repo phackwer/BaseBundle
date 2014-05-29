@@ -1,6 +1,6 @@
 <?php
 
-namespace Ibram\Core\BaseBundle\DependencyInjection;
+namespace SanSIS\Core\BaseBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('Ibram_core_base');
+        $rootNode = $treeBuilder->root('SanSIS_core_base');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

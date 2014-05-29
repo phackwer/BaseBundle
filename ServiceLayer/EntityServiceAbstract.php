@@ -1,15 +1,15 @@
 <?php
-namespace Ibram\Core\BaseBundle\ServiceLayer;
+namespace SanSIS\Core\BaseBundle\ServiceLayer;
 
 use \Symfony\Component\HttpFoundation\Request;
 use \Doctrine\ORM\Query;
-use \Ibram\Core\BaseBundle\ServiceLayer\ServiceAbstract;
-use \Ibram\Core\BaseBundle\ServiceLayer\Exception\NoRootEntityException;
-use \Ibram\Core\BaseBundle\ServiceLayer\Exception\NoImplementationException;
-use \Ibram\Core\BaseBundle\ServiceLayer\Exception\WrongTypeRootEntityException;
-use \Ibram\Core\BaseBundle\ServiceLayer\Exception\ValidationException;
-use \Ibram\Core\BaseBundle\EntityRepository\AbstractBase as EntityRepository;
-use \Ibram\Core\BaseBundle\Entity\AbstractBase as Entity;
+use \SanSIS\Core\BaseBundle\ServiceLayer\ServiceAbstract;
+use \SanSIS\Core\BaseBundle\ServiceLayer\Exception\NoRootEntityException;
+use \SanSIS\Core\BaseBundle\ServiceLayer\Exception\NoImplementationException;
+use \SanSIS\Core\BaseBundle\ServiceLayer\Exception\WrongTypeRootEntityException;
+use \SanSIS\Core\BaseBundle\ServiceLayer\Exception\ValidationException;
+use \SanSIS\Core\BaseBundle\EntityRepository\AbstractBase as EntityRepository;
+use \SanSIS\Core\BaseBundle\Entity\AbstractBase as Entity;
 
 abstract class EntityServiceAbstract extends ServiceAbstract
 {
@@ -28,13 +28,13 @@ abstract class EntityServiceAbstract extends ServiceAbstract
 
     /**
      *
-     * @var \Ibram\Core\BaseBundle\Entity\AbstractBase
+     * @var \SanSIS\Core\BaseBundle\Entity\AbstractBase
      */
     protected $rootEntity = null;
 
     /**
      *
-     * @var \Ibram\Core\BaseBundle\EntityRepository\AbstractBase
+     * @var \SanSIS\Core\BaseBundle\EntityRepository\AbstractBase
      */
     protected $rootRepository = null;
 
@@ -68,7 +68,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
      * Obtém o repositório da entidade raiz mapeada para persistência pela
      * 
      * @throws NoRootEntityException
-     * @return \Ibram\Core\BaseBundle\EntityRepository\AbstractBase
+     * @return \SanSIS\Core\BaseBundle\EntityRepository\AbstractBase
      */
     protected function getRootRepository()
     {
@@ -108,7 +108,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
      *
      * @param string $id            
      * @throws NoRootEntityException
-     * @return \Ibram\Core\BaseBundle\Entity\AbstractBase
+     * @return \SanSIS\Core\BaseBundle\Entity\AbstractBase
      */
     public function getRootEntity($id = null)
     {
@@ -131,9 +131,9 @@ abstract class EntityServiceAbstract extends ServiceAbstract
 
     /**
      *
-     * @param \Ibram\Core\BaseBundle\Entity\AbstractBase $entity            
+     * @param \SanSIS\Core\BaseBundle\Entity\AbstractBase $entity            
      * @throws WrongTypeRootEntityException
-     * @return \Ibram\Core\BaseBundle\Entity\AbstractBase
+     * @return \SanSIS\Core\BaseBundle\Entity\AbstractBase
      */
     public function setRootEntity(Entity $entity)
     {

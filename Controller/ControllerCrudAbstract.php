@@ -1,9 +1,9 @@
 <?php
-namespace Ibram\Core\BaseBundle\Controller;
+namespace SanSIS\Core\BaseBundle\Controller;
 
-use Ibram\Core\BaseBundle\ServiceLayer\MessageService;
-use Ibram\Core\BaseBundle\Controller\ControllerAbstract;
-use Ibram\Core\BaseBundle\Entity\AbstractBase;
+use SanSIS\Core\BaseBundle\ServiceLayer\MessageService;
+use SanSIS\Core\BaseBundle\Controller\ControllerAbstract;
+use SanSIS\Core\BaseBundle\Entity\AbstractBase;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -255,14 +255,14 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      */
     public function createAction()
     {
-        if ($this->get('session')->has('IbramSaveResult') && $this->get('session')->get('IbramSaveResult') instanceof AbstractBase) {
-            $entityData = $this->get('session')->get('IbramSaveResult')->toArray();
+        if ($this->get('session')->has('SanSISSaveResult') && $this->get('session')->get('SanSISSaveResult') instanceof AbstractBase) {
+            $entityData = $this->get('session')->get('SanSISSaveResult')->toArray();
         } else {
             $entityData = $this->getService()->getRootEntityData();
         }
 
-        if ($this->get('session')->has('IbramSaveResult')) {
-            $this->get('session')->remove('IbramSaveResult');
+        if ($this->get('session')->has('SanSISSaveResult')) {
+            $this->get('session')->remove('SanSISSaveResult');
         }
 
         $params = array(
@@ -278,14 +278,14 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      */
     public function editAction()
     {
-        if ($this->get('session')->has('IbramSaveResult') && $this->get('session')->get('IbramSaveResult') instanceof AbstractBase) {
-            $entityData = $this->get('session')->get('IbramSaveResult')->toArray();
+        if ($this->get('session')->has('SanSISSaveResult') && $this->get('session')->get('SanSISSaveResult') instanceof AbstractBase) {
+            $entityData = $this->get('session')->get('SanSISSaveResult')->toArray();
         } else {
             $entityData = $this->getService()->getRootEntityData($this->getRequest()->query->get('id'));
         }
 
-        if ($this->get('session')->has('IbramSaveResult')){
-            $this->get('session')->remove('IbramSaveResult');
+        if ($this->get('session')->has('SanSISSaveResult')){
+            $this->get('session')->remove('SanSISSaveResult');
         }
 
         $params = array(
@@ -320,10 +320,10 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
         try {
             $this->getService()->save($this->getRequest());
             MessageService::addMessage('success', 'MSG_S001');
-            $this->get('session')->set('IbramSaveResult', true);
+            $this->get('session')->set('SanSISSaveResult', true);
             return $this->redirectByRouteName($this->saveSuccessRoute);
         } catch (\Exception $e) {
-        	$this->get('session')->set('IbramSaveResult', $this->getService()->getRootEntity());
+        	$this->get('session')->set('SanSISSaveResult', $this->getService()->getRootEntity());
             MessageService::addMessage('error', 'MSG_E000');
             if (in_array($this->get('kernel')->getEnvironment(), array('dev')))
                 $this->addMessage($e->getMessage(), 'error');

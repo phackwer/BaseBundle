@@ -1,6 +1,6 @@
 <?php 
 
-namespace Ibram\Core\BaseBundle\Doctrine\DBAL\Event\Listeners;
+namespace SanSIS\Core\BaseBundle\Doctrine\DBAL\Event\Listeners;
 
 use Doctrine\DBAL\Event\ConnectionEventArgs;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ibram\Core\BaseBundle\Menu;
+namespace SanSIS\Core\BaseBundle\Menu;
 
 use Knp\Menu\Silex\RouterAwareFactory;
 
@@ -12,7 +12,7 @@ class Builder
         $menu = $factory->createItem('root');
 
         $menu->addChild('Início', array(
-            'route' => 'Ibram_core_base_homepage',
+            'route' => 'SanSIS_core_base_homepage',
             'routeAbsolute' => true
         ));
 

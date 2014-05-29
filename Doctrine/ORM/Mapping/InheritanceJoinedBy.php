@@ -17,7 +17,7 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace Ibram\Core\BaseBundle\Doctrine\ORM\Mapping;
+namespace SanSIS\Core\BaseBundle\Doctrine\ORM\Mapping;
 
 use \Doctrine\ORM\Mapping\Annotation;
 

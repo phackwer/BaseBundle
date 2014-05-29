@@ -1,6 +1,6 @@
 <?php
 
-namespace Ibram\Core\BaseBundle\Doctrine\ORM\Mapping;
+namespace SanSIS\Core\BaseBundle\Doctrine\ORM\Mapping;
 
 use Doctrine\ORM\Mapping\DefaultQuoteStrategy;
 use Doctrine\ORM\Mapping\ClassMetadata;

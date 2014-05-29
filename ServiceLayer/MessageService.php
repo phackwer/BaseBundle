@@ -1,5 +1,5 @@
 <?php
-namespace Ibram\Core\BaseBundle\ServiceLayer;
+namespace SanSIS\Core\BaseBundle\ServiceLayer;
 
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;

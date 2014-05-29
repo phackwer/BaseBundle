@@ -1,6 +1,6 @@
 <?php
 
-namespace Ibram\Core\BaseBundle\Doctrine\ORM;
+namespace SanSIS\Core\BaseBundle\Doctrine\ORM;
 
 use \Doctrine\ORM\UnitOfWork as UW;
 
@@ -210,7 +210,7 @@ class UnitOfWork extends UW
         	    break;
     
         	case ($class->isInheritanceTypeJoined()):
-        	    $persister = new \Ibram\Core\BaseBundle\Doctrine\ORM\Persisters\JoinedSubclassPersister($this->em, $class);
+        	    $persister = new \SanSIS\Core\BaseBundle\Doctrine\ORM\Persisters\JoinedSubclassPersister($this->em, $class);
         	    break;
     
         	default:

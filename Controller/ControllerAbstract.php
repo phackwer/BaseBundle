@@ -1,13 +1,13 @@
 <?php
 
-namespace Ibram\Core\BaseBundle\Controller;
+namespace SanSIS\Core\BaseBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Ibram\Core\BaseBundle\ServiceLayer\ServiceData;
-use Ibram\Core\BaseBundle\Doctrine\ORM\Mapping\OracleQuoteStrategy;
+use SanSIS\Core\BaseBundle\ServiceLayer\ServiceData;
+use SanSIS\Core\BaseBundle\Doctrine\ORM\Mapping\OracleQuoteStrategy;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class  ControllerAbstract extends Controller

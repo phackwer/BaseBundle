@@ -1,8 +1,8 @@
 <?php
 
-namespace Ibram\Core\BaseBundle\ServiceLayer;
+namespace SanSIS\Core\BaseBundle\ServiceLayer;
 
-use Ibram\Core\BaseBundle\ServiceLayer\ServiceDataException;
+use SanSIS\Core\BaseBundle\ServiceLayer\ServiceDataException;
 
 class ServiceData implements \ArrayAccess
 {

@@ -1,5 +1,5 @@
 <?php
-namespace Ibram\Core\BaseBundle\EntityRepository;
+namespace SanSIS\Core\BaseBundle\EntityRepository;
 
 use Doctrine\ORM\EntityRepository;
 

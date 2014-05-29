@@ -1,6 +1,6 @@
 <?php
 
-namespace Ibram\Core\BaseBundle\Doctrine\ORM\Persisters;
+namespace SanSIS\Core\BaseBundle\Doctrine\ORM\Persisters;
 
 use \Doctrine\ORM\Persisters\JoinedSubclassPersister as JSP;
 use \Doctrine\ORM\Mapping\ClassMetadata;
@@ -214,7 +214,7 @@ class JoinedSubclassPersister extends JSP
         return $this->getClassAnnotation();
     }
 
-    public function getClassAnnotation($className = null, $annotation = 'Ibram\Core\BaseBundle\Doctrine\ORM\Mapping\InheritanceJoinedBy')
+    public function getClassAnnotation($className = null, $annotation = 'SanSIS\Core\BaseBundle\Doctrine\ORM\Mapping\InheritanceJoinedBy')
     {
         if (!$className)
             $className = $this->_class->name;
@@ -226,7 +226,7 @@ class JoinedSubclassPersister extends JSP
 
     /**
      * Mapeia a herança de acordo com as definições do desenvolvedor, e não do automagicamente
-     * @param \Ibram\Core\BaseBundle\Doctrine\ORM\Mapping\InheritanceJoinedBy $inheritanceJoinedBy
+     * @param \SanSIS\Core\BaseBundle\Doctrine\ORM\Mapping\InheritanceJoinedBy $inheritanceJoinedBy
      * @param string $from
      */
     public function recursiveClassJoin($inheritanceJoinedBy, $from = null)

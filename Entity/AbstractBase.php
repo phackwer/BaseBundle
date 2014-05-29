@@ -1,5 +1,5 @@
 <?php
-namespace Ibram\Core\BaseBundle\Entity;
+namespace SanSIS\Core\BaseBundle\Entity;
 
 /**
  *

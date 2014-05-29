@@ -1,6 +1,6 @@
 <?php
 
-namespace Ibram\Core\BaseBundle\ServiceLayer\Exception;
+namespace SanSIS\Core\BaseBundle\ServiceLayer\Exception;
 
 class ValidationException extends \Exception
 {

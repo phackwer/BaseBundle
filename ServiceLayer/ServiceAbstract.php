@@ -1,8 +1,8 @@
 <?php
-namespace Ibram\Core\BaseBundle\ServiceLayer;
+namespace SanSIS\Core\BaseBundle\ServiceLayer;
 
 use \Doctrine\ORM\EntityManager;
-use \Ibram\Core\BaseBundle\Doctrine\ORM\Mapping\OracleQuoteStrategy;
+use \SanSIS\Core\BaseBundle\Doctrine\ORM\Mapping\OracleQuoteStrategy;
 
 abstract class ServiceAbstract
 {
@@ -157,7 +157,7 @@ abstract class ServiceAbstract
      * @param mixed $val
      * @param string $seqName
      * @param string $entityClass
-     * @return \Ibram\Core\BaseBundle\Entity\AbstractBase
+     * @return \SanSIS\Core\BaseBundle\Entity\AbstractBase
      */
     protected function getObj($val, $seqName, $entityClass) {
         if (trim($val)) {
@@ -188,7 +188,7 @@ abstract class ServiceAbstract
     }
 
     /**
-     * @return Ibram\Core\BaseBundle\Entity\User
+     * @return SanSIS\Core\BaseBundle\Entity\User
      */
     public function getUser()
     {

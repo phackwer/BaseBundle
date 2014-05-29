@@ -411,11 +411,11 @@ body{
     font-size: 0.8em !important;
     margin: 0;
 }
-#BoxRodape_LogoIbram{
+#BoxRodape_LogoSanSIS{
     height: 33px;
     width: 135px;
     text-indent:-9000px;
-    background-image:url("../images/lgo/Ibram_07.png");
+    background-image:url("../images/lgo/SanSIS_07.png");
     background-repeat:no-repeat;
     display:block;
     float:right;

@@ -1,10 +1,10 @@
-ibram_core_base_homepage:
+sansis_core_base_homepage:
     pattern:  /
-    defaults: { _controller: IbramCoreBaseBundle:Default:index }
+    defaults: { _controller: SanSISCoreBaseBundle:Default:index }
 
-ibram_core_base_logout:
+sansis_core_base_logout:
     pattern:  /logout
-    defaults: { _controller: IbramCoreBaseBundle:Default:logout }
+    defaults: { _controller: SanSISCoreBaseBundle:Default:logout }
 
     
     
