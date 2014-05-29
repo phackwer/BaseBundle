@@ -1,0 +1,230 @@
+@charset "utf-8";
+
+/* HEADER */
+
+.acessibilidade{
+    background-color:#000000 !important;
+    color:#000000 !important;
+}
+.acessibilidade .usuario p
+, .acessibilidade .titulo_sistema h1
+, .acessibilidade .titulo_sistema h3
+, .acessibilidade #BoxMenuPrincipal p
+, .acessibilidade #BoxMenuPrincipal a
+, .acessibilidade #wrapper-clock-count
+, .acessibilidade #wrapper-clock-count span
+, .acessibilidade #box_menu_top a{
+    color:#ffff00 !important;
+}
+.acessibilidade strong{
+    border-bottom: 2px solid #ffff00 !important;
+    color:#ffff00 !important;
+}
+
+.acessibilidade p
+, .acessibilidade label
+, .acessibilidade nav a
+, .acessibilidade #myModalLabel
+, .acessibilidade .fichaProfissional ul li
+, .acessibilidade form .dadosCadastrais span{
+    color:#ffff00 !important;
+}
+.acessibilidade #barra-brasil {
+    background: url("../images/lgo/barra-brasil-v3-bgx.png") no-repeat scroll center bottom #000000;
+}
+.acessibilidade #barra-brasil .ai {
+    background: url("../images/lgo/ai.png") no-repeat scroll 0 4px #000000;
+}
+.acessibilidade #barra-brasil .brasilgov {
+    background: url("../images/lgo/brasil.png") no-repeat scroll 0 4px #000000;
+}
+.acessibilidade #topo_geral {
+    background: linear-gradient(to bottom, #000000 0%, #423E3E 100%) repeat-x scroll 0 0 transparent;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#423E3E');
+}
+.acessibilidade .box_botoes_acessibilidade {
+    background-color: #000000;
+}
+.acessibilidade .box_botoes_acessibilidade {
+    background-color: #000000;
+    box-shadow: 1px 5px 10px 1px #3E3A3A;
+}
+.acessibilidade .logo {
+    color: #ffff00;
+    text-shadow: 0 3px 3px #3A3737 !important;
+}
+.acessibilidade .titulo_sistema {
+    text-shadow: 0 3px 3px #3A3737 !important;
+}
+.acessibilidade #BoxMenuPrincipal {
+    background: linear-gradient(to bottom, #000000 0%, #3F3B3B 100%) repeat scroll 0 0 transparent;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#3F3B3B');
+    border-top: 1px solid #ffff00;
+    box-shadow: inherit;
+    border-bottom: 1px solid #ffff00;
+}
+.acessibilidade .nav-collapse .nav > li > a:hover
+, .acessibilidade .nav-collapse .dropdown-menu a:hover {
+    background-color: #000000 !important;
+}
+.acessibilidade .menu {
+    background-color: #000000 !important;
+}
+
+/* CONTEUDO */
+
+.acessibilidade .box_borda {
+    background: none repeat scroll 0 0 #1c1c1c;
+    -webkit-border-radius: 8px;
+    border-radius: 8px 8px 8px 8px;
+    -webkit-box-shadow: 0px 8px 10px 1px #3f3b3b;
+    box-shadow: 0px 8px 10px 1px #3f3b3b;
+    float: left;
+    padding: 15px 0;
+    width: 100%;
+    margin-bottom: 30px;
+}
+.acessibilidade .geralLogin p{
+    color: #ffffff !important;
+}
+.acessibilidade .index h3 {
+    background-color: #000000;
+}
+.acessibilidade h3.pontilhado {
+    color: #fff;
+}
+.acessibilidade .fichaProfissional .dadoPessoal img{
+    border: 3px solid #ffff00;
+}
+.acessibilidade .fichaProfissional .caixa
+, .acessibilidade .fichaProfissional .branco{
+    background: none;
+}
+.acessibilidade .fichaProfissional .caixa h6{
+    color: #ffffff
+}
+.acessibilidade section p {
+    color: #000000;
+}
+.acessibilidade .BoxAreaLogin_titulo {
+    background: linear-gradient(to bottom, #070606 0%, #403C3C 100%) repeat scroll 0 0 transparent;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#070606', endColorstr='#403C3C');
+    border-radius: 8px 8px 0 0;
+    float: left;
+    margin: 0;
+    width: 100%;
+}
+.acessibilidade #BoxAreaLogin_Informacoes_Contato
+, .acessibilidade .BoxAreaLogin_content{
+    background: none repeat scroll 0 0 #1c1c1c;
+    box-shadow: 1px 5px 10px 1px #3f3b3b;
+}
+.acessibilidade .logar label
+, .acessibilidade #BoxAreaLogin_EsqueceuEmail a{
+    color: #000000;
+}
+.acessibilidade #BoxAreaLogin_Informacoes_Contato h3
+, .acessibilidade #BoxAreaLogin_Informacoes_Contato h4{
+    color: #ffffff !important;
+}
+.acessibilidade .buttonAzul {
+    background: linear-gradient(to bottom, #000000 0%, #3E3A3A 100%) repeat scroll 0 0 transparent;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#3E3A3A');
+    box-shadow: 1px 5px 10px 1px #8D8D8D;
+    color: #ffff00;
+}
+.acessibilidade .buttonAzul:hover {
+    background: linear-gradient(to bottom, #3E3A3A 0%, #000000 100%) repeat scroll 0 0 transparent;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3E3A3A', endColorstr='#000000');
+    color: #ffff00;
+}
+.acessibilidade .box strong.title {
+    border-bottom: 2px solid #ffffff;
+    color: #ffffff;
+}
+.acessibilidade a{
+    color: #ffffff !important;
+}
+.acessibilidade .nav-tabs>.active>a
+, .acessibilidade .nav-tabs>.active>a:hover
+, .acessibilidade .nav>li>a:hover{
+    background: none;
+    color: #FFFFFF !important;
+}
+.acessibilidade table .paginacao a{
+    color: #000000 !important;
+}
+.acessibilidade .filder {
+    border: 1px solid #ffff00 !important;
+}
+.acessibilidade .filder h3{
+    color: #ffff00 !important;
+}
+.acessibilidade h5{
+    display: block;
+    color: #FFFFFF;
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    clear: both;
+    position: absolute;
+    top: -10px;
+    background-color: #1c1c1c;
+    padding: 0 5px;
+}
+.acessibilidade .box h4{
+    color: #000000;
+}
+.acessibilidade .box .tab-content strong{
+    color: #ffff00 !important;
+}
+.acessibilidade .sf-menu a {
+    border-left: 0 solid #333333;
+    border-right: 0 solid #255C92;
+}
+.acessibilidade .sf-menu li:hover
+, .acessibilidade .sf-menu li.sfHover
+, .acessibilidade .sf-menu a:focus
+, .acessibilidade .sf-menu a:hover
+, .acessibilidade .sf-menu a:active {
+    background-color: #333333;
+}
+.acessibilidade .sf-menu li li{
+    background: none repeat scroll 0 0 #333333;
+    border-bottom: 1px solid #333333;
+    border-right: 1px solid #333333;
+    border-left: 1px solid #333333;
+}
+
+.acessibilidade .acordeon a.abrir {
+    border: 1px solid #FFFF00;
+}
+.acessibilidade #comunicadosLogin{
+    border-radius: 15px 15px 15px 15px;
+    color: #000000;
+    float: left;
+    margin: 15px 0px 25px 0;
+    padding: 15px;
+    background: none;
+}
+.acessibilidade .textoAcordeon{
+    border: 1px solid #FFFF00;
+    border-top: none;
+    border-radius: 0 0 15px 15px;
+}
+.acessibilidade .acordeon a.abrir:hover
+, .acessibilidade .acordeon a.abrir.ativo {
+    background: none;
+    color: #FFFF00 !important;
+}
+.acessibilidade form .dadosRemanejado span {
+    color: #ffffff;
+    font-size: 1.2em;
+}
+
+/* FOOTER */
+
+.acessibilidade #BoxRodapePrincipal {
+    background: linear-gradient(to bottom, #000000 0%, #3F3B3B 100%) repeat scroll 0 0 transparent;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#3F3B3B');
+    border-top: 1px solid #ffff00;
+}

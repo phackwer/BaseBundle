@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="appBase">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <title>{% block title %}Ibram Core Base{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/Ibramcorebase/css/bootstrap.min.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/Ibramcorebase/css/bootstrap-responsive.min.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/Ibramcorebase/css/datepicker.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/Ibramcorebase/css/menu.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/Ibramcorebase/css/contraste.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/Ibramcorebase/css/template.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/Ibramcorebase/css/content.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/Ibramcorebase/css/ui-lightness/jquery-ui-1.10.3.custom.min.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/Ibramcorebase/css/ui.jqgrid.css') }}" />
+    
+    {% block css %}
+    {% endblock %}
+    
+    <script type="text/javascript">
+      $(document).ready(function() { 
+          
+          $.rvFontsize({
+              targetSection: '#content',
+              store: true, // store.min.js required!
+              controllers: {
+                  appendTo: '#rvfs-controllers',
+                  showResetButton: true
+              }
+          });
+
+      });
+
+    </script>
+  </head>
+  <body id="content">
+    <div id="dialog-msg" title="Mensagem do Sistema" style="display: none;"></div>
+    <div class="header">
+      <div id="barra-brasil">
+        <div class="container">
+          <div class="row">
+            <div class="span12">
+              <div class="barra">
+                <ul>
+                    <li><a title="Acesso à informação" class="ai" href="http://www.acessoainformacao.gov.br" target="_parent">www.sic.gov.br</a></li>
+                    <li><a title="Portal de Estado do Brasil" class="brasilgov" href="http://www.brasil.gov.br" target="_parent">www.brasil.gov.br</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="topo_geral">
+        <div class="container">
+          <div class="row">
+            <div class="span8">
+              <div class="logo">{% block sigla_sistema %}BASE{% endblock %}</div>
+              <div class="titulo_sistema">
+                <span class="img_separador"></span>
+                <h1>{% block nome_sistema %}IBRAM{% endblock %}</h1>
+                <h3>{% block descricao_sistema %}Core Base de Desenvolvimento de Sistemas PHP do Ibram{% endblock %}</h3>
+              </div>
+            </div>
+            <div class="span4">
+              <div class="box_botoes_acessibilidade">
+                  &nbsp;
+              </div>
+              <div id="box_menu_top" >
+                  &nbsp;
+              </div>
+            </div>
+            <div class="usuario">
+                &nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="BoxMenuPrincipal">
+        <div class="container">
+          <div class="row">
+            <div class="span8">
+              <div class="navbar nav">
+                <a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar select">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </a>
+                <div class="nav-collapse navbar-responsive-collapse collapse" style="height: 0px;">
+                &nbsp;
+                </div>
+              </div>
+            </div>
+            <div class="span4">
+              &nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section" style="min-height:498px">
+      <div class="container">
+          <div class="">
+            <div class="box">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+      </div>
+    </div>
+    {% block footer %}
+    <footer>
+      <div id="BoxRodapePrincipal">
+        <div class="container">
+          <div class="row">
+            <div class="span6">
+              <div id="BoxRodape_endereco">
+              {% block endereco_footer %}
+                <p>
+                &copy; Instituto Brasileiro de Museus – IBRAM<br />
+				SBN, quadra 2, lote 8, bloco N, Edifício CNC III<br />
+				Brasília - DF - CEP 70040-020
+                </p>
+              {% endblock %}
+              </div>
+            </div>
+            <div class="span6">
+              <div id="BoxRodape_LogoIbram">Ibram</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    {% endblock %}
+  </body>
+</html>
