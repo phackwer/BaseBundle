@@ -97,7 +97,7 @@
               <div class="logo">{% block sigla_sistema %}BASE{% endblock %}</div>
               <div class="titulo_sistema">
                 <span class="img_separador"></span>
-                <h1>{% block nome_sistema %}IBRAM{% endblock %}</h1>
+                <h1>{% block nome_sistema %}SanSIS{% endblock %}</h1>
                 <h3>{% block descricao_sistema %}Core Base de Desenvolvimento de Sistemas PHP do SanSIS{% endblock %}</h3>
               </div>
             </div>
@@ -137,7 +137,7 @@
                   <span class="icon-bar"></span>
                 </a>
                 <div class="nav-collapse navbar-responsive-collapse collapse">
-                {% block page_menu %}{% if app.session.get('user_name') %}{{ knp_menu_render('SanSISCoreBaseBundle:Builder:menuExemplo', {'nav_type': 'navbar', 'template':'SanSISCoreBaseBundle:menu:sansis_menu.html.twig'}) }}{% endif %}{% endblock %}
+                &nbsp;{% block page_menu %}{% if app.session.get('user_name') %}{{ knp_menu_render('SanSISCoreBaseBundle:Builder:menuExemplo', {'nav_type': 'navbar', 'template':'SanSISCoreBaseBundle:menu:sansis_menu.html.twig'}) }}{% endif %}{% endblock %}
                 </div>
               </div>
             </div>
@@ -147,44 +147,27 @@
                 <div class="menuInformacao pull-left">
                       <a class="icoInformacao dropdown-toggle margin-right perfil" data-placement="top" rel="tooltip" data-toggle="dropdown" data-original-title="Informações" href="#"></a>
                       <ul class="dropdown-menu subMenuInforma" style="width: 214px;">
-                          <!-- <li class="nav-header">PROVAB</li> -->
-                          <li>
-                            <span class="imgPrograma" style="float:left;">
-                                <img src="{{ asset('bundles/SanSISsgpcore/images/lgo/maisMedicosInformacao.png') }}" alt="Programa">
-                            </span>
-                              <ul class="noMargin subIntem">
-                                  <li><a href="http://www.saude.gov.br/maismedicos">Portal</a></li>
-                                  <li><a href="/manuais.php">Documentos</a></li>
-                                  <li><a href="/faq.php">FAQ</a></li>
-                              </ul>
-                          </li>
-                          <li>
-                            <span class="imgPrograma" style="float:left;">
-                                <img src="{{ asset('bundles/SanSISsgpcore/images/lgo/provabeInfInformacao.png') }}" alt="Programa">
-                            </span>
-                              <ul class="noMargin subIntem">
-                                  <li><a href="http://www.saude.gov.br/maismedicos">Portal</a></li>
-                                  <li><a href="/manuaisProvabEnfDent.php">Documentos</a></li>
-                                  <li><a href="/faqProvabEnfDent.php">FAQ</a></li>
-                              </ul>
-                          </li>
-                          <li class="ultima">
-                            <span class="imgPrograma" style="float:left;">
-                                <img src="{{ asset('bundles/SanSISsgpcore/images/lgo/provabeInformacao.png') }}" alt="Programa">
-                            </span>
-                              <ul class="noMargin subIntem">
-                                  <li><a href="http://portal.saude.gov.br/portal/saude/profissional/visualizar_texto.cfm?idtxt=39675&janela=1">Portal</a></li>
-                                  <li><a href="http://189.28.128.100/maismedicos/Passo-a-passo-da-Validacao-Bolsas-PROVAB-2013.pdf">Documentos</a></li>
-                                  <li><a href="http://189.28.128.100/maismedicos/FAQ EDITAL PROVAB.pdf">FAQ</a></li>
-                              </ul>
-                          </li>
+                          <li>Ajuda</li>
+                          <li>Ajuda</li>
+{#                           <li>#}
+{#                             <span class="imgPrograma" style="float:left;">#}
+{#                                 <img src="{{ asset('bundles/SanSISsgpcore/images/lgo/maisMedicosInformacao.png') }}" alt="Programa">#}
+{#                             </span>#}
+{#                               <ul class="noMargin subIntem">#}
+{#                                   <li><a href="http://www.saude.gov.br/maismedicos">Portal</a></li>#}
+{#                                   <li><a href="/manuais.php">Documentos</a></li>#}
+{#                                   <li><a href="/faq.php">FAQ</a></li>#}
+{#                               </ul>#}
+{#                           </li>#}
                       </ul>
                   </div>
               {% endblock %}
               {% block session_counter %}
-                <div id="box_info_usuario_tempo">
-                    <div id="wrapper-clock-count">Sua sessão expira em: <span id="keepAlive"></span></div>
-                </div>
+	              {% if app.session.get('user_name') %}
+	                <div id="box_info_usuario_tempo">
+	                    <div id="wrapper-clock-count">Sua sessão expira em: <span id="keepAlive"></span></div>
+	                </div>
+                  {% endif %}
               {% endblock %}
               </div>
             </div>
@@ -215,7 +198,7 @@
       <div id="BoxRodapePrincipal">
         <div class="container">
           <div class="row">
-            <div class="span6">
+            <div class="span11">
               <div id="BoxRodape_endereco">
               {% block endereco_footer %}
                 <p>
@@ -225,9 +208,6 @@
                 </p>
               {% endblock %}
               </div>
-            </div>
-            <div class="span6">
-              <div id="BoxRodape_LogoSanSIS">SanSIS</div>
             </div>
           </div>
         </div>
