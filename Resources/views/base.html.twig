@@ -130,6 +130,7 @@
         <div class="container">
           <div class="row">
             <div class="span8">
+                &nbsp;
               <div class="navbar nav">
                 <a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar select">
                   <span class="icon-bar"></span>
@@ -137,7 +138,7 @@
                   <span class="icon-bar"></span>
                 </a>
                 <div class="nav-collapse navbar-responsive-collapse collapse">
-                &nbsp;{% block page_menu %}{% if app.session.get('user_name') %}{{ knp_menu_render('SanSISCoreBaseBundle:Builder:menuExemplo', {'nav_type': 'navbar', 'template':'SanSISCoreBaseBundle:menu:sansis_menu.html.twig'}) }}{% endif %}{% endblock %}
+                {% block page_menu %}{% if app.session.get('user_name') %}{{ knp_menu_render('SanSISCoreBaseBundle:Builder:menuExemplo', {'nav_type': 'navbar', 'template':'SanSISCoreBaseBundle:menu:sansis_menu.html.twig'}) }}{% endif %}{% endblock %}
                 </div>
               </div>
             </div>

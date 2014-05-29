@@ -40,4 +40,8 @@ composer.json:
 san_sis_core_base:
     resource: "@SanSISCoreBaseBundle/Resources/config/routing.yml"
     prefix:   /
-```
+    
+# Extend your twigs
+
+Use {% extends "SanSISCoreBaseBundle::base.html.twig" %} on your twig templates to work ok
+Remember you can change a lot of blocks. Check the resource and modify the blocks you want.
