@@ -26,9 +26,11 @@ var app = {
 
         $(window).scroll(function () {
             if ($(this).scrollTop() > 114) {
+            	$('#BoxMenuPrincipal').removeClass("BoxMenuPrincipal");
                 $('#BoxMenuPrincipal').addClass("f-nav");
             } else {
                 $('#BoxMenuPrincipal').removeClass("f-nav");
+                $('#BoxMenuPrincipal').addClass("BoxMenuPrincipal");
             }
         });
     },

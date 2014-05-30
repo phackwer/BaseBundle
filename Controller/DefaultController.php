@@ -16,7 +16,7 @@ class DefaultController extends ControllerAbstract
     public function logoutAction()
     {
         $this->getRequest()->getSession()->clear();
-        return $this->redirectByRouteName('SanSIS_core_base');
+        return $this->redirectByRouteName('sansis_core_base_homepage');
     }
 
     public function sessionInfoAction() {

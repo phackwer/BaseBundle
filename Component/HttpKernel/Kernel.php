@@ -54,10 +54,10 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel
         return $this->rootDir.'/cache/'.$this->environment;
     }
 
-    public function getLogDir()
-    {
-        return $this->rootDir.'/logs/'.$this->environment;
-    }
+//     public function getLogDir()
+//     {
+//         return $this->rootDir.'/logs/'.$this->environment;
+//     }
     
     public function registerContainerConfiguration(LoaderInterface $loader){}
 }

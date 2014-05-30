@@ -12,7 +12,7 @@ class Builder
         $menu = $factory->createItem('root');
 
         $menu->addChild('Início', array(
-            'route' => 'SanSIS_core_base_homepage',
+            'route' => 'sansis_core_base_homepage',
             'routeAbsolute' => true
         ));
 

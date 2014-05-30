@@ -5,7 +5,6 @@
 	margin-right: 10px;
 }
 .navbar .nav > li > a{
-	/*background-color: #004B82 !important;*/
     color: #ffffff;
     float: none;
     font-size: 1.2em;
@@ -27,14 +26,14 @@
     border-bottom: medium none;
 }
 .menu{
-  background-color: #004B82 !important;
+  background-color: #000066 !important;
   margin: 0;
   border: none !important;
   border-radius: inherit !important;
 }
 .dropdown-menu{
 	padding: 0;
-    background-color: #004B82 !important;
+    background-color: #000066 !important;
     margin: 0;
     border: none !important;
     border-radius: inherit !important;
@@ -51,7 +50,7 @@
     color: #FFFFFF !important;
 }
 .navbar .select{
-	background: #004B82 !important;
+	background: #000066 !important;
 }
 .navbar .btn-navbar:hover
 , .navbar .btn-navbar:active

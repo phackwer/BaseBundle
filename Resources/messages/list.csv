@@ -1,0 +1,11 @@
+success	MSG_S001	Operação realizada com sucesso
+
+error	MSG_E000	Ocorreram erros ao executar a ação solicitada.
+error	MSG_E001	Dados inválidos
+error	MSG_E002	Área de acesso restrito. Favor identificar-se
+error	MSG_E003	Você não tem permissão de acesso ao item solicitado
+
+info	MSG_A001	Confirme a ação
+info	MSG_A002	Nenhum registro encontrado
+
+alert	MSG_A003	Nenhum registro encontrado	

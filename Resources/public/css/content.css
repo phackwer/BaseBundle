@@ -5,6 +5,14 @@
 /* ------ */
 
 .f-nav  { 
+	background-color: #0F4098;
+    -webkit-box-shadow: 1px 5px 10px 1px #a4a4a4;
+    box-shadow: 1px 5px 10px 1px #a4a4a4;
+    display: block;
+    height: auto;
+    margin: auto;
+    min-height: 31px;
+    width: 100%;
     z-index: 9999; 
     position: fixed; 
     top: 0; width:100%; 
@@ -963,6 +971,7 @@ table .paginacao input{
 .menu_none .navbar{
     display: none;
 }
+
 .index h3{
     background-color: #dfdfdf;
     color: #0F4098;

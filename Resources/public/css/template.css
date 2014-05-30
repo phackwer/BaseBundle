@@ -363,7 +363,7 @@ body{
 .BoxMenuPrincipalTamanho{
     height: 40px;
 }
-#BoxMenuPrincipal{
+.BoxMenuPrincipal{
     background-color: #0F4098;
     -webkit-box-shadow: 1px 5px 10px 1px #a4a4a4;
     box-shadow: 1px 5px 10px 1px #a4a4a4;
@@ -372,6 +372,8 @@ body{
     margin: auto;
     min-height: 31px;
     width: 100%;
+    position:absolute;
+    z-index: 9999;
 }
 .navbar{
     float: left;

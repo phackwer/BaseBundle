@@ -6,6 +6,32 @@
     background-color:#000000 !important;
     color:#000000 !important;
 }
+
+.acessibilidade .btn {
+    color: #000000 !important;
+}
+
+.acessibilidade .btn-primary {
+    background: #FFFF00 !important;
+    font-weight: bold;
+}
+.acessibilidade .box_borda{
+    background: none repeat scroll 0 0 #222222 !important;
+    border-color: #FFFF00 !important;
+    -webkit-border-radius: 8px;
+    border-radius: 8px 8px 8px 8px;
+    -webkit-box-shadow:  none !important;
+    box-shadow: none !important;
+    float: left;
+    padding: 15px 0;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.acessibilidade .box_borda li{
+    color: #FFFF00 !important;
+}
+
 .acessibilidade .usuario p
 , .acessibilidade .titulo_sistema h1
 , .acessibilidade .titulo_sistema h3
@@ -39,8 +65,7 @@
     background: url("../images/lgo/brasil.png") no-repeat scroll 0 4px #000000;
 }
 .acessibilidade #topo_geral {
-    background: linear-gradient(to bottom, #000000 0%, #423E3E 100%) repeat-x scroll 0 0 transparent;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#423E3E');
+    background: #000000 0%;
 }
 .acessibilidade .box_botoes_acessibilidade {
     background-color: #000000;
@@ -57,16 +82,27 @@
     text-shadow: 0 3px 3px #3A3737 !important;
 }
 .acessibilidade #BoxMenuPrincipal {
-    background: linear-gradient(to bottom, #000000 0%, #3F3B3B 100%) repeat scroll 0 0 transparent;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#3F3B3B');
+    background: #000000;
     border-top: 1px solid #ffff00;
     box-shadow: inherit;
     border-bottom: 1px solid #ffff00;
 }
 .acessibilidade .nav-collapse .nav > li > a:hover
 , .acessibilidade .nav-collapse .dropdown-menu a:hover {
-    background-color: #000000 !important;
+    background-color: #222222 !important;
+    color: #FFFFFF !important;
 }
+
+.acessibilidade .navbar .select{
+    background: #FFFF00 !important;
+}
+
+.acessibilidade .navbar .nav{
+    background: #222222 !important;
+    border: 1px solid #FFFF00 !important;
+     
+}
+
 .acessibilidade .menu {
     background-color: #000000 !important;
 }
@@ -107,8 +143,7 @@
     color: #000000;
 }
 .acessibilidade .BoxAreaLogin_titulo {
-    background: linear-gradient(to bottom, #070606 0%, #403C3C 100%) repeat scroll 0 0 transparent;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#070606', endColorstr='#403C3C');
+    background: #111111;
     border-radius: 8px 8px 0 0;
     float: left;
     margin: 0;
@@ -224,7 +259,6 @@
 /* FOOTER */
 
 .acessibilidade #BoxRodapePrincipal {
-    background: linear-gradient(to bottom, #000000 0%, #3F3B3B 100%) repeat scroll 0 0 transparent;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#3F3B3B');
+    background: #000000;
     border-top: 1px solid #ffff00;
 }

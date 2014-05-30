@@ -45,3 +45,19 @@ san_sis_core_base:
 
 Use {% extends "SanSISCoreBaseBundle::base.html.twig" %} on your twig templates to work ok
 Remember you can change a lot of blocks. Check the resource and modify the blocks you want.
+
+# Extend your AppKernel
+
+Change your kernel to extend from the one provided by BaseBundle.
+
+Change:
+
+```php
+use Symfony\Component\HttpKernel\Kernel;
+```
+
+To:
+
+```php
+use SanSIS\Core\BaseBundle\Component\HttpKernel\Kernel;
+```
