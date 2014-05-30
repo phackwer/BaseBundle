@@ -44,9 +44,6 @@
       <script type="text/javascript" src="{{ asset('bundles/sansiscorebase/js/set-environment.js') }}"></script>
       <script type="text/javascript" src="{{ asset('bundles/sansiscorebase/js/maskedMoney.3.0.2.js') }}"></script>
       <script type="text/javascript" src="{{ asset('bundles/sansiscorebase/js/inputMasks.js') }}"></script>
-      {% block session_counter_js %}
-      <script type="text/javascript" src="{{ asset('bundles/sansiscorebase/js/timerSession.js') }}"></script>
-      {% endblock %}
       <script type="text/javascript" src="{{ asset('bundles/sansiscorebase/js/jquery.monthpicker.js') }}"></script>
     
     <script type="text/javascript">
@@ -71,7 +68,7 @@
     <div id="loading" style="display: none;">
         <div class="overlay" style=" background-color: #000; width: 100%; height: 100%; float: left; position: absolute; left: 0; top: 0; z-index: 99; opacity: 0.4;"></div>
         <img style="position: absolute;top: 35%;z-index: 99;left: 45%;width: 205px;height: 305px;"
-             src="{{ asset('bundles/SanSISsgpmaismedicos/images/ajax-loader-transparente.gif') }}">
+             src="{{ asset('bundles/sansiscorebase/images/ajax-loader.gif') }}">
     </div>
     <div id="dialog-msg" title="Mensagem do Sistema" style="display: none;"></div>
     <div id="session-dialog" title="Mensagem do Sistema" style="display: none;"></div>
@@ -203,9 +200,9 @@
               <div id="BoxRodape_endereco">
               {% block endereco_footer %}
                 <p>
-                &copy; Instituto Brasileiro de Museus – IBRAM<br />
-				SBN, quadra 2, lote 8, bloco N, Edifício CNC III<br />
-				Brasília - DF - CEP 70040-020
+                &copy; SanSIS - Sanchez Sistemas<br />
+				SQS 412 - Bloco G - 110<br />
+				Brasília - DF - CEP 70287-130
                 </p>
               {% endblock %}
               </div>
@@ -225,6 +222,144 @@
                 close: false}).html('Aguarde...');
             $('#dialog-msg').dialog('close');
             window.jQuery || document.write('<script src="{{ asset('bundles/sansiscorebase/js/jquery.js') }}"><\/script>')
+            
+            {% block session_counter_js %}
+            var sessionTimeFull = -1;
+			var sessionTime = -1;
+			
+			function keepAliveLoop() {
+			    if(sessionTime > -1) {
+			        date = (new Date(0,0,0,0,0,sessionTime,0));
+			
+			        mins = parseInt(date.getMinutes());
+			        secs = ("0" + date.getSeconds()).slice(-2);
+			
+			        dateString = mins+"min "+secs;
+			        $("#keepAlive").html(dateString);
+			
+			        if (sessionTime > 180)
+			            $("#session-dialog").dialog('close');
+			
+			        switch(sessionTime) {
+			            case 0:
+			
+			                $("#session-dialog").html("Sua sessão expirou! Efetuando logout...");
+			                sleep(5);
+			                $("#session-dialog").dialog({
+			                    modal:           true,
+			                    draggable:       false,
+			                    resizable:       false,
+			                    closeOnEscape:   false,
+			                    buttons: {
+			                        "Fechar": function() {
+			                            $(this).dialog('close');
+			                            window.location.href = "/logout.php?time=true";
+			                        }
+			                    }
+			                });
+			
+			                window.location.href= '/logout.php?time=true';
+			
+			                break;
+			            case 180:
+			                $("#session-dialog").html("Sua sessão está prestes a expirar, deseja renová-la agora?");
+			                $("#session-dialog").dialog({
+			                    modal:           true,
+			                    draggable:       false,
+			                    resizable:       false,
+			                    closeOnEscape:   false,
+			                    buttons: {
+			                        "Sim": function() {
+			                            $.ajax({
+			                                type:'GET',
+			                                data: {
+			                                    reset : true
+			                                },
+			                                url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
+			                            }).done(function(data) {
+			                                    eval("dados = "+data);
+			                                    sessionTime = dados.time;
+			
+			                                    window.setTimeout(function (){$.ajax({
+			                                        type:'GET',
+			                                        url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
+			                                    }).done(function(data){
+			                                            eval("dados = "+data);
+			                                            sessionTime = dados.time;
+			                                            keepAliveLoop();
+			                                        });
+			                                    },1000);
+			
+			                                    $("#session-dialog").html("Sessão renovada!");
+			                                    $("#session-dialog").dialog({
+			                                        modal:           true,
+			                                        draggable:       false,
+			                                        resizable:       false,
+			                                        closeOnEscape:   false,
+			                                        buttons: {
+			                                            "Fechar": function() {
+			                                                $(this).dialog('close');
+			                                            }
+			                                        }
+			                                    });
+			                                });
+			                        },
+			                        "Não": function() {
+			                            $(this).dialog('close');
+			                        }
+			                    }
+			                });
+			                break;
+			        }
+			
+			        window.setTimeout(function (){$.ajax({
+			            type:'GET',
+			            url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
+			        }).success(function(data){
+			                if (data) {
+			                    eval("dados = "+data);
+			                    sessionTime = dados.time;
+			                    keepAliveLoop();
+			                }
+			            }).error(function(data){
+			                if (data) {
+			                    eval("dados = "+data);
+			                    sessionTime = dados.time;
+			                    keepAliveLoop();
+			                }
+			            });
+			        },1000)
+			    }
+			}
+			
+			$(document).ready(function(){
+			
+			    $('#session-dialog').dialog({title: "Inicializando",
+			        resizable: false,
+			        height: 200,
+			        width: 300,
+			        modal: true,
+			        close: false}).html('Aguarde...');
+			    $('#session-dialog').dialog('close');
+			
+			    $.ajax({
+			        type:'GET',
+			        data: {reset:true},
+			        url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
+			    }).done(function(data){
+			            eval("dados = "+data);
+			            sessionTime = dados.time;
+			            sessionTimeFull = sessionTime;
+			
+			            keepAliveLoop();
+			        });
+			
+			    $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+			        sessionTime = sessionTimeFull;
+			    })
+			});
+			{% endblock %}
+            
         </script>
     	{% block javascripts %}{% endblock %}
   </body>

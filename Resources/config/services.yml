@@ -1,8 +1,8 @@
 parameters:
-  SanSIS_core_base.service_data_class: SanSIS\Core\BaseBundle\ServiceLayer\ServiceData
+  sansis_core_base.service_data_class: SanSIS\Core\BaseBundle\ServiceLayer\ServiceData
 
 services:
-  SanSIS_core_base.service_data_injector:
-    class: %SanSIS_core_base.service_data_class%
+  sansis_core_base.service_data_injector:
+    class: %sansis_core_base.service_data_class%
     public: true
     arguments: ['@service_container']

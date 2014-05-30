@@ -2,10 +2,10 @@
 
 {% block body %}
 
-<strong class="title">Base de desenvolvimento de sistemas do SanSIS</strong>
+<strong class="title">Base de desenvolvimento de sistemas da SanSIS</strong>
 
 <div class="box_borda">
-	<div class="padding">
+	<div class="paddingAll">
         <div class="span11">
 			<p class="lead">Esta é a base para desenvolvimento de sistemas da SanSIS, do qual todos os bundles deverão estender</p>
 			<p>A base de desenvolvimento é composta de 2 bundles principais:</p>
@@ -20,6 +20,11 @@
 			<p>
 				Para iniciar o desenvolvimento de sua aplicação, acesse o <a href="{{ path('sansis_core_devel_homepage') }}">DevelBundle</a>.
 				Em caso de dúvidas, bugs identificados ou sugestões de melhorias, entre em contato com a Arquitetura de Sistemas da SanSIS.
+			</p>
+			
+			<p>
+				Caso tenha instalado também o <a href="{{ path('sansis_core_sandbox_homepage') }}">Sandbox</a>, você terá lá um exemplo
+				simples de como construir um CRUD utilizando o SanSIS Core BaseBundle com um banco de dados sqlite.
 				<br /><br />&nbsp;
 			</p>
 			
