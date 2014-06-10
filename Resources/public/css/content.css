@@ -1551,3 +1551,7 @@ div.falta
 	font-size: 11px !important;
 	width:110px;
 }
+
+input {
+	border: 1px solid #CCC;
+}
