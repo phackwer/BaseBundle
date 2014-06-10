@@ -172,6 +172,7 @@
 					{% endfor %}
 				{% endfor %}
               {% block body %}{% endblock %}
+              <div class="span10" style="min-width: 220px"> &nbsp;</div>
           </div>
         </div>
       </div>
@@ -345,17 +346,19 @@
 			});
 			{% endblock %}
 
-	      $(document).ready(function() {
-	          $.rvFontsize({
-	              targetSection: '#content',
-	              store: true, // store.min.js required!
-	              controllers: {
-	                  appendTo: '#rvfs-controllers',
-	                  showResetButton: true
-	              }
-	          });
+		      $(document).ready(function() {
+		          $.rvFontsize({
+		              targetSection: '#content',
+		              store: true, // store.min.js required!
+		              controllers: {
+		                  appendTo: '#rvfs-controllers',
+		                  showResetButton: true
+		              }
+		          });
 
-	      });
+
+
+		      });
             
         </script>
     	{% block javascripts %}{% endblock %}

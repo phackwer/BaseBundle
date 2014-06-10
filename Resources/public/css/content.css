@@ -570,6 +570,7 @@ strong.title{
     padding: 15px 0;
     width: 100%;
     margin-bottom: 30px;
+    min-width: 317px
 }
 .section .table .tab-content div.tab-pane{
     padding: 15px;
