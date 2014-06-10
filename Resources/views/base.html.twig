@@ -56,6 +56,9 @@
              src="{{ asset('bundles/sansiscorebase/images/ajax-loader.gif') }}">
     </div>
     <div id="dialog-msg" title="Mensagem do Sistema" style="display: none;"></div>
+    <div id="dialog-confirm-remove" title="Remover registro?" style="display: none;">
+	  <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>Deseja remover esse cadastro?</p>
+	</div>
     <div id="session-dialog" title="Mensagem do Sistema" style="display: none;"></div>
     <div class="header">
       <div id="barra-brasil">
@@ -90,16 +93,6 @@
                   <img src="{{ asset('bundles/sansiscorebase/images/lgo/bt_acess_contraste.png') }}" width="13" height="13"/>
                 </a>
               </div>
-              <div id="box_menu_top" >
-                <ul>
-                    {% block box_menu_top %} {% endblock %}
-                    {% block menu_sair %}
-                    <li class="sair">
-                        <a href="{{ path('sansis_core_base_logout') }}"><span class="icon-off icon-white"></span>Sair</a>
-                    </li>
-                    {% endblock %}
-                </ul>
-              </div>
             </div>
             <div class="usuario">
               <p>{{ render(controller('SanSISCoreBaseBundle:Default:sessionInfo')) }}</p>
@@ -107,7 +100,7 @@
           </div>
         </div>
       </div>
-    <div class="BoxMenuPrincipalTamanho">
+      <div class="BoxMenuPrincipalTamanho">
         <div id="BoxMenuPrincipal" class="BoxMenuPrincipal">
         <div class="container">
           <div class="row">
@@ -130,8 +123,6 @@
                 <div class="menuInformacao pull-left">
                       <a class="icoInformacao dropdown-toggle margin-right perfil" data-placement="top" rel="tooltip" data-toggle="dropdown" data-original-title="Informações" href="#"></a>
                       <ul class="dropdown-menu subMenuInforma" style="width: 214px;">
-                          <li>Ajuda</li>
-                          <li>Ajuda</li>
 {#                           <li>#}
 {#                             <span class="imgPrograma" style="float:left;">#}
 {#                                 <img src="{{ asset('bundles/SanSISsgpcore/images/lgo/maisMedicosInformacao.png') }}" alt="Programa">#}
@@ -146,10 +137,10 @@
                   </div>
               {% endblock %}
               {% block session_counter %}
-	              {% if app.session.get('user_name') %}
-	                <div id="box_info_usuario_tempo">
-	                    <div id="wrapper-clock-count">Sua sessão expira em: <span id="keepAlive"></span></div>
-	                </div>
+                  {% if app.session.get('user_name') %}
+                    <div id="box_info_usuario_tempo">
+                        <div id="wrapper-clock-count">Sua sessão expira em: <span id="keepAlive"></span></div>
+                    </div>
                   {% endif %}
               {% endblock %}
               </div>
@@ -157,21 +148,51 @@
           </div>
         </div>
       </div>
-      </div>
+    </div>
     <div class="section" style="min-height:498px">
       <div class="container">
           <div class="">
             <div class="box">
                 {% for label, flashes in app.session.flashbag.all %}
-					{% for flash in flashes %}
-						<div class="alert alert-{{ label }}">
-						  {{ flash | replace({"\n":'<br />'}) | raw }}
+                    {% for flash in flashes %}
+                        <div class="alert alert-{{ label }}">
+                          {{ flash | replace({"\n":'<br />'}) | raw }}
 
-						</div>
-						
-					{% endfor %}
-				{% endfor %}
-              {% block body %}{% endblock %}
+                        </div>
+                        
+                    {% endfor %}
+                {% endfor %}
+              {% block body %}
+              
+              <strong class="title">{% block box_title %}Título do Box{% endblock %}</strong>
+
+              <div class="box_borda">
+                 <div class="paddingAll">
+                    <div class="span11">
+                        {% block box_content %}
+                        {% endblock %}
+	                    <p style="height:5px;">
+	                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                    </p>
+	                    {% block box_javascripts %}{% endblock %}
+	                    
+                    </div>
+                  </div>
+                </div>
+                        
+              {% endblock %}
               <div class="span10" style="min-width: 220px"> &nbsp;</div>
           </div>
         </div>
@@ -187,8 +208,8 @@
               {% block endereco_footer %}
                 <p>
                 &copy; SanSIS - Sanchez Sistemas<br />
-				SQS 412 - Bloco G - 110<br />
-				Brasília - DF - CEP 70287-130
+                SQS 412 - Bloco G - 110<br />
+                Brasília - DF - CEP 70287-130
                 </p>
               {% endblock %}
               </div>
@@ -198,7 +219,7 @@
       </div>
     </footer>
     {% endblock %}
-    	<script>
+        <script>
             window.jQuery || document.write('<script src="{{ asset('bundles/sansiscorebase/js/jquery.js') }}"><\/script>')
             $('#dialog-msg').dialog({title: "Inicializando",
                 resizable: false,
@@ -211,161 +232,161 @@
             
             {% block session_counter_js %}
             var sessionTimeFull = -1;
-			var sessionTime = -1;
-			
-			function keepAliveLoop() {
-			    if(sessionTime > -1) {
-			        date = (new Date(0,0,0,0,0,sessionTime,0));
-			
-			        mins = parseInt(date.getMinutes());
-			        secs = ("0" + date.getSeconds()).slice(-2);
-			
-			        dateString = mins+"min "+secs;
-			        $("#keepAlive").html(dateString);
-			
-			        if (sessionTime > 180)
-			            $("#session-dialog").dialog('close');
-			
-			        switch(sessionTime) {
-			            case 0:
-			
-			                $("#session-dialog").html("Sua sessão expirou! Efetuando logout...");
-			                sleep(5);
-			                $("#session-dialog").dialog({
-			                    modal:           true,
-			                    draggable:       false,
-			                    resizable:       false,
-			                    closeOnEscape:   false,
-			                    buttons: {
-			                        "Fechar": function() {
-			                            $(this).dialog('close');
-			                            window.location.href = "/logout.php?time=true";
-			                        }
-			                    }
-			                });
-			
-			                window.location.href= '/logout.php?time=true';
-			
-			                break;
-			            case 180:
-			                $("#session-dialog").html("Sua sessão está prestes a expirar, deseja renová-la agora?");
-			                $("#session-dialog").dialog({
-			                    modal:           true,
-			                    draggable:       false,
-			                    resizable:       false,
-			                    closeOnEscape:   false,
-			                    buttons: {
-			                        "Sim": function() {
-			                            $.ajax({
-			                                type:'GET',
-			                                data: {
-			                                    reset : true
-			                                },
-			                                url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-			                            }).done(function(data) {
-			                                    eval("dados = "+data);
-			                                    sessionTime = dados.time;
-			
-			                                    window.setTimeout(function (){$.ajax({
-			                                        type:'GET',
-			                                        url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-			                                    }).done(function(data){
-			                                            eval("dados = "+data);
-			                                            sessionTime = dados.time;
-			                                            keepAliveLoop();
-			                                        });
-			                                    },1000);
-			
-			                                    $("#session-dialog").html("Sessão renovada!");
-			                                    $("#session-dialog").dialog({
-			                                        modal:           true,
-			                                        draggable:       false,
-			                                        resizable:       false,
-			                                        closeOnEscape:   false,
-			                                        buttons: {
-			                                            "Fechar": function() {
-			                                                $(this).dialog('close');
-			                                            }
-			                                        }
-			                                    });
-			                                });
-			                        },
-			                        "Não": function() {
-			                            $(this).dialog('close');
-			                        }
-			                    }
-			                });
-			                break;
-			        }
-			
-			        window.setTimeout(function (){$.ajax({
-			            type:'GET',
-			            url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-			        }).success(function(data){
-			                if (data) {
-			                    eval("dados = "+data);
-			                    sessionTime = dados.time;
-			                    keepAliveLoop();
-			                }
-			            }).error(function(data){
-			                if (data) {
-			                    eval("dados = "+data);
-			                    sessionTime = dados.time;
-			                    keepAliveLoop();
-			                }
-			            });
-			        },1000)
-			    }
-			}
-			
-			$(document).ready(function(){
-			
-			    $('#session-dialog').dialog({title: "Inicializando",
-			        resizable: false,
-			        height: 200,
-			        width: 300,
-			        modal: true,
-			        close: false}).html('Aguarde...');
-			    $('#session-dialog').dialog('close');
-			
-			    $.ajax({
-			        type:'GET',
-			        data: {reset:true},
-			        url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-			    }).done(function(data){
-			            eval("dados = "+data);
-			            sessionTime = dados.time;
-			            sessionTimeFull = sessionTime;
-			
-			            keepAliveLoop();
-			        });
-			
-			    $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
-			        sessionTime = sessionTimeFull;
-			    })
-			});
-			{% endblock %}
+            var sessionTime = -1;
+            
+            function keepAliveLoop() {
+                if(sessionTime > -1) {
+                    date = (new Date(0,0,0,0,0,sessionTime,0));
+            
+                    mins = parseInt(date.getMinutes());
+                    secs = ("0" + date.getSeconds()).slice(-2);
+            
+                    dateString = mins+"min "+secs;
+                    $("#keepAlive").html(dateString);
+            
+                    if (sessionTime > 180)
+                        $("#session-dialog").dialog('close');
+            
+                    switch(sessionTime) {
+                        case 0:
+            
+                            $("#session-dialog").html("Sua sessão expirou! Efetuando logout...");
+                            sleep(5);
+                            $("#session-dialog").dialog({
+                                modal:           true,
+                                draggable:       false,
+                                resizable:       false,
+                                closeOnEscape:   false,
+                                buttons: {
+                                    "Fechar": function() {
+                                        $(this).dialog('close');
+                                        window.location.href = "/logout.php?time=true";
+                                    }
+                                }
+                            });
+            
+                            window.location.href= '/logout.php?time=true';
+            
+                            break;
+                        case 180:
+                            $("#session-dialog").html("Sua sessão está prestes a expirar, deseja renová-la agora?");
+                            $("#session-dialog").dialog({
+                                modal:           true,
+                                draggable:       false,
+                                resizable:       false,
+                                closeOnEscape:   false,
+                                buttons: {
+                                    "Sim": function() {
+                                        $.ajax({
+                                            type:'GET',
+                                            data: {
+                                                reset : true
+                                            },
+                                            url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
+                                        }).done(function(data) {
+                                                eval("dados = "+data);
+                                                sessionTime = dados.time;
+            
+                                                window.setTimeout(function (){$.ajax({
+                                                    type:'GET',
+                                                    url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
+                                                }).done(function(data){
+                                                        eval("dados = "+data);
+                                                        sessionTime = dados.time;
+                                                        keepAliveLoop();
+                                                    });
+                                                },1000);
+            
+                                                $("#session-dialog").html("Sessão renovada!");
+                                                $("#session-dialog").dialog({
+                                                    modal:           true,
+                                                    draggable:       false,
+                                                    resizable:       false,
+                                                    closeOnEscape:   false,
+                                                    buttons: {
+                                                        "Fechar": function() {
+                                                            $(this).dialog('close');
+                                                        }
+                                                    }
+                                                });
+                                            });
+                                    },
+                                    "Não": function() {
+                                        $(this).dialog('close');
+                                    }
+                                }
+                            });
+                            break;
+                    }
+            
+                    window.setTimeout(function (){$.ajax({
+                        type:'GET',
+                        url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
+                    }).success(function(data){
+                            if (data) {
+                                eval("dados = "+data);
+                                sessionTime = dados.time;
+                                keepAliveLoop();
+                            }
+                        }).error(function(data){
+                            if (data) {
+                                eval("dados = "+data);
+                                sessionTime = dados.time;
+                                keepAliveLoop();
+                            }
+                        });
+                    },1000)
+                }
+            }
+            
+            $(document).ready(function(){
+            
+                $('#session-dialog').dialog({title: "Inicializando",
+                    resizable: false,
+                    height: 200,
+                    width: 300,
+                    modal: true,
+                    close: false}).html('Aguarde...');
+                $('#session-dialog').dialog('close');
+            
+                $.ajax({
+                    type:'GET',
+                    data: {reset:true},
+                    url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
+                }).done(function(data){
+                        eval("dados = "+data);
+                        sessionTime = dados.time;
+                        sessionTimeFull = sessionTime;
+            
+                        keepAliveLoop();
+                    });
+            
+                $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+                    sessionTime = sessionTimeFull;
+                })
+            });
+            {% endblock %}
 
-		      $(document).ready(function() {
-		          $.rvFontsize({
-		              targetSection: '#content',
-		              store: true, // store.min.js required!
-		              controllers: {
-		                  appendTo: '#rvfs-controllers',
-		                  showResetButton: true
-		              }
-		          });
-		          
-		          $(window).bind('resize', function() {
-		        	  $('#grid').setGridWidth(10);
-		        	    var width = $('#jqGrid_container').width();
-		        	    $('#grid').setGridWidth(width);
-		        	});
+              $(document).ready(function() {
+                  $.rvFontsize({
+                      targetSection: '#content',
+                      store: true, // store.min.js required!
+                      controllers: {
+                          appendTo: '#rvfs-controllers',
+                          showResetButton: true
+                      }
+                  });
+                  
+                  $(window).bind('resize', function() {
+                      $('#grid').setGridWidth(10);
+                      var width = $('#jqGrid_container').width();
+                      $('#grid').setGridWidth(width);
+                    });
 
 
-		      });
+              });
             
         </script>
-    	{% block javascripts %}{% endblock %}
+        {% block javascripts %}{% endblock %}
   </body>
 </html>

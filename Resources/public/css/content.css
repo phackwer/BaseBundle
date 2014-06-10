@@ -37,7 +37,7 @@
 }
 
 p{
-    color: #7D7D7D;
+    color: #333333;
     display: block;
     font-size: 1.2em !important;
     margin-bottom: 15px;
@@ -570,7 +570,7 @@ strong.title{
     padding: 15px 0;
     width: 100%;
     margin-bottom: 30px;
-    min-width: 317px
+    min-width: 310px
 }
 .section .table .tab-content div.tab-pane{
     padding: 15px;
@@ -1545,4 +1545,8 @@ div.falta
 .frequencia .justificativa{
     float: left;
     width: 100%;
+}
+
+.ui-pg-input {
+	width:35px;
 }

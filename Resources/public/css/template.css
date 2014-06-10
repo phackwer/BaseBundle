@@ -15,7 +15,7 @@
 
 a { outline: none; }
 legend { display: none; }
-ol, ul { list-style: none; }
+ol, ul { list-style: none; margin-bottom:17px}
 a:hover { text-decoration: underline; }
 a:active, button:active { position: relative; }
 table { border-collapse: collapse; border-spacing: 0; }

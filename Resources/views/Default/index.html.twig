@@ -1,34 +1,28 @@
 {% extends "SanSISCoreBaseBundle::base.html.twig" %}
 
-{% block body %}
+{% block box_title %}Base de desenvolvimento de sistemas da SanSIS{% endblock %}
 
-<strong class="title">Base de desenvolvimento de sistemas da SanSIS</strong>
+{% block box_content %}
 
-<div class="box_borda">
-	<div class="paddingAll">
-        <div class="span11">
-			<p class="lead">Esta é a base para desenvolvimento de sistemas da SanSIS, do qual todos os bundles deverão estender</p>
-			<p>A base de desenvolvimento é composta de 2 bundles principais:</p>
-			
-			<ul>
-				<li>SanSIS\Core\BaseBundle - Provê elementos básicos da arquitetura do
-					SanSIS - CSS, Javascript, componentes de view, controller e model</li>
-				<li>SanSIS\Core\DevelBundle - Provê diversas ferramentas para o
-					desenvolvimento de aplicações utilizando o BaseBundle do SanSIS</li>
-			</ul>
-			
-			<p>
-				Para iniciar o desenvolvimento de sua aplicação, acesse o <a href="{{ path('sansis_core_devel_homepage') }}">DevelBundle</a>.
-				Em caso de dúvidas, bugs identificados ou sugestões de melhorias, entre em contato com a Arquitetura de Sistemas da SanSIS.
-			</p>
-			
-			<p>
-				Caso tenha instalado também o <a href="{{ path('sansis_core_sandbox_homepage') }}">Sandbox</a>, você terá lá um exemplo
-				simples de como construir um CRUD utilizando o SanSIS Core BaseBundle com um banco de dados sqlite.
-				<br /><br />&nbsp;
-			</p>
-			
-    	</div>
-	</div>
-</div>
+	<p class="lead">Esta é a base para desenvolvimento de sistemas da SanSIS, do qual todos os bundles deverão estender</p>
+	<p>A base de desenvolvimento é composta de 2 bundles principais:</p>
+	
+	<ul>
+		<li>SanSIS\Core\BaseBundle - Provê elementos básicos da arquitetura do
+			SanSIS - CSS, Javascript, componentes de view, controller e model</li>
+		<li>SanSIS\Core\DevelBundle - Provê diversas ferramentas para o
+			desenvolvimento de aplicações utilizando o BaseBundle do SanSIS</li>
+	</ul>
+	
+	<p>
+		Para iniciar o desenvolvimento de sua aplicação, acesse o <a href="{{ path('sansis_core_devel_homepage') }}">DevelBundle</a>.
+		Em caso de dúvidas, bugs identificados ou sugestões de melhorias, entre em contato com a Arquitetura de Sistemas da SanSIS.
+	</p>
+	
+	<p>
+		Caso tenha instalado também o <a href="{{ path('sansis_core_sandbox_homepage') }}">Sandbox</a>, você terá lá um exemplo
+		simples de como construir um CRUD utilizando o SanSIS Core BaseBundle com um banco de dados sqlite.
+		<br /><br />&nbsp;
+	</p>
+
 {% endblock %}
