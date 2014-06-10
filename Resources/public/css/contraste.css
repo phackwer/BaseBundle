@@ -2,6 +2,10 @@
 
 /* HEADER */
 
+.ui-dialog, .ui-dialog-content, .ui-datepicker-calendar,  .ui-datepicker-calendar a,  .ui-datepicker-calendar a:hover{
+	color:#000000 !important;
+}
+
 .acessibilidade{
     background-color:#000000 !important;
     color:#000000 !important;
