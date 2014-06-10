@@ -79,7 +79,7 @@
         <div class="container">
           <div class="row">
             <div class="span8">
-              <div class="logo">{% block sigla_sistema %}BASE{% endblock %}</div>
+              <div class="logo hidden-phone">{% block sigla_sistema %}BASE{% endblock %}</div>
               <div class="titulo_sistema">
                 <span class="img_separador"></span>
                 <h1>{% block nome_sistema %}SanSIS{% endblock %}</h1>
@@ -104,7 +104,7 @@
         <div id="BoxMenuPrincipal" class="BoxMenuPrincipal">
         <div class="container">
           <div class="row">
-            <div class="span8">
+            <div class="span12">
                 <span class="visible-desktop">&nbsp;</span>
               <div class="navbar nav">
                 <a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar select">
@@ -117,12 +117,12 @@
                 </div>
               </div>
             </div>
-            <div class="span4">
-              <div id="box_info_usuario">
-              {% block extra_info %}
-                <div class="menuInformacao pull-left">
-                      <a class="icoInformacao dropdown-toggle margin-right perfil" data-placement="top" rel="tooltip" data-toggle="dropdown" data-original-title="Informações" href="#"></a>
-                      <ul class="dropdown-menu subMenuInforma" style="width: 214px;">
+{#             <div class="span2">#}
+{#               <div id="box_info_usuario">#}
+{#               {% block extra_info %}#}
+{#                 <div class="menuInformacao pull-left">#}
+{#                       <a class="icoInformacao dropdown-toggle margin-right perfil" data-placement="top" rel="tooltip" data-toggle="dropdown" data-original-title="Informações" href="#"></a>#}
+{#                       <ul class="dropdown-menu subMenuInforma" style="width: 214px;">#}
 {#                           <li>#}
 {#                             <span class="imgPrograma" style="float:left;">#}
 {#                                 <img src="{{ asset('bundles/SanSISsgpcore/images/lgo/maisMedicosInformacao.png') }}" alt="Programa">#}
@@ -133,18 +133,18 @@
 {#                                   <li><a href="/faq.php">FAQ</a></li>#}
 {#                               </ul>#}
 {#                           </li>#}
-                      </ul>
-                  </div>
-              {% endblock %}
-              {% block session_counter %}
-                  {% if app.session.get('user_name') %}
-                    <div id="box_info_usuario_tempo">
-                        <div id="wrapper-clock-count">Sua sessão expira em: <span id="keepAlive"></span></div>
-                    </div>
-                  {% endif %}
-              {% endblock %}
-              </div>
-            </div>
+{#                       </ul>#}
+{#                   </div>#}
+{#               {% endblock %}#}
+{#               {% block session_counter %}#}
+{#                   {% if app.session.get('user_name') %}#}
+{#                     <div id="box_info_usuario_tempo">#}
+{#                         <div id="wrapper-clock-count">Sua sessão expira em: <span id="keepAlive"></span></div>#}
+{#                     </div>#}
+{#                   {% endif %}#}
+{#               {% endblock %}#}
+{#               </div>#}
+{#             </div>#}
           </div>
         </div>
       </div>
