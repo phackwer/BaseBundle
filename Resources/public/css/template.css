@@ -423,3 +423,17 @@ body{
     float:right;
     margin-top:10px;
 }
+
+.validateMsg {
+    width: 100%;
+    clear: both;
+    color: #F00;
+    margin-bottom: 10px;
+    margin-top: -10px;
+}
+
+.right {
+    margin-right: 20px;
+    margin-top: 5px;
+    text-align: left;
+}
