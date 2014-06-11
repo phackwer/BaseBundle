@@ -24,8 +24,20 @@ var app = {
         if( $( ".acordeon" ).length )
             app.acordeon();
         
-        $('.nav-collapse').find('.dropdown-submenu').find('.dropdown-menu').addClass('f-dropdown-menu');
-        $('.nav-collapse').find('.dropdown-submenu').find('.f-dropdown-menu').removeClass('dropdown-menu');
+        $(window).bind('resize', function() {
+            if ($(window).innerWidth() > 990) {
+            	$('.nav-collapse').find('.dropdown-submenu').find('.f-dropdown-menu').addClass('dropdown-menu');
+                $('.nav-collapse').find('.dropdown-submenu').find('.f-dropdown-menu').removeClass('f-dropdown-menu');
+            }
+            else{
+            	$('.nav-collapse').find('.dropdown-submenu').find('.dropdown-menu').addClass('f-dropdown-menu');
+                $('.nav-collapse').find('.dropdown-submenu').find('.f-dropdown-menu').removeClass('dropdown-menu');            	
+            }
+        	
+            $('#grid').setGridWidth(10);
+            var width = $('#jqGrid_container').width();
+            $('#grid').setGridWidth(width);
+          });
         
 
         $(window).scroll(function () {
@@ -33,19 +45,16 @@ var app = {
             	$('#BoxMenuPrincipal').removeClass("BoxMenuPrincipal");
                 $('#BoxMenuPrincipal').addClass("f-nav");
                 
-                if ($('.nav-collapse').height() > 40)
-                	$('.nav-collapse').height($(window).innerHeight() - 40);                
-                $('.nav-collapse').addClass("f-nav-collapse");
+            	$('.nav-collapse').addClass("f-nav-collapse");
+            	
+            	if ($('.nav-collapse').height() > 40) {
+                	$('.nav-collapse').height($(window).innerHeight() - 40);
+            	}
                 
-                $('.nav-collapse').find('.dropdown-submenu').find('.dropdown-menu').addClass('f-dropdown-menu');
-                $('.nav-collapse').find('.dropdown-submenu').find('.f-dropdown-menu').removeClass('dropdown-menu');
             } else {
                 $('#BoxMenuPrincipal').removeClass("f-nav");
                 $('.nav-collapse').removeClass("f-nav-collapse");
                 $('#BoxMenuPrincipal').addClass("BoxMenuPrincipal");
-                
-                $('.nav-collapse').find('.dropdown-submenu').find('.dropdown-menu').addClass('f-dropdown-menu');
-                $('.nav-collapse').find('.dropdown-submenu').find('.f-dropdown-menu').removeClass('dropdown-menu');
             }
         });
     },
