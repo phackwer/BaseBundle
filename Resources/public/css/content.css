@@ -1567,6 +1567,7 @@ div.falta
 	width:110px;
 }
 
-input {
+input, select {
 	border: 1px solid #CCC;
+	background: #FFFFFF;
 }
