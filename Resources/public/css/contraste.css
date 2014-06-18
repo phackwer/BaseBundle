@@ -6,6 +6,37 @@
 	color:#000000 !important;
 }
 
+.acessibilidade .filder h5.legenda{
+    display: block !important;
+    color: #FFFF00 !important;
+    font-size: 1.4em !important;
+    margin-bottom: 10px !important;
+    clear: both !important;
+    position: absolute !important;
+    top: -10px !important;
+    background-color: #222222  !important;
+    padding: 0 10px !important;
+    width: auto !important;
+}
+
+.acessibilidade .aba .nav li.active a {
+    border: 1px solid #FFFF00 !important;
+    background-color:#FFFF00 !important;
+    color:#000000 !important;
+}
+
+.acessibilidade .aba .nav li a {
+    border: 1px solid #FFFF00 !important;
+    background-color:#000000 !important;
+    color:#FFFF00 !important;
+}
+
+.acessibilidade .aba .nav li a:hover {
+    border: 1px solid #FFFF00 !important;
+    background-color:#AAAA00 !important;
+    color:#000000 !important;
+}
+
 .acessibilidade{
     background-color:#000000 !important;
     color:#000000 !important;

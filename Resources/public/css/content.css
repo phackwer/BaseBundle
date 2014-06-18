@@ -539,7 +539,7 @@ strong.title{
     color: #064060;
     display: block;
     font-size: 1.6em;
-    margin: 0 0 0 10px;
+    margin-bottom: 20px;
 }
 .section .aba{
     display: block;
@@ -585,7 +585,8 @@ strong.title{
     padding: 15px 0;
     width: 100%;
     margin-bottom: 30px;
-    min-width: 310px
+    min-width: 310px;
+    overflow:hidden;
 }
 .section .table .tab-content div.tab-pane{
     padding: 15px;
@@ -633,28 +634,42 @@ strong.title{
 .box_borda .paddingAll{
     padding: 20px 15px;
 }
-.filder{
-    margin-bottom: 30px;
+
+.maps{
+    margin-bottom: 20px;
     position: relative;
     border: 1px solid #3a87ad;
     float: left;
-    width: 100%;
+    width: 93%;
     margin-top: 5px;
-    /*padding-bottom: 20px;*/
+    padding: 5px;
+}
+
+.filder{
+    margin-bottom: 20px;
+    position: relative;
+    border: 1px solid #3a87ad;
+    float: left;
+    width: 97%;
+    margin-top: 5px;
+    padding: 10px 5px 0px 5px;
 }
 .filder ul{
-    margin-bottom: 0;
+    margin-bottom: 0px;
 }
 h5{
     display: block;
     color: #0095DA;
     font-size: 1.4em;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     clear: both;
-    position: absolute;
     top: -10px;
-    background-color: #F0F0F0;
-    padding: 0 5px;
+}
+
+h3{
+    display: block;
+    margin-bottom: 20px;
+    clear: both;
 }
 form{
     float: left;
@@ -1066,7 +1081,7 @@ table .paginacao input{
     width: 100%;
     /*padding-bottom: 20px;*/
 }
-.exportarDados h5.legenda{
+.filder h5.legenda{
     display: block;
     color: #0095DA;
     font-size: 1.4em;
@@ -1074,8 +1089,9 @@ table .paginacao input{
     clear: both;
     position: absolute;
     top: -10px;
-    background-color: #F0F0F0;
-    padding: 0 5px;
+    background-color: #E4E4E4 ;
+    padding: 0 10px;
+    width: auto;
 }
 .exportarDados{
     float: left;

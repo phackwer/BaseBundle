@@ -34,9 +34,9 @@ var app = {
                 $('.nav-collapse').find('.dropdown-submenu').find('.f-dropdown-menu').removeClass('dropdown-menu');            	
             }
         	
-            $('#grid').setGridWidth(10);
-            var width = $('#jqGrid_container').width();
-            $('#grid').setGridWidth(width);
+            $('.grid').setGridWidth(10);
+            var width = $('.jqGrid_container').width();
+            $('.grid').setGridWidth(width);
           });
         
 
