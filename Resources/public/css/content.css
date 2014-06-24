@@ -669,7 +669,7 @@ h5{
 h3{
     display: block;
     margin-bottom: 20px;
-    clear: both;
+/*     clear: both; */
 }
 form{
     float: left;
