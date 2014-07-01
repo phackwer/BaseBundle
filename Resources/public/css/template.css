@@ -401,29 +401,44 @@ body{
     width: 100%;
     position: fixed;
     bottom: 0;
+    color: #FFFFFF;
+    font-size: 1.2em;
 }
 
 #BoxRodape_endereco{
-    color: #FFFFFF;
+	color: #FFFFFF;
     float: left;
-    font-size: 1.2em;
     height: auto;
     padding: 4px 0;
 }
+
 #BoxRodape_endereco p{
 	color: #FFFFFF;
     font-size: 0.8em !important;
     margin: 0;
 }
-#BoxRodape_LogoSanSIS{
-    height: 33px;
-    width: 135px;
-    text-indent:-9000px;
-    background-image:url("../images/lgo/SanSIS_07.png");
-    background-repeat:no-repeat;
-    display:block;
+
+#BoxRodape_timer{
+	color: #FFFFFF;
     float:right;
-    margin-top:10px;
+    padding: 4px 0;
+}
+
+#BoxRodape_timer p{
+	color: #FFFFFF;
+    font-size: 0.8em !important;
+    margin: 0;
+}
+
+#BoxRodape_timer_full{
+    color: #FFFFFF;
+    padding: 4px 10px;
+}
+
+#BoxRodape_timer_full p{
+    color: #FFFFFF;
+    font-size: 0.8em !important;
+    margin: 0;
 }
 
 .validateMsg {

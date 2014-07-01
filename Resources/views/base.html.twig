@@ -203,17 +203,34 @@
       <div id="BoxRodapePrincipal">
         <div class="container">
           <div class="row">
-            <div class="span11">
-              <div id="BoxRodape_endereco">
-              {% block endereco_footer %}
-                <p>
-                &copy; SanSIS - Sanchez Sistemas<br />
-                SQS 412 - Bloco G - 110<br />
-                Brasília - DF - CEP 70287-130
-                </p>
-              {% endblock %}
-              </div>
+            <div class="span6 visible-desktop">
+                <div id="BoxRodape_endereco">
+                    
+                    <p>
+                        {% block copyright_footer %}
+	                    &copy; SanSIS - Sanchez Sistemas<br />
+	                    SQS 412 - Bloco G - 110<br />
+	                    Brasília - DF - CEP 70287-130
+	                    {% endblock %}
+                    </p>
+                </div>
             </div>
+            {% block session_counter %}
+            <div class="span6 visible-desktop">
+                <div id="BoxRodape_timer">
+                    <p>
+                        Sua sessão expira em: <span class="keepAlive"></span>
+                    </p>
+                </div>
+            </div>
+            <div class="span12 hidden-desktop">
+                <div id="BoxRodape_timer_full">
+                    <p>
+                        Sua sessão expira em: <span class="keepAlive"></span>
+                    </p>
+                </div>
+            </div>
+            {% endblock %} 
           </div>
         </div>
       </div>
@@ -242,7 +259,7 @@
                     secs = ("0" + date.getSeconds()).slice(-2);
             
                     dateString = mins+"min "+secs;
-                    $("#keepAlive").html(dateString);
+                    $(".keepAlive").html(dateString);
             
                     if (sessionTime > 180)
                         $("#session-dialog").dialog('close');
@@ -367,16 +384,16 @@
             });
             {% endblock %}
 
-              $(document).ready(function() {
-                  $.rvFontsize({
-                      targetSection: '#content',
-                      store: true, // store.min.js required!
-                      controllers: {
-                          appendTo: '#rvfs-controllers',
-                          showResetButton: true
-                      }
-                  });
-              });
+            $(document).ready(function() {
+                $.rvFontsize({
+                    targetSection: '#content',
+                    store: true, // store.min.js required!
+                    controllers: {
+                        appendTo: '#rvfs-controllers',
+                        showResetButton: true
+                    }
+                });
+            });
             
         </script>
         {% block javascripts %}{% endblock %}

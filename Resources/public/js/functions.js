@@ -200,10 +200,10 @@ $(function()
 {
 	app.init();
 	
-	window.alert = function(msg)
-	{
-		msg += '';
-		Message.show(msg.replace(/\n{1}/gi, '<br/>'));
-		return null;
-	}
+//	window.alert = function(msg)
+//	{
+//		msg += '';
+//		Message.show(msg.replace(/\n{1}/gi, '<br/>'));
+//		return null;
+//	}
 })
