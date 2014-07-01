@@ -373,7 +373,7 @@ body{
     min-height: 31px;
     width: 100%;
     position:absolute;
-    z-index: 9999;
+    z-index: 999;
 }
 .navbar{
     float: left;
