@@ -4,7 +4,7 @@ $(document).ready(function ($){
 
 
 function mascaras($) {
-    
+	
     $('.date_ddmmyyyy').datepicker({
         changeMonth: true,
         changeYear: true
