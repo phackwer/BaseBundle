@@ -85,7 +85,6 @@ body{
 /*     BACKGROUND: -MS-LINEAR-GRADIENT(TOP,  #0F4098 0%,#052F77 100%); */
 /*     BACKGROUND: LINEAR-GRADIENT(to bottom,  #0F4098 0%,#052F77 100%); */
 /*     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0F4098', endColorstr='#052F77',GradientType=0 ); */
-    border-bottom: 1px solid #FFCC00;
     
     overflow: hidden;
     position: relative;
@@ -135,6 +134,8 @@ body{
     margin: auto;
     position: relative;
     width: 100%;
+    border-top: 1px solid #59f;
+/*     border-bottom: 1px solid #59f; */
 }
 #topo_geral .banner_programa{
     margin-top: 10px;
@@ -405,7 +406,8 @@ body{
 /*     background: -ms-linear-gradient(top,  #0F4098 0%,#052F77 100%); */
 /*     background: linear-gradient(to bottom,  #0F4098 0%,#052F77 100%); */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0F4098', endColorstr='#052F77',GradientType=0 );
-    border-top: 2px solid #FFCC00;
+    
+    border-top: 1px solid #59f;
     float: left;
     height: auto;
     padding: 10px 0;
