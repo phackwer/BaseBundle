@@ -33,9 +33,6 @@
     border-radius:0 6px 6px 6px;
 }
 
-.cadastro_dependete li{
-	position: relative;
-}
 .validateMsgNovo{
 	position: absolute;
 	line-height: 12px;
@@ -61,7 +58,6 @@ ul.position li
 , .position{
     position: relative;
 }
-
 
 span.ng-binding{
     font-size: 1em !important;
@@ -101,8 +97,8 @@ span.ng-binding{
 /* FORMATO DO TITULO */
 
 strong.title{
-    border-bottom: 2px solid #064060;
-    color: #064060;
+    border-bottom: 2px solid #999;
+    color: #444;
     display: block;
     font-size: 2em;
     margin: 10px 0;
@@ -114,14 +110,6 @@ strong.title{
 .box {
     float: left;
     padding: 10px;
-}
-.box strong.title{
-    border-bottom: 2px solid #064060;
-    color: #064060;
-    display: block;
-    font-size: 2em;
-    margin: 10px 0;
-    padding-bottom: 5px;
 }
 .box h4{
     color: #064060;
@@ -342,14 +330,6 @@ span.pontilhado {
     height: 10px;
     margin-top: 5px;
     width: 100%;
-}
-strong.title{
-    border-bottom: 2px solid #064060;
-    color: #064060;
-    display: block;
-    font-size: 2em;
-    margin: 10px 0;
-    padding-bottom: 5px;
 }
 
 /* DIV BOX */
@@ -771,4 +751,8 @@ textarea{
     
 .ui-jqgrid {
 	margin-bottom: 20px;
+}
+
+.paddingAll .alert{
+	margin-right:20px;
 }
