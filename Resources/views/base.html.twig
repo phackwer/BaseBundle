@@ -65,18 +65,19 @@
     <div id="session-dialog" title="Mensagem do Sistema" style="display: none;"></div>
     <div class="header">
       <div id="barra-brasil">
-        <div class="container">
-          <div class="row">
-            <div class="span12">
-              <div class="barra">
-                <ul>
-                    <li><a title="Acesso à informação" class="ai" href="http://www.acessoainformacao.gov.br" target="_parent">www.sic.gov.br</a></li>
-                    <li><a title="Portal de Estado do Brasil" class="brasilgov" href="http://www.brasil.gov.br" target="_parent">www.brasil.gov.br</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+        &nbsp;
+{#         <div class="container">#}
+{#           <div class="row">#}
+{#             <div class="span12">#}
+{#               <div class="barra">#}
+{#                 <ul>#}
+{#                     <li><a title="Acesso à informação" class="ai" href="http://www.acessoainformacao.gov.br" target="_parent">www.sic.gov.br</a></li>#}
+{#                     <li><a title="Portal de Estado do Brasil" class="brasilgov" href="http://www.brasil.gov.br" target="_parent">www.brasil.gov.br</a></li>#}
+{#                 </ul>#}
+{#               </div>#}
+{#             </div>#}
+{#           </div>#}
+{#         </div>#}
       </div>
       <div id="topo_geral">
         <div class="container">
@@ -398,6 +399,11 @@
                     }
                 });
             });
+
+//             $('.modal').bind('show').css({
+//             	'margin-top': function () {return -($(this).height() / 2);},
+//             	'margin-left': function () {return -($(this).width() / 2);}
+//             })
             
         </script>
         {% block javascripts %}{% endblock %}

@@ -91,7 +91,8 @@
     color:#ffff00 !important;
 }
 .acessibilidade #barra-brasil {
-    background: url("../images/lgo/barra-brasil-v3-bgx.png") no-repeat scroll center bottom #000000;
+    background: #000000;
+    border-bottom: 1px solid #FFFF00;
 }
 .acessibilidade #barra-brasil .ai {
     background: url("../images/lgo/ai.png") no-repeat scroll 0 4px #000000;
