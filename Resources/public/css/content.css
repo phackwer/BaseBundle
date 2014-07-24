@@ -721,6 +721,9 @@ table .paginacao input{
     , .usuario p{
         float: left !important;
     }
+    .box_botoes_acessibilidade {
+        margin-left: 10px
+    }
     .logo {
         margin-right: 20px;
     }
@@ -738,10 +741,7 @@ table .paginacao input{
     .navbar{
         /*width: 60px;*/
     }
-    .box_botoes_acessibilidade
-    , .usuario{
-        display: none !important;
-    }
+    
     .img_disqueSaude{
         position: relative;
         left: 50%;
