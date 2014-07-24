@@ -90,14 +90,14 @@
 , .acessibilidade form .dadosCadastrais span{
     color:#ffff00 !important;
 }
-.acessibilidade #barra-brasil {
+.acessibilidade #barra-topo {
     background: #000000;
     border-bottom: 1px solid #FFFF00;
 }
-.acessibilidade #barra-brasil .ai {
+.acessibilidade #barra-topo .ai {
     background: url("../images/lgo/ai.png") no-repeat scroll 0 4px #000000;
 }
-.acessibilidade #barra-brasil .brasilgov {
+.acessibilidade #barra-topo .brasilgov {
     background: url("../images/lgo/brasil.png") no-repeat scroll 0 4px #000000;
 }
 .acessibilidade #topo_geral {
