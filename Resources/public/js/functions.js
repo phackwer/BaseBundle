@@ -40,23 +40,23 @@ var app = {
           });
         
 
-//        $(window).scroll(function () {
-//            if ($(this).scrollTop() > 114) {
-//            	$('#BoxMenuPrincipal').removeClass("BoxMenuPrincipal");
-//                $('#BoxMenuPrincipal').addClass("f-nav");
-//                
-//            	$('.nav-collapse').addClass("f-nav-collapse");
-//            	
-//            	if ($('.nav-collapse').height() > 40) {
-//                	$('.nav-collapse').height($(window).innerHeight() - 40);
-//            	}
-//                
-//            } else {
-//                $('#BoxMenuPrincipal').removeClass("f-nav");
-//                $('.nav-collapse').removeClass("f-nav-collapse");
-//                $('#BoxMenuPrincipal').addClass("BoxMenuPrincipal");
-//            }
-//        });
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 114) {
+            	$('#BoxMenuPrincipal').removeClass("BoxMenuPrincipal");
+                $('#BoxMenuPrincipal').addClass("f-nav");
+                
+            	$('.nav-collapse').addClass("f-nav-collapse");
+            	
+            	if ($('.nav-collapse').height() > 40) {
+                	$('.nav-collapse').height($(window).innerHeight() - 40);
+            	}
+                
+            } else {
+                $('#BoxMenuPrincipal').removeClass("f-nav");
+                $('.nav-collapse').removeClass("f-nav-collapse");
+                $('#BoxMenuPrincipal').addClass("BoxMenuPrincipal");
+            }
+        });
         
     },
 
