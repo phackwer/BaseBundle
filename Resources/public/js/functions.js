@@ -47,16 +47,17 @@ var app = {
         		$('.nav-collapse').find('.dropdown-submenu').find('.f-dropdown-menu').addClass('dropdown-menu');
                 $('.nav-collapse').find('.dropdown-submenu').find('.f-dropdown-menu').removeClass('f-dropdown-menu');
         		$('.navbar').filter('.nav').css({'width':''});
-        		if ($('.navbar-responsive-collapse').filter('.in').size()) {
-                	$('#BoxMenuPrincipal').removeClass("nf-nav");
-                } else {
-                	$('#BoxMenuPrincipal').addClass("nf-nav");
-                }
+        		$('#BoxMenuPrincipal').removeClass("nf-nav");
         	}
         	else{
         		$('.nav-collapse').find('.dropdown-submenu').find('.dropdown-menu').addClass('f-dropdown-menu');
                 $('.nav-collapse').find('.dropdown-submenu').find('.f-dropdown-menu').removeClass('dropdown-menu');
         		$('.navbar').filter('.nav').css({'width':'100%'});
+        		if ($('.navbar-responsive-collapse').filter('.in').size()) {
+                	$('#BoxMenuPrincipal').removeClass("nf-nav");
+                } else {
+                	$('#BoxMenuPrincipal').addClass("nf-nav");
+                }
         	}
             $('.grid').setGridWidth(10);
             var width = $('.jqGrid_container').width();
