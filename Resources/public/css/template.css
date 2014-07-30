@@ -24,7 +24,7 @@ body{
     background-color: #3D6FBF;
     
     /* Diversos papéis de parede do BaseCoreBundle */
-    background: url('../images/bkg/000.jpg')  no-repeat center center fixed;/**/
+    /*background: url('../images/bkg/000.jpg')  no-repeat center center fixed;/**/
     /*background: url('../images/bkg/001.jpg')  no-repeat center center fixed;/**/
     /*background: url('../images/bkg/002.jpg')  no-repeat center center fixed;/**/
     /*background: url('../images/bkg/003.jpg')  no-repeat center center fixed;/**/
@@ -270,8 +270,8 @@ body{
     line-height: 0px;
     margin-top: 6px;
     padding: 0 3px;
-    -webkit-box-shadow: 1px 5px 10px 1px #000000;
-    box-shadow: 1px 5px 10px 1px #000000;
+    -webkit-box-shadow: 1px 5px 10px 1px rgba(0,0,0,0.5);
+    box-shadow: 1px 5px 10px 1px rgba(0,0,0,0.5);
 }
 .box_botoes_acessibilidadeLogin {
     background-color: #024D29;
@@ -386,8 +386,8 @@ body{
     min-height: 40px !important;
     background-color: #0F4098;
     background-color: rgba(0,0,0,0.7);
-    -webkit-box-shadow: 1px 5px 10px 1px #999;
-    box-shadow: 1px 5px 10px 1px #999;
+    -webkit-box-shadow: 1px 5px 10px 1px rgba(0,0,0,0.5);
+    box-shadow: 1px 5px 10px 1px rgba(0,0,0,0.5);
     display: block;
     height: auto;
     margin: auto;
