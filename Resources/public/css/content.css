@@ -549,6 +549,7 @@ table .paginacao input{
 }
 .section .aba .nav a{
     background-color: #666666;
+    background-color: rgba(0,0,0,0.5);
     border-radius: 4px 4px 0 0;
     border: medium none;
     color: #ffffff;
@@ -562,6 +563,7 @@ table .paginacao input{
 .aba .nav li.active a
 , .aba .nav li a:hover{
     background-color: #f0f0f0 !important;
+    background-color: rgba(255,255,255,0.8) !important;
     border: medium none !important;
     color: #555555 !important;
 }

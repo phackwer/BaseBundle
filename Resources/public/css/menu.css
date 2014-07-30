@@ -27,7 +27,7 @@
 }
 .menu{
   background-color: #000066 !important;
-  background-color: rgba(0,0,0,0.95) !important;
+  background-color: rgba(0,0,0,0.93) !important;
   margin: 0;
   border: none !important;
   border-radius: inherit !important;
@@ -35,7 +35,7 @@
 .dropdown-menu{
 	padding: 0;
     background-color: #000066 !important;
-    background-color: rgba(0,0,0,0.95) !important;
+    background-color: rgba(0,0,0,0.93) !important;
     margin: 0;
     border: none !important;
     border-radius: inherit !important;
@@ -49,11 +49,15 @@
 .nav-collapse .nav > li > a:hover
 , .nav-collapse .dropdown-menu a:hover{
     background-color: #0088CC !important;
-    background-color: rgba(100,100,100,0.9) !important;
+    background-color: rgba(255,255,255,0.25) !important;
     color: #FFFFFF !important;
 }
 .navbar .select{
-	background: #444 !important;
+	background: #000000 !important;
+	border-top: 1px solid #999999;
+	border-left: 1px solid #444444;
+	border-right: 1px solid #444444;
+	border-bottom: 1px solid #111111;
 }
 .navbar .btn-navbar:hover
 , .navbar .btn-navbar:active
