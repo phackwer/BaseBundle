@@ -24,22 +24,22 @@ body{
     background-color: #3D6FBF;
     
     /* Diversos papéis de parede do BaseCoreBundle */
-    /*background: url('../images/bkg/000.jpg')  no-repeat center center fixed;/**/
-    /*background: url('../images/bkg/001.jpg')  no-repeat center center fixed;/**/
-    /*background: url('../images/bkg/002.jpg')  no-repeat center center fixed;/**/
-    /*background: url('../images/bkg/003.jpg')  no-repeat center center fixed;/**/
-    /*background: url('../images/bkg/004.jpg')  no-repeat center center fixed;/**/
-    /*background: url('../images/bkg/005.jpg')  no-repeat center center fixed;/**/
-    /*background: url('../images/bkg/006.jpg')  no-repeat center center fixed;/**/
-    /*background: url('../images/bkg/007.jpg')  no-repeat center center fixed;/**/
-    /*background: url('../images/bkg/008.jpg')  no-repeat center center fixed;/**/
-    /*background: url('../images/bkg/009.jpg')  no-repeat center center fixed;/**/
-    /*background: url('../images/bkg/010.jpg')  no-repeat center center fixed;/**/
-    /*background: url('../images/bkg/011.jpg')  no-repeat center center fixed;/**/
-    /*background: url('../images/bkg/012.jpg')  no-repeat center center fixed;/**/
-    /*background: url('../images/bkg/013.jpg')  no-repeat center center fixed;/**/
+    background: url('../images/bkg/000.jpg')  no-repeat center center fixed;/**/
+    background: url('../images/bkg/001.jpg')  no-repeat center center fixed;/**/
+    background: url('../images/bkg/002.jpg')  no-repeat center center fixed;/**/
+    background: url('../images/bkg/003.jpg')  no-repeat center top fixed;/**/
+    background: url('../images/bkg/004.jpg')  no-repeat center center fixed;/**/
+    background: url('../images/bkg/005.jpg')  no-repeat center center fixed;/**/
+    background: url('../images/bkg/006.jpg')  no-repeat center center fixed;/**/
+    background: url('../images/bkg/007.jpg')  no-repeat center center fixed;/**/
+    background: url('../images/bkg/008.jpg')  no-repeat center center fixed;/**/
+    background: url('../images/bkg/009.jpg')  no-repeat center center fixed;/**/
+    background: url('../images/bkg/010.jpg')  no-repeat center center fixed;/**/
+    background: url('../images/bkg/011.jpg')  no-repeat center center fixed;/**/
+    background: url('../images/bkg/012.jpg')  no-repeat center center fixed;/**/
+    background: url('../images/bkg/013.jpg')  no-repeat center center fixed;/**/
     
-    /*background: url('../images/bkg/100.jpg')  no-repeat center top fixed;/**/
+    background: url('../images/bkg/100.jpg')  no-repeat center top fixed;/**/
     
     /*background: url('')  no-repeat center center fixed;/**/
     -webkit-background-size: cover;
