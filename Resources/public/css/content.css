@@ -6,8 +6,10 @@
 
 .f-nav  { 
 	background-color: #0F4098;
-    -webkit-box-shadow: 1px 5px 10px 1px #a4a4a4;
-    box-shadow: 1px 5px 10px 1px #a4a4a4;
+	background-color: rgba(0,0,0,0.9);
+    -webkit-box-shadow: 1px 5px 10px 1px #999;
+    border-bottom: 1px solid #CCC
+    box-shadow: 1px 5px 10px 1px #999;
     display: block;
     height: auto;
     margin: auto;
@@ -97,8 +99,8 @@ span.ng-binding{
 /* FORMATO DO TITULO */
 
 strong.title{
-    border-bottom: 2px solid #999;
-    color: #444;
+    border-bottom: 2px solid #444444;
+    color: #444444;
     display: block;
     font-size: 2em;
     margin: 10px 0;
@@ -546,7 +548,7 @@ table .paginacao input{
     float: left;
 }
 .section .aba .nav a{
-    background-color: #AAAAAA;
+    background-color: #666666;
     border-radius: 4px 4px 0 0;
     border: medium none;
     color: #ffffff;
@@ -731,8 +733,8 @@ table .paginacao input{
 }
 
 
-input, select {
-	border: 1px solid #CCC;
+input, select, textarea {
+	border: 1px solid #BBB !important;
 	background: #FFFFFF;
 }
 

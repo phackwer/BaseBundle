@@ -51,6 +51,7 @@
     
     {% block javascript_libs %}
     {% endblock %}
+    
   </head>
   <body id="content">
     <div id="loading" style="display: none;">
@@ -66,18 +67,6 @@
     <div class="header">
       <div id="barra-topo">
         &nbsp;
-{#         <div class="container">#}
-{#           <div class="row">#}
-{#             <div class="span12">#}
-{#               <div class="barra">#}
-{#                 <ul>#}
-{#                     <li><a title="Acesso à informação" class="ai" href="http://www.acessoainformacao.gov.br" target="_parent">www.sic.gov.br</a></li>#}
-{#                     <li><a title="Portal de Estado do Brasil" class="brasilgov" href="http://www.brasil.gov.br" target="_parent">www.brasil.gov.br</a></li>#}
-{#                 </ul>#}
-{#               </div>#}
-{#             </div>#}
-{#           </div>#}
-{#         </div>#}
       </div>
       <div id="topo_geral">
         <div class="container">
@@ -122,39 +111,12 @@
                 </div>
               </div>
             </div>
-{#             <div class="span2">#}
-{#               <div id="box_info_usuario">#}
-{#               {% block extra_info %}#}
-{#                 <div class="menuInformacao pull-left">#}
-{#                       <a class="icoInformacao dropdown-toggle margin-right perfil" data-placement="top" rel="tooltip" data-toggle="dropdown" data-original-title="Informações" href="#"></a>#}
-{#                       <ul class="dropdown-menu subMenuInforma" style="width: 214px;">#}
-{#                           <li>#}
-{#                             <span class="imgPrograma" style="float:left;">#}
-{#                                 <img src="{{ asset('bundles/SanSISsgpcore/images/lgo/maisMedicosInformacao.png') }}" alt="Programa">#}
-{#                             </span>#}
-{#                               <ul class="noMargin subIntem">#}
-{#                                   <li><a href="http://www.saude.gov.br/maismedicos">Portal</a></li>#}
-{#                                   <li><a href="/manuais.php">Documentos</a></li>#}
-{#                                   <li><a href="/faq.php">FAQ</a></li>#}
-{#                               </ul>#}
-{#                           </li>#}
-{#                       </ul>#}
-{#                   </div>#}
-{#               {% endblock %}#}
-{#               {% block session_counter %}#}
-{#                   {% if app.session.get('user_name') %}#}
-{#                     <div id="box_info_usuario_tempo">#}
-{#                         <div id="wrapper-clock-count">Sua sessão expira em: <span id="keepAlive"></span></div>#}
-{#                     </div>#}
-{#                   {% endif %}#}
-{#               {% endblock %}#}
-{#               </div>#}
-{#             </div>#}
           </div>
         </div>
       </div>
     </div>
-    <div class="section" style="min-height:498px">
+    </div>
+    <div class="section">
       <div class="container">
           <div class="">
             <div class="box">
@@ -162,16 +124,12 @@
                     {% for flash in flashes %}
                         <div class="alert alert-{{ label }}">
                           {{ flash | replace({"\n":'<br />'}) | raw }}
-
                         </div>
-                        
                     {% endfor %}
                 {% endfor %}
-                
               {% block body %}
               
               <strong class="title">{% block box_title %}Título do Box{% endblock %}</strong>
-
               <div class="box_borda">
                  <div class="paddingAll">
                     <div class="span11">
@@ -196,12 +154,12 @@
 	                    
                     </div>
                   </div>
-                </div>
+              </div>
                         
               {% endblock %}
               <div class="span10" style="min-width: 220px"> &nbsp;</div>
-          </div>
-        </div>
+           </div>
+         </div>
       </div>
     </div>
     {% block footer %}
