@@ -4,6 +4,20 @@
 /* - CONTENT
 /* ------ */
 
+.nf-nav  { 
+    background-color: #0F4098;
+    background-color: rgba(0,0,0,0.9);
+    -webkit-box-shadow: 1px 5px 10px 1px #999;
+    border-bottom: 1px solid #CCC
+    box-shadow: 1px 5px 10px 1px #999;
+    display: block;
+    height: auto;
+    margin: auto;
+    min-height: 31px;
+    width: 100%;
+    z-index: 999; 
+}
+
 .f-nav  { 
 	background-color: #0F4098;
 	background-color: rgba(0,0,0,0.9);
@@ -35,27 +49,13 @@
     border-radius:0 6px 6px 6px;
 }
 
-.validateMsgNovo{
-	position: absolute;
-	line-height: 12px;
-	/*top: 45px;*/
-	bottom: -4px;
-}
-
-.validateMsg{
-    color: red;
-    position: absolute;
-    line-height: 12px;
-    /*top: 45px;*/
-    bottom: -7px;
-}
-
 p{
     color: #333333;
     display: block;
     font-size: 1.2em !important;
     margin-bottom: 15px;
 }
+
 ul.position li
 , .position{
     position: relative;
@@ -99,8 +99,8 @@ span.ng-binding{
 /* FORMATO DO TITULO */
 
 strong.title{
-    border-bottom: 2px solid #444444;
-    color: #444444;
+    border-bottom: 2px solid #222222;
+    color: #222222;
     display: block;
     font-size: 2em;
     margin: 10px 0;
