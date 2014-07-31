@@ -65,7 +65,9 @@
     <div id="session-dialog" title="Mensagem do Sistema" style="display: none;"></div>
     <div class="header">
       <div id="barra-topo">
-        &nbsp;
+        {% block top %}
+            &nbsp;
+        {% endblock %}
       </div>
       <div id="topo_geral">
         <div class="container">
@@ -171,8 +173,8 @@
                     <p>
                         {% block copyright_footer %}
 	                    &copy; SanSIS - Sanchez Sistemas<br />
-	                    SQS 412 - Bloco G - 110<br />
-	                    Brasília - DF - CEP 70287-130
+{# 	                    SQS 412 - Bloco G - 110<br />#}
+{# 	                    Brasília - DF - CEP 70287-130#}
 	                    {% endblock %}
                     </p>
                 </div>
