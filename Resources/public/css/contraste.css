@@ -2,6 +2,11 @@
 
 /* HEADER */
 
+.acessibilidade body{
+    background: #000000;
+    background-color: #000000;
+}
+
 .acessibilidade .section {
     background-color: #000000;
 }
