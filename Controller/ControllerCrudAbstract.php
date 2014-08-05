@@ -38,6 +38,13 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      * @var string
      */
     protected $createView;
+    
+    /**
+     * Permite a criação de títulos padronizados para as ações de CRUD
+     * 
+     * @var unknown
+     */
+    protected $createFormAction = 'Criar novo';
 
     /**
      * Define o nome da rota para o create
@@ -52,6 +59,13 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      * @var string
      */
     protected $editView;
+    
+    /**
+     * Permite a criação de títulos padronizados para as ações de CRUD
+     * 
+     * @var unknown
+     */
+    protected $editFormAction = 'Editar';
 
     /**
      * Define o nome da rota para o edit
@@ -66,6 +80,13 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      * @var string
      */
     protected $deleteView;
+    
+    /**
+     * Permite a criação de títulos padronizados para as ações de CRUD
+     * 
+     * @var unknown
+     */
+    protected $deleteFormAction = 'Excluir';
 
     /**
      * Define o nome da rota para o delete
@@ -80,6 +101,13 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      * @var string
      */
     protected $viewView;
+    
+    /**
+     * Permite a criação de títulos padronizados para as ações de CRUD
+     * 
+     * @var unknown
+     */
+    protected $viewFormAction = 'Visualizar';
 
     /**
      * Define o nome da rota para o view
@@ -266,8 +294,9 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
         }
 
         $params = array(
-            'formData'      => $this->getService()->getFormData(),
-            'entityData'    => $entityData
+            'formTitleAction'   => $this->createFormAction,
+            'formData'          => $this->getService()->getFormData(),
+            'entityData'        => $entityData
         );
 
         return $this->render($this->createView, $params);
@@ -289,8 +318,9 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
         }
 
         $params = array(
-            'formData' => $this->getService()->getFormData(),
-            'entityData' => $entityData
+            'formTitleAction'   => $this->editFormAction,
+            'formData'          => $this->getService()->getFormData(),
+            'entityData'        => $entityData
         );
 
         return $this->render($this->editView, $params);
@@ -304,6 +334,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
         $entityData = $this->getService()->getRootEntityData($this->getRequest()->query->get('id'));
 
         $params = array(
+            'formTitleAction'   => $this->viewFormAction,
             'formData' => $this->getService()->getFormData(),
             'entityData' => $entityData
         );

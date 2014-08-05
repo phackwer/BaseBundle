@@ -24,7 +24,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
      *
      * @var string - nome da PK da entidade raiz da service
      */
-    protected $rootEntityIdName = null;
+    protected $rootEntityIdName = 'id';
 
     /**
      *
