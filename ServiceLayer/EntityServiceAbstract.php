@@ -176,26 +176,26 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         $ref = new \ReflectionClass($this->rootEntity);
         
         $methods = get_class_methods($this->rootEntity);
-       
+         
         foreach ($methods as $method) {
             if ('set' === substr($method, 0, 3)) {
-                
+        
                 $attr = lcfirst(substr($method, 3));
                 if ($req->query->has($attr)) {
                     $value = $req->query->get($attr);
                 } else {
                     $value = $req->request->get($attr);
                 }
-                
+        
                 $params = $ref->getMethod($method)->getParameters();
                 $strDoc = $ref->getMethod($method)->getDocComment();
                 $class = '';
-                
+        
                 if ($params[0]->getClass()) $class = $params[0]->getClass()->name;
-                
+        
                 if (strstr($strDoc,'\DateTime') || $class == 'DateTime') {
                     $class = '\DateTime';
-                                          
+        
                     if ($value) {
                         if (strstr($value, ':'))
                             $value = $class::createFromFormat('d/m/Y h:m:i', $value);
@@ -207,10 +207,83 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                         $value = null;
                     }
                 }
-           
+                else if ($class && strstr($method, 'set') && is_array($value)) {
+                    $value = $this->populateEntity($class, $value, $this->rootEntity);
+                }
+                else if ($class && strstr($method, 'setId')) {
+                    $value = $this->getEntityManager()->getRepository($class)->findOneBy(array('id' => $value));
+                }
+                 
                 $this->rootEntity->$method($value);
             }
         }
+    }
+    
+    /**
+     * Preenche os dados de entidades mapeadas abaixo da atual
+     * @param string $class - nome da classe
+     * @param array $values - valores para popular o objeto
+     * @return SanSIS\Core\BaseBundle\Entity\AbstractBase
+     */
+    public function populateEntity($newClass, $values, $parent)
+    {
+        $newEntity = new $newClass();
+        $this->getEntityManager()->persist($newEntity);
+        
+        $class = explode('\\', get_class($parent));
+        
+        $class = $class[count($class) - 1];
+        
+        $method = 'setId'.$class;
+        $newEntity->$method($parent);
+        
+        $ref = new \ReflectionClass($newEntity);
+        
+        $methods = get_class_methods($newEntity);
+         
+        foreach ($methods as $method) {
+            if ('set' === substr($method, 0, 3)) {
+                $attr = lcfirst(substr($method, 3));
+                if (isset($values[$attr])) {
+                    $value = $values[$attr];
+                }
+                else 
+                    $value=null;
+            
+                $params = $ref->getMethod($method)->getParameters();
+                $strDoc = $ref->getMethod($method)->getDocComment();
+                $class = '';
+                
+                if (!isset($params[0])) {var_dump($params); die;}
+                
+                if ($params[0]->getClass()) $class = $params[0]->getClass()->name;
+                
+                if (strstr($strDoc,'\DateTime') || $class == 'DateTime') {
+                    $class = '\DateTime';
+                
+                    if ($value) {
+                        if (strstr($value, ':'))
+                            $value = $class::createFromFormat('d/m/Y h:m:i', $value);
+                        else
+                            $value = $class::createFromFormat('d/m/Y', $value);
+                    }
+                    else {
+                        //corrige casos de strings vazias para datas
+                        $value = null;
+                    }
+                }
+                else if ($class && strstr($method, 'set') && is_array($value)) {
+                    $value = $this->populateEntity($class, $value, $newEntity);
+                }
+                else if ($class && strstr($method, 'setId')) {
+                    $value = $this->getEntityManager()->getRepository($class)->findOneBy(array('id' => $value));
+                }
+                 
+                $newEntity->$method($value);
+            }
+        }
+        
+        return $newEntity;
     }
 
     /**

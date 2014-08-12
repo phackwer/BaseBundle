@@ -240,15 +240,18 @@
 .acessibilidade .filder h3{
     color: #ffff00 !important;
 }
+.acessibilidade .filder h5{
+    color: #ffff00 !important;
+   position: absolute;
+}
 .acessibilidade h5{
     display: block;
     color: #FFFFFF;
     font-size: 1.4em;
     margin-bottom: 10px;
     clear: both;
-    position: absolute;
     top: -10px;
-    background-color: #1c1c1c;
+    background-color: #222222;
     padding: 0 5px;
 }
 .acessibilidade .box h4{

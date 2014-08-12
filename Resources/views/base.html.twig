@@ -212,143 +212,148 @@
             window.jQuery || document.write('<script src="{{ asset('bundles/sansiscorebase/js/jquery.js') }}"><\/script>')
             
             {% block session_counter_js %}
-            var sessionTimeFull = -1;
-            var sessionTime = -1;
+//             var sessionTimeFull = -1;
+//             var sessionTime = -1;
             
-            function keepAliveLoop() {
-                if(sessionTime > -1) {
-                    date = (new Date(0,0,0,0,0,sessionTime,0));
+//             function keepAliveLoop() {
+//                 if(sessionTime > -1) {
+//                     date = (new Date(0,0,0,0,0,sessionTime,0));
             
-                    mins = parseInt(date.getMinutes());
-                    secs = ("0" + date.getSeconds()).slice(-2);
+//                     mins = parseInt(date.getMinutes());
+//                     secs = ("0" + date.getSeconds()).slice(-2);
             
-                    dateString = mins+"min "+secs;
-                    $(".keepAlive").html(dateString);
+//                     dateString = mins+"min "+secs;
+//                     $(".keepAlive").html(dateString);
             
-                    if (sessionTime > 180)
-                        $("#session-dialog").dialog('close');
+//                     if (sessionTime > 180)
+//                         $("#session-dialog").dialog('close');
             
-                    switch(sessionTime) {
-                        case 0:
+//                     switch(sessionTime) {
+//                         case 0:
             
-                            $("#session-dialog").html("Sua sessão expirou! Efetuando logout...");
-                            sleep(5);
-                            $("#session-dialog").dialog({
-                                modal:           true,
-                                draggable:       false,
-                                resizable:       false,
-                                closeOnEscape:   false,
-                                buttons: {
-                                    "Fechar": function() {
-                                        $(this).dialog('close');
-                                        window.location.href = "/logout.php?time=true";
-                                    }
-                                }
-                            });
+//                             $("#session-dialog").html("Sua sessão expirou! Efetuando logout...");
+//                             sleep(5);
+//                             $("#session-dialog").dialog({
+//                                 modal:           true,
+//                                 draggable:       false,
+//                                 resizable:       false,
+//                                 closeOnEscape:   false,
+//                                 buttons: {
+//                                     "Fechar": function() {
+//                                         $(this).dialog('close');
+//                                         window.location.href = "/logout.php?time=true";
+//                                     }
+//                                 }
+//                             });
             
-                            window.location.href= '/logout.php?time=true';
+//                             window.location.href= '/logout.php?time=true';
             
-                            break;
-                        case 180:
-                            $("#session-dialog").html("Sua sessão está prestes a expirar, deseja renová-la agora?");
-                            $("#session-dialog").dialog({
-                                modal:           true,
-                                draggable:       false,
-                                resizable:       false,
-                                closeOnEscape:   false,
-                                buttons: {
-                                    "Sim": function() {
-                                        $.ajax({
-                                            type:'GET',
-                                            data: {
-                                                reset : true
-                                            },
+//                             break;
+//                         case 180:
+//                             $("#session-dialog").html("Sua sessão está prestes a expirar, deseja renová-la agora?");
+//                             $("#session-dialog").dialog({
+//                                 modal:           true,
+//                                 draggable:       false,
+//                                 resizable:       false,
+//                                 closeOnEscape:   false,
+//                                 buttons: {
+//                                     "Sim": function() {
+//                                         $.ajax({
+//                                             type:'GET',
+//                                             data: {
+//                                                 reset : true
+//                                             },
                                             url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-                                        }).done(function(data) {
-                                                eval("dados = "+data);
-                                                sessionTime = dados.time;
+//                                         }).done(function(data) {
+//                                                 eval("dados = "+data);
+//                                                 sessionTime = dados.time;
             
-                                                window.setTimeout(function (){$.ajax({
-                                                    type:'GET',
+//                                                 window.setTimeout(function (){$.ajax({
+//                                                     type:'GET',
                                                     url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-                                                }).done(function(data){
-                                                        eval("dados = "+data);
-                                                        sessionTime = dados.time;
-                                                        keepAliveLoop();
-                                                    });
-                                                },1000);
+//                                                 }).done(function(data){
+//                                                         eval("dados = "+data);
+//                                                         sessionTime = dados.time;
+//                                                         keepAliveLoop();
+//                                                     });
+//                                                 },1000);
             
-                                                $("#session-dialog").html("Sessão renovada!");
-                                                $("#session-dialog").dialog({
-                                                    modal:           true,
-                                                    draggable:       false,
-                                                    resizable:       false,
-                                                    closeOnEscape:   false,
-                                                    buttons: {
-                                                        "Fechar": function() {
-                                                            $(this).dialog('close');
-                                                        }
-                                                    }
-                                                });
-                                            });
-                                    },
-                                    "Não": function() {
-                                        $(this).dialog('close');
-                                    }
-                                }
-                            });
-                            break;
-                    }
+//                                                 $("#session-dialog").html("Sessão renovada!");
+//                                                 $("#session-dialog").dialog({
+//                                                     modal:           true,
+//                                                     draggable:       false,
+//                                                     resizable:       false,
+//                                                     closeOnEscape:   false,
+//                                                     buttons: {
+//                                                         "Fechar": function() {
+//                                                             $(this).dialog('close');
+//                                                         }
+//                                                     }
+//                                                 });
+//                                             });
+//                                     },
+//                                     "Não": function() {
+//                                         $(this).dialog('close');
+//                                     }
+//                                 }
+//                             });
+//                             break;
+//                     }
             
-                    window.setTimeout(function (){$.ajax({
-                        type:'GET',
+//                     window.setTimeout(function (){$.ajax({
+//                         type:'GET',
                         url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-                    }).success(function(data){
-                            if (data) {
-                                eval("dados = "+data);
-                                sessionTime = dados.time;
-                                keepAliveLoop();
-                            }
-                        }).error(function(data){
-                            if (data) {
-                                eval("dados = "+data);
-                                sessionTime = dados.time;
-                                keepAliveLoop();
-                            }
-                        });
-                    },1000)
-                }
-            }
+//                     }).success(function(data){
+//                             if (data) {
+//                                 eval("dados = "+data);
+//                                 sessionTime = dados.time;
+//                                 keepAliveLoop();
+//                             }
+//                         }).error(function(data){
+//                             if (data) {
+//                                 eval("dados = "+data);
+//                                 sessionTime = dados.time;
+//                                 keepAliveLoop();
+//                             }
+//                         });
+//                     },1000)
+//                 }
+//             }
             
-            $(document).ready(function(){
+//             $(document).ready(function(){
             
-                $('#session-dialog').dialog({title: "Inicializando",
-                    resizable: false,
-                    height: 200,
-                    width: 300,
-                    modal: true,
-                    close: false}).html('Aguarde...');
-                $('#session-dialog').dialog('close');
+//                 $('#session-dialog').dialog({title: "Inicializando",
+//                     resizable: false,
+//                     height: 200,
+//                     width: 300,
+//                     modal: true,
+//                     close: false}).html('Aguarde...');
+//                 $('#session-dialog').dialog('close');
             
-                $.ajax({
-                    type:'GET',
-                    data: {reset:true},
+//                 $.ajax({
+//                     type:'GET',
+//                     data: {reset:true},
                     url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-                }).done(function(data){
-                        eval("dados = "+data);
-                        sessionTime = dados.time;
-                        sessionTimeFull = sessionTime;
+//                 }).done(function(data){
+//                         eval("dados = "+data);
+//                         sessionTime = dados.time;
+//                         sessionTimeFull = sessionTime;
             
-                        keepAliveLoop();
-                    });
+//                         keepAliveLoop();
+//                     });
             
-                $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
-                    sessionTime = sessionTimeFull;
-                })
-            });
+//                 $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+//                     sessionTime = sessionTimeFull;
+//                 })
+//             });
             {% endblock %}
 
             $(document).ready(function() {
+
+            	var sectionHeight = $(window).innerHeight() - ($('.header').outerHeight() + $('#BoxRodapePrincipal').outerHeight());
+
+                $('.section').css({'min-height':sectionHeight});
+                
                 $.rvFontsize({
                     targetSection: '#content',
                     store: true, // store.min.js required!
@@ -359,11 +364,6 @@
                 });
             });
 
-//             $('.modal').bind('show').css({
-//             	'margin-top': function () {return -($(this).height() / 2);},
-//             	'margin-left': function () {return -($(this).width() / 2);}
-//             })
-            
         </script>
         {% block javascripts %}{% endblock %}
   </body>

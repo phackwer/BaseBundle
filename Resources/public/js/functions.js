@@ -62,7 +62,10 @@ var app = {
             $('.grid').setGridWidth(10);
             var width = $('.jqGrid_container').width();
             $('.grid').setGridWidth(width);
-          });
+            
+            var sectionHeight = $(window).innerHeight() - ($('.header').outerHeight() + $('#BoxRodapePrincipal').outerHeight());
+            
+            $('.section').css({'min-height':sectionHeight});
         
 
         $(window).scroll(function () {
