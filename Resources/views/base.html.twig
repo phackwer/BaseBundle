@@ -244,6 +244,7 @@
                         },1000);
 
                         $("#session-dialog-body").html("Sessão renovada!");
+                        window.setTimeout(function(){$("#session-dialog").modal('hide');}, 1000);
                     });
             });
             
@@ -256,10 +257,7 @@
             
                     dateString = mins+"min "+secs;
                     $(".keepAlive").html(dateString);
-            
-                    if (sessionTime > 180)
-                        $("#session-dialog").modal('hide');
-            
+                       
                     switch(sessionTime) {
                         case 0:
             
