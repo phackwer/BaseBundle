@@ -53,16 +53,31 @@
     
   </head>
   <body>
-    <div id="loading" style="display: none;">
-        <div class="overlay" style=" background-color: #000; width: 100%; height: 100%; float: left; position: absolute; left: 0; top: 0; z-index: 99; opacity: 0.4;"></div>
-        <img style="position: absolute;top: 35%;z-index: 99;left: 45%;width: 205px;height: 305px;"
-             src="{{ asset('bundles/sansiscorebase/images/ajax-loader.gif') }}">
+  <!-- DIÁLOGOS PADRÃO DO SISTEMA -->
+{#     <div id="dialog-msg" title="Mensagem do Sistema" style="display: none;"></div>#}
+{#     <div id="dialog-confirm-remove" title="Remover registro?" style="display: none;">#}
+{# 	  <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>Deseja remover esse cadastro?</p>#}
+{# 	</div>#}
+{#     <div id="session-dialog" title="Mensagem do Sistema" style="display: none;"></div>#}
+    
+    
+    <!-- Modal -->
+    <div id="session-dialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Mensagem do sistema</h3>
+      </div>
+      <div class="modal-body" id="session-dialog-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+        <button class="btn btn-primary" id="renewSession">Renovar</button>
+      </div>
     </div>
-    <div id="dialog-msg" title="Mensagem do Sistema" style="display: none;"></div>
-    <div id="dialog-confirm-remove" title="Remover registro?" style="display: none;">
-	  <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>Deseja remover esse cadastro?</p>
-	</div>
-    <div id="session-dialog" title="Mensagem do Sistema" style="display: none;"></div>
+    
+    
+  <!-- FIM DIÁLOGOS PADRÃO -->
     <div class="header">
       <div id="barra-topo">
         {% block top %}
@@ -202,150 +217,102 @@
     {% endblock %}
         <script>
             window.jQuery || document.write('<script src="{{ asset('bundles/sansiscorebase/js/jquery.js') }}"><\/script>')
-            $('#dialog-msg').dialog({title: "Inicializando",
-                resizable: false,
-                height: 200,
-                width: 300,
-                modal: true,
-                close: false}).html('Aguarde...');
-            $('#dialog-msg').dialog('close');
-            window.jQuery || document.write('<script src="{{ asset('bundles/sansiscorebase/js/jquery.js') }}"><\/script>')
             
             {% block session_counter_js %}
-//             var sessionTimeFull = -1;
-//             var sessionTime = -1;
-            
-//             function keepAliveLoop() {
-//                 if(sessionTime > -1) {
-//                     date = (new Date(0,0,0,0,0,sessionTime,0));
-            
-//                     mins = parseInt(date.getMinutes());
-//                     secs = ("0" + date.getSeconds()).slice(-2);
-            
-//                     dateString = mins+"min "+secs;
-//                     $(".keepAlive").html(dateString);
-            
-//                     if (sessionTime > 180)
-//                         $("#session-dialog").dialog('close');
-            
-//                     switch(sessionTime) {
-//                         case 0:
-            
-//                             $("#session-dialog").html("Sua sessão expirou! Efetuando logout...");
-//                             sleep(5);
-//                             $("#session-dialog").dialog({
-//                                 modal:           true,
-//                                 draggable:       false,
-//                                 resizable:       false,
-//                                 closeOnEscape:   false,
-//                                 buttons: {
-//                                     "Fechar": function() {
-//                                         $(this).dialog('close');
-//                                         window.location.href = "/logout.php?time=true";
-//                                     }
-//                                 }
-//                             });
-            
-//                             window.location.href= '/logout.php?time=true';
-            
-//                             break;
-//                         case 180:
-//                             $("#session-dialog").html("Sua sessão está prestes a expirar, deseja renová-la agora?");
-//                             $("#session-dialog").dialog({
-//                                 modal:           true,
-//                                 draggable:       false,
-//                                 resizable:       false,
-//                                 closeOnEscape:   false,
-//                                 buttons: {
-//                                     "Sim": function() {
-//                                         $.ajax({
-//                                             type:'GET',
-//                                             data: {
-//                                                 reset : true
-//                                             },
-                                            url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-//                                         }).done(function(data) {
-//                                                 eval("dados = "+data);
-//                                                 sessionTime = dados.time;
-            
-//                                                 window.setTimeout(function (){$.ajax({
-//                                                     type:'GET',
-                                                    url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-//                                                 }).done(function(data){
-//                                                         eval("dados = "+data);
-//                                                         sessionTime = dados.time;
-//                                                         keepAliveLoop();
-//                                                     });
-//                                                 },1000);
-            
-//                                                 $("#session-dialog").html("Sessão renovada!");
-//                                                 $("#session-dialog").dialog({
-//                                                     modal:           true,
-//                                                     draggable:       false,
-//                                                     resizable:       false,
-//                                                     closeOnEscape:   false,
-//                                                     buttons: {
-//                                                         "Fechar": function() {
-//                                                             $(this).dialog('close');
-//                                                         }
-//                                                     }
-//                                                 });
-//                                             });
-//                                     },
-//                                     "Não": function() {
-//                                         $(this).dialog('close');
-//                                     }
-//                                 }
-//                             });
-//                             break;
-//                     }
-            
-//                     window.setTimeout(function (){$.ajax({
-//                         type:'GET',
-                        url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-//                     }).success(function(data){
-//                             if (data) {
-//                                 eval("dados = "+data);
-//                                 sessionTime = dados.time;
-//                                 keepAliveLoop();
-//                             }
-//                         }).error(function(data){
-//                             if (data) {
-//                                 eval("dados = "+data);
-//                                 sessionTime = dados.time;
-//                                 keepAliveLoop();
-//                             }
-//                         });
-//                     },1000)
-//                 }
-//             }
-            
-//             $(document).ready(function(){
-            
-//                 $('#session-dialog').dialog({title: "Inicializando",
-//                     resizable: false,
-//                     height: 200,
-//                     width: 300,
-//                     modal: true,
-//                     close: false}).html('Aguarde...');
-//                 $('#session-dialog').dialog('close');
-            
-//                 $.ajax({
-//                     type:'GET',
-//                     data: {reset:true},
+            var sessionTimeFull = -1;
+            var sessionTime = -1;
+
+            $('#renewSession').click(function () {
+                $.ajax({
+                    type:'GET',
+                    data: {
+                        reset : true
+                    },
                     url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-//                 }).done(function(data){
-//                         eval("dados = "+data);
-//                         sessionTime = dados.time;
-//                         sessionTimeFull = sessionTime;
+                }).done(function(data) {
+                        eval("dados = "+data);
+                        sessionTime = dados.time;
+
+                        window.setTimeout(function (){$.ajax({
+                            type:'GET',
+                            url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
+                        }).done(function(data){
+                                eval("dados = "+data);
+                                sessionTime = dados.time;
+                                keepAliveLoop();
+                            });
+                        },1000);
+
+                        $("#session-dialog-body").html("Sessão renovada!");
+                    });
+            });
             
-//                         keepAliveLoop();
-//                     });
+            function keepAliveLoop() {
+                if(sessionTime > -1) {
+                    date = (new Date(0,0,0,0,0,sessionTime,0));
             
-//                 $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
-//                     sessionTime = sessionTimeFull;
-//                 })
-//             });
+                    mins = parseInt(date.getMinutes());
+                    secs = ("0" + date.getSeconds()).slice(-2);
+            
+                    dateString = mins+"min "+secs;
+                    $(".keepAlive").html(dateString);
+            
+                    if (sessionTime > 180)
+                        $("#session-dialog").modal('hide');
+            
+                    switch(sessionTime) {
+                        case 0:
+            
+                            $("#session-dialog-body").html("Sua sessão expirou! Efetuando logout...");
+                            $("#session-dialog").modal('show');
+            
+                            window.location.href= '{{ path('logout') }}';
+            
+                            break;
+                        case 180:
+                            $("#session-dialog-body").html("Sua sessão está prestes a expirar, deseja renová-la agora?");
+                            $("#session-dialog").modal('show');
+                            break;
+                    }
+            
+                    window.setTimeout(function (){$.ajax({
+                        type:'GET',
+                        url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
+                    }).success(function(data){
+                            if (data) {
+                                eval("dados = "+data);
+                                sessionTime = dados.time;
+                                keepAliveLoop();
+                            }
+                        }).error(function(data){
+                            if (data) {
+                                eval("dados = "+data);
+                                sessionTime = dados.time;
+                                keepAliveLoop();
+                            }
+                        });
+                    },1000)
+                }
+            }
+            
+            $(document).ready(function(){
+            
+                $.ajax({
+                    type:'GET',
+                    data: {reset:true},
+                    url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
+                }).done(function(data){
+                        eval("dados = "+data);
+                        sessionTime = dados.time;
+                        sessionTimeFull = sessionTime;
+            
+                        keepAliveLoop();
+                    });
+            
+                $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+                    sessionTime = sessionTimeFull;
+                })
+            });
             {% endblock %}
 
             $(document).ready(function() {

@@ -66,6 +66,7 @@ var app = {
             var sectionHeight = $(window).innerHeight() - ($('.header').outerHeight() + $('#BoxRodapePrincipal').outerHeight());
             
             $('.section').css({'min-height':sectionHeight});
+        });
         
 
         $(window).scroll(function () {

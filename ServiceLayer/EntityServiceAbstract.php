@@ -177,7 +177,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         $methods = get_class_methods($this->rootEntity);
          
         foreach ($methods as $method) {
-            if ('set' === substr($method, 0, 3)) {
+            if ('set' === substr($method, 0, 3) && $method != 'setStatusTuple') {
         
                 $attr = lcfirst(substr($method, 3));
                 if ($req->query->has($attr)) {
@@ -209,10 +209,10 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                 else if ($class && strstr($method, 'set') && is_array($value)) {
                     if (!count($this->innerEntities)){
                         $this->innerEntities = array('root'=>$this->rootEntity,'innerEntities' => array());
-                    }
+                    }                    
                     $allInt = true;
                     foreach($value as $key=>$val) {
-                        if (is_int($key)) {
+                        if (!is_int($key)) {
                             $allInt = false;
                         }
                     }
@@ -244,7 +244,6 @@ abstract class EntityServiceAbstract extends ServiceAbstract
     public function populateInnerEntity($newClass, $values, $parent, &$innerEntities = null)
     {
         $newEntity = new $newClass();
-//         $this->getEntityManager()->persist($newEntity);
         $this->registerInnerEntityHelper($newEntity, $innerEntities);
         
         $class = explode('\\', get_class($parent));
@@ -259,7 +258,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         $methods = get_class_methods($newEntity);
          
         foreach ($methods as $method) {
-            if ('set' === substr($method, 0, 3)) {
+            if ('set' === substr($method, 0, 3) && $method != 'setStatusTuple') {
                 $attr = lcfirst(substr($method, 3));
                 if (isset($values[$attr])) {
                     $value = $values[$attr];
