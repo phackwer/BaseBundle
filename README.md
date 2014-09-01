@@ -61,3 +61,28 @@ To:
 ```php
 use SanSIS\Core\BaseBundle\Component\HttpKernel\Kernel;
 ```
+
+# Customize your base.html.twig to extend from BaseBundle
+
+This is a sample on how to create your own visual identity and the main blocks of code
+for your page layout
+
+{% extends "SanSISCoreBaseBundle::base.html.twig" %}
+
+{% block css %}
+<link type="text/css" rel="stylesheet" href="{{ asset('bundles/yourproject/css/project.css') }}" />
+{% endblock %}
+
+{% block title %}Company's name - System's name{% endblock %}
+
+{% block sigla_sistema %}SYS{% endblock %}
+{% block descricao_sistema %}System's name{% endblock %}
+
+{% block entidade_sistema %}Entity's name{% endblock %}
+{% block info_sessao %}Anything you want{% endblock %}
+
+{% block page_menu %}{{ knp_menu_render('YourProjectBundle:Builder:menu', {'nav_type': 'navbar', 'template':'SanSISCoreBaseBundle:menu:sansis_menu.html.twig'}) }}{% endblock %}
+
+{% block copyright_footer %}
+&copy; Company's name
+{% endblock %}
