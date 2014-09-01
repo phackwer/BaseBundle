@@ -172,6 +172,8 @@ abstract class EntityServiceAbstract extends ServiceAbstract
      */
     public function populateRootEntity(Request $req)
     {
+        echo '<pre>';
+        
         $ref = new \ReflectionClass($this->rootEntity);
         
         $methods = get_class_methods($this->rootEntity);
@@ -233,6 +235,12 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                 $this->rootEntity->$method($value);
             }
         }
+        
+        
+        
+//         var_export($_POST);
+        
+        var_dump($this->innerEntities); die;
     }
     
     /**
@@ -250,15 +258,22 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         
         $class = $class[count($class) - 1];
         
-        $method = 'setId'.$class;
-        $newEntity->$method($parent);
+        $setParentMethod = 'setId'.$class;
+        if (method_exists($newEntity,$setParentMethod)){
+            $newEntity->$setParentMethod($parent);
+        } else {
+            $setParentMethod = 'set'.$class;
+            if (method_exists($newEntity,$setParentMethod)){
+                $newEntity->$setParentMethod($parent);
+            }
+        }
         
         $ref = new \ReflectionClass($newEntity);
         
         $methods = get_class_methods($newEntity);
          
         foreach ($methods as $method) {
-            if ('set' === substr($method, 0, 3) && $method != 'setStatusTuple') {
+            if ('set' === substr($method, 0, 3) && $method != 'setStatusTuple' && $method != $setParentMethod) {
                 $attr = lcfirst(substr($method, 3));
                 if (isset($values[$attr])) {
                     $value = $values[$attr];
@@ -287,7 +302,22 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                     }
                 }
                 else if ($class && strstr($method, 'set') && is_array($value)) {
-                    $value = $this->populateEntity($class, $value, $newEntity, $innerEntities['innerEntities']);
+                    
+                    $allInt = true;
+                    foreach($value as $key=>$val) {
+                        if (!is_int($key)) {
+                            $allInt = false;
+                        }
+                    }
+                    if ($allInt){
+                        foreach($value as $key=>$val){
+                            $newEntity->$method($this->populateInnerEntity($class, $val, $newEntity, $innerEntities['innerEntities']));
+                        }
+                        continue;
+                    }
+                    else {
+                        $value = $this->populateInnerEntity($class, $value, $newEntity, $innerEntities['innerEntities']);
+                    }
                 }
                 else if ($class && strstr($method, 'setId')) {
                     $value = $this->getEntityManager()->getRepository($class)->findOneBy(array('id' => $value));
@@ -316,13 +346,24 @@ abstract class EntityServiceAbstract extends ServiceAbstract
             $class = explode('\\', get_class($parent));
             $class = $class[count($class) - 1];
             $method = 'setId'.$class;
-            $entity['root']->$method($parent);
-
-            $this->getEntityManager()->persist($entity['root']);
-            $this->getEntityManager()->flush();
             
-            if (count($entity['innerEntities'])) {
-                $this->proccessInnerEntities($entity['root'], $entity['innerEntities']);
+            if (isset($entity['root'])) {
+//                 if (method_exists($entity['root'],$method)){
+                    $entity['root']->$method($parent);
+                    $this->getEntityManager()->persist($entity['root']);
+                    $this->getEntityManager()->flush();
+//                 }
+//                 else{
+//                     $method = 'set'.$class;
+//                     if (method_exists($entity['root'],$method)){
+//                         $entity['root']->$method($parent);
+//                         $this->getEntityManager()->persist($entity['root']);
+//                         $this->getEntityManager()->flush();
+//                     }
+//                 }
+//                 if (isset($entity['innerEntities']) && count($entity['innerEntities'])) {
+                    $this->proccessInnerEntities($entity['root'], $entity['innerEntities']);
+                    //             }
             }
         }
     }
