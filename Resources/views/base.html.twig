@@ -57,15 +57,34 @@
 {#     <div id="dialog-msg" title="Mensagem do Sistema" style="display: none;"></div>#}
 {#     <div id="dialog-confirm-remove" title="Remover registro?" style="display: none;">#}
 {# 	  <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>Deseja remover esse cadastro?</p>#}
-{# 	</div>#}    
+{# 	</div>#}
+
+    <!-- Modal -->
+    <div id="aboutDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Sobre o sistema</h3>
+      </div>
+      <div class="modal-body" id="about-dialog-body">
+        {% block about %}
+            Este é o diálogo de exemplo para informações sobre o sistema.<br />
+            Veja o Builder.php do menu do BaseBundle para um exemplo de como implantar.<br />
+            Em seu base extendido você deverá definir o conteúdo dentro de um block chamado "about"<br /><br />
+            &copy; SanSIS<br />
+        {% endblock %}
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fechar</button>
+      </div>
+    </div>  
     
     <!-- Modal -->
-    <div id="session-dialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="sessionDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="myModalLabel">Mensagem do sistema</h3>
       </div>
-      <div class="modal-body" id="session-dialog-body">
+      <div class="modal-body" id="sessionDialogBody">
         
       </div>
       <div class="modal-footer">
@@ -120,7 +139,7 @@
                   <span class="icon-bar"></span>
                 </a>
                 <div class="nav-collapse navbar-responsive-collapse collapse">
-                {% block page_menu %}{% if app.session.get('user_name') %}{{ knp_menu_render('SanSISCoreBaseBundle:Builder:menuExemplo', {'nav_type': 'navbar', 'template':'SanSISCoreBaseBundle:menu:sansis_menu.html.twig'}) }}{% endif %}{% endblock %}
+                {% block page_menu %}{{ knp_menu_render('SanSISCoreBaseBundle:Builder:menuExemplo', {'nav_type': 'navbar', 'template':'SanSISCoreBaseBundle:menu:sansis_menu.html.twig'}) }}{% endblock %}
                 </div>
               </div>
             </div>
@@ -185,7 +204,7 @@
                     
                     <p>
                         {% block copyright_footer %}
-	                    &copy; SanSIS - Sanchez Sistemas<br />
+	                    &copy; SanSIS<br />
 {# 	                    SQS 412 - Bloco G - 110<br />#}
 {# 	                    Brasília - DF - CEP 70287-130#}
 	                    {% endblock %}
@@ -241,10 +260,10 @@
                             });
                         },1000);
 
-                        $("#session-dialog-body").html("Sessão renovada!");
+                        $("#sessionDialogBody").html("Sessão renovada!");
                         renewSession
                         $("#renewSession").hide();
-                        window.setTimeout(function(){$("#renewSession").show();$("#session-dialog").modal('hide');}, 1000);
+                        window.setTimeout(function(){$("#renewSession").show();$("#sessionDialog").modal('hide');}, 1000);
                     });
             });
             
@@ -262,15 +281,15 @@
                         case 0:
 
                         	$("#renewSession").hide();
-                            $("#session-dialog-body").html("Sua sessão expirou! Efetuando logout...");
-                            $("#session-dialog").modal('show');
+                            $("#sessionDialogBody").html("Sua sessão expirou! Efetuando logout...");
+                            $("#sessionDialog").modal('show');
             
                             window.setTimeout(function(){window.location.href= '{{ path('logout') }}'},2000);
             
                             break;
                         case 180:
-                            $("#session-dialog-body").html("Sua sessão está prestes a expirar, deseja renová-la agora?");
-                            $("#session-dialog").modal('show');
+                            $("#sessionDialogBody").html("Sua sessão está prestes a expirar, deseja renová-la agora?");
+                            $("#sessionDialog").modal('show');
                             break;
                     }
             
@@ -296,21 +315,21 @@
             
             $(document).ready(function(){
             
-                $.ajax({
-                    type:'GET',
-                    data: {reset:true},
+//                 $.ajax({
+//                     type:'GET',
+//                     data: {reset:true},
                     url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-                }).done(function(data){
-                        eval("dados = "+data);
-                        sessionTime = dados.time;
-                        sessionTimeFull = sessionTime;
+//                 }).done(function(data){
+//                         eval("dados = "+data);
+//                         sessionTime = dados.time;
+//                         sessionTimeFull = sessionTime;
             
-                        keepAliveLoop();
-                    });
+//                         keepAliveLoop();
+//                     });
             
-                $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
-                    sessionTime = sessionTimeFull;
-                })
+//                 $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+//                     sessionTime = sessionTimeFull;
+//                 })
             });
             {% endblock %}
 

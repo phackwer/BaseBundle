@@ -15,6 +15,12 @@ class Builder
             'route' => 'sansis_core_base_homepage',
             'routeAbsolute' => true
         ));
+        
+        $about = $menu->addChild('Sobre o sistema', array(
+            'uri' => '#aboutDialog',
+            'data-toggle' => 'modal'
+        ));
+        $about->setLinkAttribute('data-toggle', 'modal');
 
         return $menu;
     }

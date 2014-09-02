@@ -220,12 +220,16 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                     }
                     if ($allInt){
                         foreach($value as $key=>$val){
-                            $this->rootEntity->$method($this->populateInnerEntity($class, $val, $this->rootEntity, $this->innerEntities));
+                            $inner = $this->populateInnerEntity($class, $val, $this->rootEntity, $this->innerEntities);
+                            $innerEntities['innerEntities'][] = $inner;
+                            $newEntity->$method($inner);
+                            $this->rootEntity->$method($inner);
                         }
                         continue;
                     }
                     else {
                         $value = $this->populateInnerEntity($class, $value, $this->rootEntity, $this->innerEntities);
+                        $innerEntities['innerEntities'][] = $value;
                     }
                 }
                 else if ($class && strstr($method, 'setId')) {
@@ -235,12 +239,6 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                 $this->rootEntity->$method($value);
             }
         }
-        
-        
-        
-//         var_export($_POST);
-        
-        var_dump($this->innerEntities); die;
     }
     
     /**
@@ -311,12 +309,15 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                     }
                     if ($allInt){
                         foreach($value as $key=>$val){
-                            $newEntity->$method($this->populateInnerEntity($class, $val, $newEntity, $innerEntities['innerEntities']));
+                            $inner = $this->populateInnerEntity($class, $val, $newEntity, $innerEntities['innerEntities']);
+                            $innerEntities['innerEntities'][] = $inner;
+                            $newEntity->$method($inner);
                         }
                         continue;
                     }
                     else {
                         $value = $this->populateInnerEntity($class, $value, $newEntity, $innerEntities['innerEntities']);
+                        $innerEntities['innerEntities'][] = $value;
                     }
                 }
                 else if ($class && strstr($method, 'setId')) {
@@ -330,7 +331,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         return $newEntity;
     }
     
-    protected function registerInnerEntityHelper($entity, &$array = null)
+    protected function registerInnerEntityHelper(&$entity, &$array = null)
     {
         $array['innerEntities'][] = array('root'=>$entity,'innerEntities' => array());
     }
@@ -338,14 +339,22 @@ abstract class EntityServiceAbstract extends ServiceAbstract
     protected function flushInnerEntities()
     {
         $this->proccessInnerEntities($this->innerEntities['root'], $this->innerEntities['innerEntities']);
+        
+        die;
     }
     
-    protected function proccessInnerEntities($parent, &$entities)
+    protected function proccessInnerEntities(&$parent, &$entities)
     {
+        $class = explode('\\', get_class($parent));
+        $class = $class[count($class) - 1];
+        
+        echo '<H1>'.$class.'</h1>';
+        print_r($entities);
+        
         foreach ($entities as $key=>$entity){
-            $class = explode('\\', get_class($parent));
-            $class = $class[count($class) - 1];
             $method = 'setId'.$class;
+            
+            if (!is_object($entity))
             
             if (isset($entity['root'])) {
 //                 if (method_exists($entity['root'],$method)){
@@ -366,6 +375,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                     //             }
             }
         }
+        die();
     }
 
     /**
