@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use SanSIS\Core\BaseBundle\ServiceLayer\ServiceData;
 use SanSIS\Core\BaseBundle\Doctrine\ORM\Mapping\OracleQuoteStrategy;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 abstract class  ControllerAbstract extends Controller
 {
