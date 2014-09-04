@@ -315,21 +315,21 @@
             
             $(document).ready(function(){
             
-//                 $.ajax({
-//                     type:'GET',
-//                     data: {reset:true},
+                $.ajax({
+                    type:'GET',
+                    data: {reset:true},
                     url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-//                 }).done(function(data){
-//                         eval("dados = "+data);
-//                         sessionTime = dados.time;
-//                         sessionTimeFull = sessionTime;
+                }).done(function(data){
+                        eval("dados = "+data);
+                        sessionTime = dados.time;
+                        sessionTimeFull = sessionTime;
             
-//                         keepAliveLoop();
-//                     });
+                        keepAliveLoop();
+                    });
             
-//                 $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
-//                     sessionTime = sessionTimeFull;
-//                 })
+                $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+                    sessionTime = sessionTimeFull;
+                })
             });
             {% endblock %}
 
