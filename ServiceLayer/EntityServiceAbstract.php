@@ -178,7 +178,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
      */
     public function populateRootEntity(Request $req)
     {
-        $this->populateEntities($this->rootEntity, $req, null, $this->innerEntities);
+        $this->populateEntities($this->innerEntities, $req, $this->rootEntity, null);
     }
     
     /**
@@ -187,14 +187,13 @@ abstract class EntityServiceAbstract extends ServiceAbstract
      * @param array $values - valores para popular o objeto
      * @return SanSIS\Core\BaseBundle\Entity\AbstractBase
      */
-    public function populateEntities($newClass, $values, $parent, &$innerEntities)
+    public function populateEntities(&$innerEntities, $values, $newClass, $parent, $arrayClass=null)
     {
         if (!$parent) {
             $entity = $newClass;
             $setParentMethod = null;
         } else {
             $entity = new $newClass();
-
     
             $class = explode('\\', get_class($parent));
     
@@ -219,7 +218,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         $methods = get_class_methods($entity);
          
         foreach ($methods as $method) {
-            if (('set' === substr($method, 0, 3) || 'add' === substr($method, 0, 3)) && $method != 'setStatusTuple' && $method != $setParentMethod) {
+            if ( (('set' === substr($method, 0, 3) && strlen($method) > 3)) && $method != 'setStatusTuple' && $method != $setParentMethod) {
     
                 $attr = lcfirst(substr($method, 3));
                 if (is_array($values))
@@ -258,7 +257,13 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                         $value = null;
                     }
                 }
-                else if ($class && ('set' === substr($method, 0, 3) || 'add' === substr($method, 0, 3)) && is_array($value)) {
+                /**
+                 * @TODO - AJUSTAR O CÓDIGO PARA FUNCIONAR CORRETAMENTE COM AS COLLECTIONS
+                 */
+                else if ((strstr($strDoc,'ArrayCollection') && strstr($strDoc, '@innerEntity')) && 'set' === substr($method, 0, 3)  && is_array($value)) {
+                    $begin = substr($strDoc, strpos($strDoc, '@innerEntity ') + 13);
+                    $class = substr($begin, 0, strpos($begin, "\n"));
+                    $method = str_replace('set', 'add', $method);
                     $allInt = true;
                     foreach($value as $key=>$val) {
                         if (!is_int($key)) {
@@ -267,20 +272,28 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                     }
                     if ($allInt){
                         foreach($value as $key=>$val){
-                            $inner = $this->populateEntities($class, $val, $entity, $innerEntities[$entIndex]['innerEntities']);
+                            $inner = $this->populateEntities($innerEntities[$entIndex]['innerEntities'], $val, $class, $entity);
                             $entity->$method($inner);
                         }
                         continue;
                     }
-                    else {
-                        $value = $this->populateEntities($class, $value, $entity, $innerEntities[$entIndex]['innerEntities']);
-                    }
+                }
+                else if ($class && !(strstr($strDoc,'ArrayCollection') || $class == 'ArrayCollection') && 'set' === substr($method, 0, 3) && is_array($value)) {
+                    $value = $this->populateEntities($innerEntities[$entIndex]['innerEntities'], $value, $class, $entity);;
                 }
                 else if ($class && strstr($method, 'setId')) {
                     $value = $this->getEntityManager()->getRepository($class)->findOneBy(array('id' => $value));
                 }
-                 
-                $entity->$method($value);
+                
+                try {
+                    $entity->$method($value);
+                } catch (\Exception $e) {
+                    echo '<pre>';
+                    echo $e->getMessage();
+                    var_dump($value);
+                    print_r($this->innerEntities);
+                    die;
+                }
             }
         }
     
@@ -336,7 +349,8 @@ abstract class EntityServiceAbstract extends ServiceAbstract
      * @throws NoImplementationException
      */
     public function verifyRootEntity()
-    {}
+    {
+    }
 
     public function flushRootEntity(Request $req)
     {

@@ -40,13 +40,14 @@ composer.json:
 san_sis_core_base:
     resource: "@SanSISCoreBaseBundle/Resources/config/routing.yml"
     prefix:   /
+```
     
-# Extend your twigs
+## Extend your twigs
 
 Use {% extends "SanSISCoreBaseBundle::base.html.twig" %} on your twig templates to work ok
 Remember you can change a lot of blocks. Check the resource and modify the blocks you want.
 
-# Extend your AppKernel
+## Extend your AppKernel
 
 Change your kernel to extend from the one provided by BaseBundle.
 
@@ -62,7 +63,7 @@ To:
 use SanSIS\Core\BaseBundle\Component\HttpKernel\Kernel;
 ```
 
-# Customize your base.html.twig to extend from BaseBundle
+## Customize your base.html.twig to extend from BaseBundle
 
 This is a sample on how to create your own visual identity and the main blocks of code
 for your page layout
@@ -86,3 +87,24 @@ for your page layout
 {% block copyright_footer %}
 &copy; Company's name
 {% endblock %}
+
+{% block javascript_libs %}
+<script type="text/javascript" src="{{ asset('bundles/yourproject/js/functions.js') }}"></script>
+{% endblock %}
+
+## Use the CRUD structure of BaseBundle for powerfull and fast development!
+
+The most amazing and useful function of BaseBundle is the Crud Infrastructure created for it.
+
+You may use it for complex entities with a huge number of inner entities (that can have their own inner entity as well!).
+
+For this, you must declare the @innerEntity annotation on top of vars that are ArrayCollections from Doctrine project.
+
+And your form field's names must follow the object infrastructure.
+
+Here are the objects you must extend from in order to get it working:
+
+- Controllers: \SanSIS\Core\BaseBundle\Controller\ControllerCrudAbstract
+- Services: \SanSIS\Core\BaseBundle\ServiceLayer\EntityServiceAbstract
+- Entities: \SanSIS\Core\BaseBundle\Entity\AbstractBase
+- Repositories: \SanSIS\Core\BaseBundle\EntityRepository\AbstractBase
