@@ -295,7 +295,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
 
         $params = array(
             'formTitleAction'   => $this->createFormAction,
-            'formData'          => $this->getService()->getFormData(),
+            'formData'          => $this->getService()->getFormData($entityData),
             'entityData'        => $entityData
         );
 
@@ -319,7 +319,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
 
         $params = array(
             'formTitleAction'   => $this->editFormAction,
-            'formData'          => $this->getService()->getFormData(),
+            'formData'          => $this->getService()->getFormData($entityData),
             'entityData'        => $entityData
         );
 
