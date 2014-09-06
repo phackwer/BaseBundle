@@ -776,7 +776,7 @@ input, select, textarea {
 }
 
 textarea{
-    min-height: 100px;
+    min-height: 150px;
 }
 
 .ui-pg-input {
@@ -896,4 +896,9 @@ form label{
 
 .modal-body{
     font-size: 1.2em;
+}
+
+textarea{
+    min-height: 100px !important;
+    height: 150px;
 }

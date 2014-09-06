@@ -335,7 +335,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
 
         $params = array(
             'formTitleAction'   => $this->viewFormAction,
-            'formData' => $this->getService()->getFormData(),
+            'formData' => $this->getService()->getFormData($entityData),
             'entityData' => $entityData
         );
 
