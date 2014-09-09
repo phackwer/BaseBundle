@@ -523,7 +523,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         
         $query = $this->getSearchQuery($searchData);
         
-        $and = count($searchData) ? ' ' : ' where';
+        $and = count($searchData) ? strstr($query->getDQL(), ' where') ? ' and' : ' ' : ' where';
         
         if ($this->checkStatusTuple($this->getRootEntity())){
             $query->setDQL($query->getDQL() . $and . ' g.statusTuple <> 0');
