@@ -175,7 +175,6 @@ abstract class EntityServiceAbstract extends ServiceAbstract
     public function populateRootEntity(Request $req)
     {
         $this->populateEntities($req, $this->rootEntity, null);
-//         die;
     }
     
     /**
@@ -304,9 +303,8 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                         continue;
                     }
                 }
-                else if ($class && !(strstr($strDoc,'ArrayCollection') || $class == 'ArrayCollection') && 'set' === substr($method, 0, 3) && is_array($value)) {
+                else if ($class && !(strstr($strDoc,'ArrayCollection') || $class == 'ArrayCollection') && 'set' === substr($method, 0, 3) && is_array($value) && !strstr($method, 'setId')) {
                     $value = $this->populateEntities($value, $class, $entity);
-                    
                 }
                 else if ($class && strstr($method, 'setId')) {
                     $value = $this->getEntityManager()->getRepository($class)->findOneBy(array('id' => $value));
@@ -318,11 +316,6 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                     !strstr('DateTime', get_class($value)) && 
                     !strstr($method, 'setId')
                 ) {
-
-//                     if (strstr($class, 'rganization'))
-//                     {
-//                         var_dump($value);die;
-//                     }
                     $this->getEntityManager()->persist($value);
                 }
             }
@@ -512,7 +505,8 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         $keys = $req->query->keys();
         $searchData = array();
         foreach ($keys as $key) {
-            $searchData[$key] = $req->query->get($key);
+            if ($req->query->get($key))
+                $searchData[$key] = $req->query->get($key);
         }
         
         if (isset($searchData['sidx'])) {
@@ -529,7 +523,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         
         $query = $this->getSearchQuery($searchData);
         
-        $and = count($searchData) ? ' and' : ' where';
+        $and = count($searchData) ? ' ' : ' where';
         
         if ($this->checkStatusTuple($this->getRootEntity())){
             $query->setDQL($query->getDQL() . $and . ' g.statusTuple <> 0');
@@ -538,6 +532,8 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         if (isset($orderby)) {
             $query->setDQL($query->getDQL() . ' order by ' . $orderby . ' ' . $order);
         }
+        
+//         echo  $query->getDQL();die;
         
         return $query->setHydrationMode(Query::HYDRATE_ARRAY);
     }

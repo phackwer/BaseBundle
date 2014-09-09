@@ -49,7 +49,7 @@ function mascaras($) {
     $('.float').maskMoney({ allowNegative: true, thousands:'', decimal:'.'});
     $('.float-br').maskMoney({ allowNegative: true, thousands:'', decimal:','});
     
-	$('.phone').mask('(55)(99) 9999-9999?9');
+	$('.phone').mask('(99)(99) 9999-9999?9');
 	$('.cpf').mask('999.999.999-99');
 	$('.cnpj').mask('99.999.999/9999-99');
 	$('.cep').mask('99.999-999');

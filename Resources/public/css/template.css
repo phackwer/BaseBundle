@@ -646,7 +646,7 @@ strong.title{
 }
 h5{
     display: block;
-    color: #0095DA;
+    color: #05c;
     font-size: 1.4em;
     margin-bottom: 20px;
     clear: both;
@@ -773,6 +773,7 @@ h3{
 input, select, textarea {
     border: 1px solid #BBB !important;
     background: #FFFFFF;
+    font-size: 1.2em !important;
 }
 
 textarea{
@@ -901,4 +902,15 @@ form label{
 textarea{
     min-height: 100px !important;
     height: 150px;
+}
+
+.validationSpan{
+    margin-bottom: 10px;
+    margin-left: 0px !important;
+}
+
+.error{
+    float: none;
+    font-size: 0.9em;
+    color: #FF0000;
 }
