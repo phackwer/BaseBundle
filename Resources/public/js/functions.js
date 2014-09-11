@@ -225,8 +225,8 @@ function addItem() {
     var newFill = $(this).parent().clone(true, true);
     newFill.find('input').val('');
     newFill.find('textarea').val('');
-    $(this).parent().find('select').find(':selected').prop('selected', false);
-	$(this).parent().find('select').find('option').first().prop('selected', true);
+    newFill.find('select').find(':selected').prop('selected', false);
+    newFill.find('select').find('option').first().prop('selected', true);
     newFill.insertAfter($(this).parent());
     //renomeia todos adicionando um valor ao número do contador
     newFill.find('input').each(addNumber);
@@ -246,14 +246,16 @@ function addItem() {
     mask();
 };
 
+
+
 function addMultiItem() {
 	unmask();
 	//clona
     var newFill = $(this).parent().parent().clone(true, true);
     newFill.find('input').val('');
     newFill.find('textarea').val('');
-    $(this).parent().find('select').find(':selected').prop('selected', false);
-	$(this).parent().find('select').find('option').first().prop('selected', true);
+    newFill.find('select').find(':selected').prop('selected', false);
+    newFill.find('select').find('option').first().prop('selected', true);
     newFill.insertAfter($(this).parent().parent());
     //renomeia todos adicionando um valor ao número do contador
     $(this).parent().parent().parent().find('h5:visible').each(reindexMultiNumberLabel);
