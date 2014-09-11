@@ -123,7 +123,8 @@ function removeItem()
 	} else {
 		$(this).parent().find('input').val('');
 		$(this).parent().find('textarea').val('');
-		$(this).parent().find('select').val('');
+		$(this).parent().find('select').find(':selected').prop('selected', false);
+		$(this).parent().find('select').find('option').first().prop('selected', true);
 		alert('É preciso ter um item pelo menos. O campo será deixado em branco para exclusão no banco de dados.')
 	}
 
@@ -164,7 +165,8 @@ function removeMultiItem()
 	} else {
 		$(this).parent().find('input').val('');
 		$(this).parent().find('textarea').val('');
-		$(this).parent().find('select').val('');
+		$(this).parent().find('select').find(':selected').prop('selected', false);
+		$(this).parent().find('select').find('option').first().prop('selected', true);
 		alert('É preciso ter um item pelo menos. O campo será deixado em branco para exclusão no banco de dados.')
 	}
 
@@ -176,8 +178,12 @@ function addNumber()
 	var numberPattern = /\d+/g;
 	
 	var number = $(this).parent().parent().children().length;
-	if ($(this).prop('required'))
+	if ($(this).prop('required')) {
 		var number = $(this).parent().parent().parent().children().length;
+		$.each($(this).data('events'), function(i, e) {
+		    console.log(i, e);
+		});
+	}
 		
 	
 	if ($(this).attr('name')) {
@@ -219,7 +225,8 @@ function addItem() {
     var newFill = $(this).parent().clone(true, true);
     newFill.find('input').val('');
     newFill.find('textarea').val('');
-    newFill.find('select').val('');
+    $(this).parent().find('select').find(':selected').prop('selected', false);
+	$(this).parent().find('select').find('option').first().prop('selected', true);
     newFill.insertAfter($(this).parent());
     //renomeia todos adicionando um valor ao número do contador
     newFill.find('input').each(addNumber);
@@ -239,15 +246,14 @@ function addItem() {
     mask();
 };
 
-
-
 function addMultiItem() {
 	unmask();
 	//clona
     var newFill = $(this).parent().parent().clone(true, true);
     newFill.find('input').val('');
     newFill.find('textarea').val('');
-    newFill.find('select').val('');
+    $(this).parent().find('select').find(':selected').prop('selected', false);
+	$(this).parent().find('select').find('option').first().prop('selected', true);
     newFill.insertAfter($(this).parent().parent());
     //renomeia todos adicionando um valor ao número do contador
     $(this).parent().parent().parent().find('h5:visible').each(reindexMultiNumberLabel);
@@ -260,6 +266,8 @@ function addMultiItem() {
     newFill.find('.icon-minus').show();
 //    newFill.find('.icon-minus').click(removeMultiItem);
 //    newFill.find('.autocomplete').each(autoCompleteField);
+    newFill.find('.validationSpan').find('.error').remove();
+    newFill.find('.error').removeClass('error')
     $(this).insertAfter(newFill.find('.icon-minus'));
 
     $('.icon-minus').each(hideMultiMinus);

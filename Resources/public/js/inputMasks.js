@@ -40,8 +40,8 @@ function mask() {
     }).mask('99/99/9999');
 
     $('.date_mmyyyy').monthpicker({
-        startYear: 2013,
-        finalYear: 2100,
+        startYear: 1700,
+        finalYear: 2025,
         openOnFocus: false
     }).mask('99/9999');
 

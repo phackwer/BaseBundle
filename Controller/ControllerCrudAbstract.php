@@ -352,7 +352,13 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
             $this->getService()->save($this->getRequest());
             MessageService::addMessage('success', 'MSG_S001');
             $this->get('session')->set('SanSISSaveResult', true);
-            return $this->redirectByRouteName($this->saveSuccessRoute);
+            if ($this->saveSuccessRoute == $this->editRoute){
+                $id = $this->getService()->getRootEntity()->getId();
+                return $this->redirectByRouteName($this->saveSuccessRoute, 302, array('id' => $id));
+            }
+            else {
+                return $this->redirectByRouteName($this->saveSuccessRoute);
+            }
         } catch (\Exception $e) {
         	$this->get('session')->set('SanSISSaveResult', $this->getService()->getRootEntity());
             MessageService::addMessage('error', 'MSG_E000');
