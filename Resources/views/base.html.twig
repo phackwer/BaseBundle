@@ -157,7 +157,7 @@
                 {% for label, flashes in app.session.flashbag.all %}
                     {% for flash in flashes %}
                         <div class="alert alert-{{ label }}">
-                          {{ flash | replace({"\n":'<br />'}) | raw }}
+                          {{ flash | replace({"\n":'<br />'}) | raw | trans({},'messages')}}
                         </div>
                     {% endfor %}
                 {% endfor %}

@@ -246,8 +246,6 @@ function addItem() {
     mask();
 };
 
-
-
 function addMultiItem() {
 	unmask();
 	//clona

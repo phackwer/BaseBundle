@@ -39,7 +39,16 @@ abstract class  ControllerAbstract extends Controller
      */
     public function indexAction()
     {
-        return $this->render($this->indexView);
+        if (method_exists($this->getService(),'getFormData')) {
+            $params = array(
+                'formData'          => $this->getService()->getFormData()
+            );
+        }
+        else {
+            $params = array();
+        }
+        
+        return $this->render($this->indexView, $params);
     }
     
     /**

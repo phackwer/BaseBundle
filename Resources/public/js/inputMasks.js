@@ -34,10 +34,13 @@ function onlyIntegers(e)
 
 function mask() {
 	
-    $('.date_ddmmyyyy').datepicker({
+    $('.dateBR').datepicker({
         changeMonth: true,
         changeYear: true
-    }).mask('99/99/9999');
+    }).mask('99/99/9999').keypress( function (e) {
+    	console.log($(this).val());
+//    	String.fromCharCode(e.charCode)
+    });
 
     $('.date_mmyyyy').monthpicker({
         startYear: 1700,
@@ -83,7 +86,7 @@ function mask() {
 
 function unmask() {
 	
-    $('.date_ddmmyyyy').unmask();
+    $('.dateBR').unmask();
 
     $('.date_mmyyyy').unmask();
 

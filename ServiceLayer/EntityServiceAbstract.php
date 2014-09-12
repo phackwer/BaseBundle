@@ -89,7 +89,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
      * @param array $entityData - dados para auxiliar na busca de informações para o formulário (ex: lista de UFs e Cidades)
      * @return array
      */
-    public function getFormData($entityData)
+    public function getFormData($entityData = null)
     {
         return array();
     }
