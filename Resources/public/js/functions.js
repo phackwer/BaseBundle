@@ -95,9 +95,6 @@ function addNumber()
 	var number = $(this).parent().parent().children().length;
 	if ($(this).prop('required') || $(this).parent().hasClass('nospaceuse')) {
 		var number = $(this).parent().parent().parent().children().length;
-		$.each($(this), function(i, e) {
-		    console.log(i, e);
-		});
 	}
 	
 	if ($(this).attr('name')) {
@@ -118,9 +115,6 @@ function addMultiNumber()
 
 	if ($(this).prop('required') || $(this).parent().hasClass('nospaceuse')) {
 		var number = $(this).parent().parent().parent().parent().children().length;
-		$.each($(this), function(i, e) {
-		    console.log(i, e);
-		});
 	}
 	
 	if ($(this).attr('name')) {
@@ -141,62 +135,60 @@ function reindexMultiNumberLabel(index)
 }
 
 function addItem() {
-	unmask();
+	
 	//clona
     var newFill = $(this).parent().clone(true, true);
-    newFill.find('input').val('');
-    newFill.find('textarea').val('');
-    newFill.find('select').find(':selected').prop('selected', false);
-    newFill.find('select').find('option').first().prop('selected', true);
     newFill.insertAfter($(this).parent());
-    //renomeia todos adicionando um valor ao número do contador
-    newFill.find('.textCounter').each(addNumber);
-    newFill.find('input').each(addNumber);
-    newFill.find('input').each(addNumber);
-    newFill.find('select').each(addNumber);
-    newFill.find('textarea').each(addNumber);
-    newFill.find('textarea').each(textAreaLimit);
+    
+    adjustNewItem(newFill,$(this), addNumber);
+    
     //esconde o label duplicado
-    newFill.find('label').html("&nbsp;&nbsp;&nbsp;").addClass('visible-desktop');
-    //retira o botão de adição do clone
-    newFill.find('.icon-plus').remove();
-    //define comportamento do minus
-    newFill.find('.icon-minus').show();
-    $(this).insertAfter(newFill.find('.icon-minus'));
-
+    newFill.find('label').html("&nbsp;&nbsp;&nbsp;").addClass('visible-desktop');$(this).parent().parent().parent().find('h5:visible').each(reindexMultiNumberLabel);
     $('.icon-minus').each(hideMinus);
-    //Recoloca as máscaras
-    mask();
 };
 
 function addMultiItem() {
-	//Retira máscaras para evitar referências erradas de targets
-	unmask();
 	//clona
     var newFill = $(this).parent().parent().clone(true, true);
+    newFill.insertAfter($(this).parent().parent());
+    
+    //Ajusta campos e valores
+    adjustNewItem(newFill, $(this), addMultiNumber);
+    //Reindexa o título
+    $(this).parent().parent().parent().find('h5:visible').each(reindexMultiNumberLabel);
+    
+    $('.icon-minus').each(hideMultiMinus);
+};
+
+function adjustNewItem(newFill, original, addNumberFunction)
+{
+    //Retira máscaras para evitar referências erradas de targets
+    unmask();    
+    //Ajusta
     newFill.find('input').val('');
     newFill.find('textarea').val('');
     newFill.find('select').find(':selected').prop('selected', false);
     newFill.find('select').find('option').first().prop('selected', true);
-    newFill.insertAfter($(this).parent().parent());
+
     //renomeia todos adicionando um valor ao número do contador
-    $(this).parent().parent().parent().find('h5:visible').each(reindexMultiNumberLabel);
-    newFill.find('.textCounter').each(addMultiNumber);
-    newFill.find('select').each(addMultiNumber);
-    newFill.find('textarea').each(addMultiNumber);
+    newFill.find('input').each(addNumberFunction);
+    newFill.find('select').each(addNumberFunction);
+    newFill.find('textarea').each(addNumberFunction);
     newFill.find('textarea').each(textAreaLimit);
+    newFill.find('.textCounter').each(addNumberFunction);
+    
     //retira o botão de adição do clone
     newFill.find('.icon-plus').remove();
     //define comportamento do minus
     newFill.find('.icon-minus').show();
-    newFill.find('.validationSpan').find('.error').remove();
-    newFill.find('.error').removeClass('error')
-    $(this).insertAfter(newFill.find('.icon-minus'));
+    original.insertAfter(newFill.find('.icon-minus'));
+    //Resolve mensagens de erro por ventura copiados
+    newFill.find('label.error').remove();
+    newFill.find('.error').removeClass('.error');
 
-    $('.icon-minus').each(hideMultiMinus);
     //Recoloca as máscaras
     mask();
-};
+}
 
 function hideMinus(index)
 {
@@ -294,13 +286,11 @@ function textAreaLimit(){
 	}
 	
 	if (!$('#counter' + $(this).prop('id')).length) {
-		console.log('?');
 		$('<div id="counter' + $(this).prop('id') + '" class="textCounter">' + maxsize + ' / ' + $(this).val().length + ' caracteres restantes</div>').insertAfter($(this));
 	}
 	
 	$(this).keydown(function(e){
 		if ($(this).val().length > (maxsize - 1)) {
-			console.log('broqueia');
 			var key = e.keyCode;
 		    $(this).val($(this).val().substr(0,maxsize));
 

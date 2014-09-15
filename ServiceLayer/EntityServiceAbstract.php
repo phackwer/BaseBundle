@@ -252,7 +252,8 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                         $value = $values->request->get($attr);
                     }
                 }
-                if (!is_array($value) && $value){
+                
+                if (!is_array($value) && !is_object($value) && $value){
                     $value = trim($value);
                 }
     
