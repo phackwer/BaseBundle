@@ -93,13 +93,12 @@ function addNumber()
 	var numberPattern = /\d+/g;
 	
 	var number = $(this).parent().parent().children().length;
-	if ($(this).prop('required')) {
+	if ($(this).prop('required') || $(this).parent().hasClass('nospaceuse')) {
 		var number = $(this).parent().parent().parent().children().length;
-		$.each($(this).data('events'), function(i, e) {
+		$.each($(this), function(i, e) {
 		    console.log(i, e);
 		});
 	}
-		
 	
 	if ($(this).attr('name')) {
 		$(this).attr('name', $(this).attr('name').replace( numberPattern , number ))
@@ -116,6 +115,13 @@ function addMultiNumber()
 {
 	var numberPattern = /\d+/g;
 	var number = $(this).parent().parent().parent().children().length -1;
+
+	if ($(this).prop('required') || $(this).parent().hasClass('nospaceuse')) {
+		var number = $(this).parent().parent().parent().parent().children().length;
+		$.each($(this), function(i, e) {
+		    console.log(i, e);
+		});
+	}
 	
 	if ($(this).attr('name')) {
 		$(this).attr('name', $(this).attr('name').replace( numberPattern , number ))
@@ -144,17 +150,18 @@ function addItem() {
     newFill.find('select').find('option').first().prop('selected', true);
     newFill.insertAfter($(this).parent());
     //renomeia todos adicionando um valor ao número do contador
+    newFill.find('.textCounter').each(addNumber);
     newFill.find('input').each(addNumber);
-    newFill.find('textarea').each(addNumber);
+    newFill.find('input').each(addNumber);
     newFill.find('select').each(addNumber);
+    newFill.find('textarea').each(addNumber);
+    newFill.find('textarea').each(textAreaLimit);
     //esconde o label duplicado
     newFill.find('label').html("&nbsp;&nbsp;&nbsp;").addClass('visible-desktop');
     //retira o botão de adição do clone
     newFill.find('.icon-plus').remove();
     //define comportamento do minus
     newFill.find('.icon-minus').show();
-//    newFill.find('.icon-minus').click(removeItem);
-//    newFill.find('.autocomplete').each(autoCompleteField);
     $(this).insertAfter(newFill.find('.icon-minus'));
 
     $('.icon-minus').each(hideMinus);
@@ -174,15 +181,14 @@ function addMultiItem() {
     newFill.insertAfter($(this).parent().parent());
     //renomeia todos adicionando um valor ao número do contador
     $(this).parent().parent().parent().find('h5:visible').each(reindexMultiNumberLabel);
-    newFill.find('input').each(addMultiNumber);
-    newFill.find('textarea').each(addMultiNumber);
+    newFill.find('.textCounter').each(addMultiNumber);
     newFill.find('select').each(addMultiNumber);
+    newFill.find('textarea').each(addMultiNumber);
+    newFill.find('textarea').each(textAreaLimit);
     //retira o botão de adição do clone
     newFill.find('.icon-plus').remove();
     //define comportamento do minus
     newFill.find('.icon-minus').show();
-//    newFill.find('.icon-minus').click(removeMultiItem);
-//    newFill.find('.autocomplete').each(autoCompleteField);
     newFill.find('.validationSpan').find('.error').remove();
     newFill.find('.error').removeClass('error')
     $(this).insertAfter(newFill.find('.icon-minus'));
@@ -275,12 +281,50 @@ function cancelData()
 	}
 }
 
+function textAreaLimit(){
+	var maxsize = $(this).attr('maxlength');
+	if (!maxsize || maxsize == 0 || maxsize == 'undefined') {
+		maxsize = 65535;
+	}
+	if(!$(this).parent().hasClass('nospaceuse')){
+		var container = $('<div class="span nospaceuse"></div>');
+		container.addClass('span');
+		$(this).replaceWith(container);
+		container.append($(this));
+	}
+	
+	if (!$('#counter' + $(this).prop('id')).length) {
+		console.log('?');
+		$('<div id="counter' + $(this).prop('id') + '" class="textCounter">' + maxsize + ' / ' + $(this).val().length + ' caracteres restantes</div>').insertAfter($(this));
+	}
+	
+	$(this).keydown(function(e){
+		if ($(this).val().length > (maxsize - 1)) {
+			console.log('broqueia');
+			var key = e.keyCode;
+		    $(this).val($(this).val().substr(0,maxsize));
+
+		     // allow backspace, tab, delete, home, end, pageup, pagedown, arrows, numbers and keypad numbers ONLY
+		     if (key == 8 || key == 9 || key == 46 || (key >= 35 && key <= 40));
+		     	return;
+		    
+			e.preventVault();
+			return false;
+		}
+	});
+	
+	$(this).keyup(function(e){
+		$(this).val($(this).val().substr(0,maxsize));
+		var target = $('#counter' + $(this).prop('id'));
+		target.html(maxsize + ' / ' + $(this).val().length + ' caracteres restantes');
+	});
+}
+
 $(document).ready(function() {
 	//Funções para edição de objetos
 	$('.single-line').parent().find('.icon-minus').click(removeItem);
 	$('.single-line').parent().find('.icon-plus').click(addItem);
 	$('.single-line').parent().find('.icon-minus').each(hideMinus);
-	
 
 	$('.multi-line').parent().find('.icon-minus').click(removeMultiItem);
 	$('.multi-line').parent().find('.icon-plus').click(addMultiItem);
@@ -354,4 +398,6 @@ $(document).ready(function() {
             $('#BoxMenuPrincipal').addClass("BoxMenuPrincipal");
         }
     });
+    
+    $('textarea').each(textAreaLimit);
 });

@@ -894,7 +894,6 @@ form label{
     margin-right: 10px;
 }
 
-
 .modal-body{
     font-size: 1.2em;
 }
@@ -913,4 +912,21 @@ textarea{
     float: none;
     font-size: 0.9em;
     color: #FF0000;
+    margin-left: 5px !important;
+}
+
+.nospaceuse{
+    margin: 0px !important;
+    padding: 0px !important;
+    border: 0px;
+}
+
+.textCounter{
+    margin-top: -5px !important;
+    margin-bottom: 10px !important;
+    margin-left: 5px !important;
+}
+
+li span{
+    float: left;
 }
