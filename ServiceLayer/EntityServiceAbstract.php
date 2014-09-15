@@ -229,12 +229,6 @@ abstract class EntityServiceAbstract extends ServiceAbstract
             }
         }
         
-//         if (!is_object($newClass) && strstr($newClass, 'rganization'))
-//         {
-//             var_dump($values);
-//             var
-//         }
-        
         $ref = new \ReflectionClass($entity);
     
         $methods = get_class_methods($entity);
@@ -258,6 +252,9 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                         $value = $values->request->get($attr);
                     }
                 }
+                if (!is_array($value) && $value){
+                    $value = trim($value);
+                }
     
                 $params = $ref->getMethod($method)->getParameters();
                 $strDoc = $ref->getMethod($method)->getDocComment();
@@ -279,9 +276,6 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                         $value = null;
                     }
                 }
-                /**
-                 * @TODO - AJUSTAR O CÓDIGO PARA FUNCIONAR CORRETAMENTE COM AS COLLECTIONS
-                 */
                 else if ((strstr($strDoc,'ArrayCollection') && strstr($strDoc, '@innerEntity')) && 'set' === substr($method, 0, 3)  && is_array($value)) {
                     $begin = substr($strDoc, strpos($strDoc, '@innerEntity ') + 13);
                     $class = substr($begin, 0, strpos($begin, "\n"));

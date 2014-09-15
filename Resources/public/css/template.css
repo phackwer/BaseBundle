@@ -912,7 +912,6 @@ textarea{
     float: none;
     font-size: 0.9em;
     color: #FF0000;
-    margin-left: 5px !important;
 }
 
 .nospaceuse{
@@ -929,4 +928,5 @@ textarea{
 
 li span{
     float: left;
+    margin-bottom: 10px;
 }
