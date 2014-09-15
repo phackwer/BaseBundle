@@ -280,7 +280,7 @@
                     $(".keepAlive").html(dateString);
                        
                     switch(sessionTime) {
-                        case 0:
+                        case (sessionTime <= 0):
 
                         	$("#renewSession").hide();
                             $("#sessionDialogBody").html("Sua sessão expirou! Efetuando logout...");

@@ -27,20 +27,114 @@ function onlyIntegers(e)
      key == 8 || 
      key == 9 ||
      key == 46 ||
-     (key >= 37 && key <= 40) ||
+     key == 16 ||
+     (key >= 35 && key <= 40) ||
      (key >= 48 && key <= 57) ||
      (key >= 96 && key <= 105));
  }
+
+function numOnKeyDown(keyCode){
+//	console.log(keyCode);
+	switch (keyCode)
+	{
+		case 48:
+			return 0;
+		case 49:
+			return 1;
+		case 50:
+			return 2;
+		case 51:
+			return 3;
+		case 52:
+			return 4;
+		case 53:
+			return 5;
+		case 54:
+			return 6;
+		case 55:
+			return 7;
+		case 56:
+			return 8;
+		case 57:
+			return 9;
+		case 96:
+			return 0;
+		case 97:
+			return 1;
+		case 98:
+			return 2;
+		case 99:
+			return 3;
+		case 100:
+			return 4;
+		case 101:
+			return 5;
+		case 102:
+			return 6;
+		case 103:
+			return 7;
+		case 104:
+			return 8;
+		case 105:
+			return 9;
+	}
+}
 
 function mask() {
 	
     $('.dateBR').datepicker({
         changeMonth: true,
         changeYear: true
-    }).mask('99/99/9999').keypress( function (e) {
-    	console.log($(this).val());
-//    	String.fromCharCode(e.charCode)
-    });
+    }).keydown(function(e) {
+    	var key = e.keyCode;
+    	if (key == 8 || 
+		     key == 9 ||
+		     key == 46 ||
+		     (key >= 35 && key <= 40)
+		     ){
+    		return true;
+    	}
+    	var currNumber = numOnKeyDown(key);
+    	
+    	if (isNaN(currNumber)){
+    		e.preventDefault();
+    		return false;
+    	}
+    	
+    	var data = ($(this).val().replace(/_/g,'')).split('/');
+        var dia = data[0];
+        var mes = data[1];
+        var ano = data[2];
+        
+        if (((dia + '').length) < 2){
+			dia = parseInt(dia + ''  + currNumber);
+		}
+
+	    if (((mes + '').length) < 2){
+	    	mes = parseInt(mes + ''  + currNumber);
+		}
+
+	    if (((ano + '').length) < 4){
+	    	ano = parseInt(ano + ''  + currNumber);
+		}
+        
+        if (isNaN(dia) || dia > 31) {
+        	e.preventDefault();
+    	};
+        if (isNaN(mes) || mes > 12) {
+        	e.preventDefault();
+    	};
+        if (!isNaN(mes) && (mes == 4 || mes == 6 || mes == 9 || mes == 11) && dia == 31){
+        	e.preventDefault();
+        }
+        if (!isNaN(mes) && mes == 2 && (dia > 29 || ( !isNaN(ano) && (ano + '').length == 4 && (dia == 29 && ano % 4 != 0)))){
+        	e.preventDefault();
+        };
+        if (data[0] + '' + currNumber == '00' || data[1] + '' + currNumber == '00'){
+        	e.preventDefault();
+        }
+    	
+    }).mask('99/99/9999');
 
     $('.date_mmyyyy').monthpicker({
         startYear: 1700,
