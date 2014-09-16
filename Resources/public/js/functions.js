@@ -282,7 +282,8 @@ function textAreaLimit(){
 		var spanClass = $(this)[0].outerHTML.match(/(span\d)/);
 		var container = $('<div class="'+spanClass[0]+' nospaceuse"></div>');
 		container.addClass('span');
-		$(this).replaceWith(container);
+//		$(this).replaceWith(container);
+		container.insertAfter($(this));
 		container.append($(this));
 	}
 	
@@ -312,18 +313,20 @@ function textAreaLimit(){
 }
 
 function errorPlacement (error, element) {
+	unmask()
 	if(!element.parent().hasClass('validationSpan')){
 		var spanClass = element[0].outerHTML.match(/(span\d)/);
 		var container = $('<div class="'+spanClass[0]+' validationSpan"></div>');
 		
 		if (!element.parent().hasClass('nospaceuse')) {
-			element.replaceWith(container);
+			container.insertAfter(element)
+//			element.replaceWith(container);
 			container.append(element);
 			error.insertAfter(element);
 		} else {
 			var oldParent = element.parent();
-			console.log(oldParent[0].outerHTML)
-			oldParent.replaceWith(container);
+			container.insertAfter(oldParent)
+//			oldParent.replaceWith(container);
 			container.append(oldParent);
 			error.insertAfter(oldParent);
 		}
@@ -332,23 +335,16 @@ function errorPlacement (error, element) {
 		error.insertAfter(element);
 	}
 	$('textarea').each(textAreaLimit);
+	mask();
 }
 
-//Localiza a aba do primeiro elemento que tem um erro na lista de validação, para abrir a aba
 function findTabPane(element){
-	//se não tem parent, para
-	if(!element.parent()){
-		return;
-	}
-	if (!element.parent().hasClass('tab-pane')){
-		findTabPane(element.parent());
-		return;
-	}
-	else{
-		tabId = element.parent().prop('id');
-		$('a[href="#'+tabId+'"]').trigger('click');
-		return;
-	}
+	$('.tab-pane').each(function(){
+		if ($(this).find('#' + element.prop('id')).length > 0){
+			tabId = $(this).prop('id');
+			$('a[href="#'+tabId+'"]').trigger('click');
+		}
+	}) 
 }
 
 function invalidHandler(event, validator) 
