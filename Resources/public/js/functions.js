@@ -334,16 +334,44 @@ function errorPlacement (error, element) {
 	$('textarea').each(textAreaLimit);
 }
 
+//Localiza a aba do primeiro elemento que tem um erro na lista de validação, para abrir a aba
+function findTabPane(element){
+	//se não tem parent, para
+	if(!element.parent()){
+		return;
+	}
+	if (!element.parent().hasClass('tab-pane')){
+		findTabPane(element.parent());
+		return;
+	}
+	else{
+		tabId = element.parent().prop('id');
+		$('a[href="#'+tabId+'"]').trigger('click');
+		return;
+	}
+}
+
+function invalidHandler(event, validator) 
+{
+	var errors = validator.numberOfInvalids();
+	if (errors) {
+		findTabPane($('#'+validator.errorList[0].element.id));
+	    var message = errors == 1
+	      ? 'Erro encontrado no formulário. Corrija-o para prosseguir.'
+	      : 'Erros encontrados no formulário. Corrija-os para prosseguir.';
+		$("#errorDialogBody").html(message);
+	    $("#errorDialog").modal('show');
+	}
+}
+
 //Sobrescreva para definir comportamento específico para o formulário em questão
 var validateOptions = {
 	ignore: '',
-	errorPlacement: errorPlacement
+	errorPlacement: errorPlacement,
+	invalidHandler: invalidHandler
 };
 
 $(document).ready(function() {
-
-	//Validação de formulário
-	$('form').validate(validateOptions);
 	
 	//Funções para edição de objetos
 	$('.single-line').parent().find('.icon-minus').click(removeItem);
@@ -423,4 +451,7 @@ $(document).ready(function() {
     });
     
     $('textarea').each(textAreaLimit);
+    
+	//Validação de formulário
+	$('form').validate(validateOptions);
 });

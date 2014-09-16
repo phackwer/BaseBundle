@@ -914,6 +914,14 @@ textarea{
     color: #FF0000;
 }
 
+.error span{
+    font-size: 1.8em;
+    font-weight: 2000;
+    position: relative; 
+    top: -4px; 
+    margin-right: 5px
+}
+
 .nospaceuse{
     margin: 0px !important;
     padding: 0px !important;
