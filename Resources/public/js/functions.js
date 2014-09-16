@@ -279,7 +279,8 @@ function textAreaLimit(){
 		maxsize = 65535;
 	}
 	if(!$(this).parent().hasClass('nospaceuse')){
-		var container = $('<div class="span nospaceuse"></div>');
+		var spanClass = $(this)[0].outerHTML.match(/(span\d)/);
+		var container = $('<div class="'+spanClass[0]+' nospaceuse"></div>');
 		container.addClass('span');
 		$(this).replaceWith(container);
 		container.append($(this));
@@ -310,7 +311,40 @@ function textAreaLimit(){
 	});
 }
 
+function errorPlacement (error, element) {
+	if(!element.parent().hasClass('validationSpan')){
+		var spanClass = element[0].outerHTML.match(/(span\d)/);
+		var container = $('<div class="'+spanClass[0]+' validationSpan"></div>');
+		
+		if (!element.parent().hasClass('nospaceuse')) {
+			element.replaceWith(container);
+			container.append(element);
+			error.insertAfter(element);
+		} else {
+			var oldParent = element.parent();
+			console.log(oldParent[0].outerHTML)
+			oldParent.replaceWith(container);
+			container.append(oldParent);
+			error.insertAfter(oldParent);
+		}
+	}
+	else {
+		error.insertAfter(element);
+	}
+	$('textarea').each(textAreaLimit);
+}
+
+//Sobrescreva para definir comportamento específico para o formulário em questão
+var validateOptions = {
+	ignore: '',
+	errorPlacement: errorPlacement
+};
+
 $(document).ready(function() {
+
+	//Validação de formulário
+	$('form').validate(validateOptions);
+	
 	//Funções para edição de objetos
 	$('.single-line').parent().find('.icon-minus').click(removeItem);
 	$('.single-line').parent().find('.icon-plus').click(addItem);
@@ -322,7 +356,6 @@ $(document).ready(function() {
 	
 	//Funções autocomplete
 	$('.autocomplete').each(autoCompleteField);
-	$('form').validate();
 	
 	$('#cancel_bt').click(cancelData);
 	
