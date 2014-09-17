@@ -84,7 +84,10 @@ function mask() {
 	
     $('.dateBR').datepicker({
         changeMonth: true,
-        changeYear: true
+        changeYear: true,
+        onSelect: function() {
+        	$(this).trigger('blur');
+        }
     }).keydown(function(e) {
     	var key = e.keyCode;
     	if (key == 8 || 
@@ -135,16 +138,6 @@ function mask() {
         }
     	
     }).mask('99/99/9999');
-
-    $('.date_mmyyyy').monthpicker({
-        startYear: 1700,
-        finalYear: 2025,
-        openOnFocus: false
-    }).mask('99/9999');
-
-    $('.bt_date').bind('click', function () {
-        $('.date_mmyyyy').monthpicker('show');
-    });
 
     $.mask.definitions['H'] = "[0-2]";
     $.mask.definitions['h'] = "[0-9]";
@@ -198,6 +191,3 @@ function unmask() {
 	$('.integer').unbind('keydown', onlyIntegers);
 }
 
-$(document).ready(function ($){
-	mask()
-})

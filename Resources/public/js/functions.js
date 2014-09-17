@@ -43,7 +43,7 @@ function removeItem()
 		alert('É preciso ter um item pelo menos. O campo será deixado em branco para exclusão no banco de dados.')
 	}
 
-	$('.icon-minus').each(hideMinus);
+	grandPa.find('.icon-minus').each(hideMinus);
 }
 
 function removeMultiItem()
@@ -85,7 +85,7 @@ function removeMultiItem()
 		alert('É preciso ter um item pelo menos. O campo será deixado em branco para exclusão no banco de dados.')
 	}
 
-	$('.icon-minus').each(hideMultiMinus);
+	grandPa.find('.icon-minus').each(hideMultiMinus);
 }
 
 function addNumber()
@@ -144,7 +144,7 @@ function addItem() {
     
     //esconde o label duplicado
     newFill.find('label').html("&nbsp;&nbsp;&nbsp;").addClass('visible-desktop');$(this).parent().parent().parent().find('h5:visible').each(reindexMultiNumberLabel);
-    $('.icon-minus').each(hideMinus);
+    $(this).parent().parent().find('.icon-minus').each(hideMinus);
 };
 
 function addMultiItem() {
@@ -157,7 +157,7 @@ function addMultiItem() {
     //Reindexa o título
     $(this).parent().parent().parent().find('h5:visible').each(reindexMultiNumberLabel);
     
-    $('.icon-minus').each(hideMultiMinus);
+    $(this).parent().parent().parent().find('.icon-minus').each(hideMultiMinus);
 };
 
 function adjustNewItem(newFill, original, addNumberFunction)
@@ -171,11 +171,8 @@ function adjustNewItem(newFill, original, addNumberFunction)
     newFill.find('select').find('option').first().prop('selected', true);
 
     //renomeia todos adicionando um valor ao número do contador
-    newFill.find('input').each(addNumberFunction);
-    newFill.find('select').each(addNumberFunction);
-    newFill.find('textarea').each(addNumberFunction);
+    newFill.find('input, select, textarea, .textCounter').each(addNumberFunction);
     newFill.find('textarea').each(textAreaLimit);
-    newFill.find('.textCounter').each(addNumberFunction);
     
     //retira o botão de adição do clone
     newFill.find('.icon-plus').remove();
@@ -192,7 +189,7 @@ function adjustNewItem(newFill, original, addNumberFunction)
 
 function hideMinus(index)
 {
-	var visibleChildren = $(this).parent().parent().find('span:visible:not(.validationSpan)').length
+	var visibleChildren = $(this).parent().parent().find('span:visible').filter('.clonable').length
 	if (visibleChildren == 1) {
 		$(this).hide();
 	}
@@ -241,21 +238,12 @@ function autoCompleteField()
 }
 
 function transformToReadForm() {
-
-    $('input').attr('readOnly', true);
-    $('textarea').attr('readOnly', true);
-    $('select').attr('readOnly', true);
-    $('input').attr('disabled', true);
-    $('textarea').attr('disabled', true);
-    $('select').attr('disabled', true);
+    
+    $('input, select, textarea').attr('readOnly', true);
+    $('input, select, textarea').attr('disabled', true);
 
     //some com botões de ação
-    $('.icon-plus').remove();
-    $('.icon-minus').remove();
-    $('.icon-edit').remove();
-    $('.icon-trash').remove();
-    $('.addFile').remove();
-    $('#save_bt').remove();
+    $('.icon-plus, .icon-minus, .icon-edit, .icon-trash, .addFile, #save_bt').remove();
     hrefRemove = $('.foto').parent();
     $('.foto').each(function(){$(this).insertBefore($(this).parent())});
     hrefRemove.each(function(){$(this).remove()});
@@ -280,14 +268,14 @@ function textAreaLimit(){
 	}
 	if(!$(this).parent().hasClass('nospaceuse')){
 		var spanClass = $(this)[0].outerHTML.match(/(span\d)/);
-		var container = $('<div class="'+spanClass[0]+' nospaceuse"></div>');
+		var container = $('<span class="'+spanClass[0]+' nospaceuse"></span>');
 		container.addClass('span');
 //		$(this).replaceWith(container);
 		container.insertAfter($(this));
 		container.append($(this));
 	}
 	
-	if (!$('#counter' + $(this).prop('id')).length) {
+	if ($('#counter' + $(this).prop('id')).length == 0) {
 		$('<div id="counter' + $(this).prop('id') + '" class="textCounter">' + maxsize + ' / ' + $(this).val().length + ' caracteres restantes</div>').insertAfter($(this));
 	}
 	
@@ -310,32 +298,36 @@ function textAreaLimit(){
 		var target = $('#counter' + $(this).prop('id'));
 		target.html(maxsize + ' / ' + $(this).val().length + ' caracteres restantes');
 	});
+	
+	$(this).trigger('keyup');
 }
 
 function errorPlacement (error, element) {
-	unmask()
+//	unmask()
 	if(!element.parent().hasClass('validationSpan')){
 		var spanClass = element[0].outerHTML.match(/(span\d)/);
-		var container = $('<div class="'+spanClass[0]+' validationSpan"></div>');
+		var container = $('<span class="'+spanClass[0]+' validationSpan"></span>');
 		
 		if (!element.parent().hasClass('nospaceuse')) {
 			container.insertAfter(element)
-//			element.replaceWith(container);
 			container.append(element);
-			error.insertAfter(element);
+			if (error) {
+				error.insertAfter(element);
+			}
 		} else {
 			var oldParent = element.parent();
 			container.insertAfter(oldParent)
-//			oldParent.replaceWith(container);
 			container.append(oldParent);
-			error.insertAfter(oldParent);
+			if (error) {
+				error.insertAfter(oldParent);
+			}
 		}
 	}
-	else {
+	else  if (error) {
 		error.insertAfter(element);
 	}
 	$('textarea').each(textAreaLimit);
-	mask();
+//	mask();
 }
 
 function findTabPane(element){
@@ -382,6 +374,9 @@ $(document).ready(function() {
 	$('.autocomplete').each(autoCompleteField);
 	
 	$('#cancel_bt').click(cancelData);
+	
+	$('input, select, textarea').filter('[required]').each(function(){errorPlacement(false, $(this))});
+	$('.dateBR, .cpf, .cnpj').each(function(){errorPlacement(false, $(this))});
 	
 	//Ajustes de tela
     $('.btn-navbar').filter('.select').click(function(){
@@ -446,7 +441,11 @@ $(document).ready(function() {
         }
     });
     
+    //contador de caracteres
     $('textarea').each(textAreaLimit);
+    
+    //máscaras
+    mask();
     
 	//Validação de formulário
 	$('form').validate(validateOptions);

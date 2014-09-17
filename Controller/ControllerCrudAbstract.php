@@ -206,7 +206,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
     public function getEditGridAction($id)
     {
         if ($this->editRoute)
-    	   return '<a title="Editar" href="'.$this->generateUrl($this->editRoute).'?id='.$id.'" class="icon-edit"></a>';
+    	   return '<a title="Editar" href="'.$this->generateUrl($this->editRoute).'?id='.$id.'" class="icon-edit" style="margin-right:5px;margin-left:5px"></a>';
         else
            return '';
     }
@@ -222,7 +222,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
     {
         try {
             if ($this->viewRoute || $viewRoute)
-                return '<a title="Visualizar" href="' . $this->generateUrl($viewRoute ? $viewRoute : $this->viewRoute) . '?id=' . $id . '" class="icon-eye-open"></a>';
+                return '<a title="Visualizar" href="' . $this->generateUrl($viewRoute ? $viewRoute : $this->viewRoute) . '?id=' . $id . '" class="icon-eye-open" style="margin-right:5px;margin-left:5px"></a>';
             else
                 return '';
         } catch (RouteNotFoundException $e) {
@@ -234,7 +234,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
                 }
                 $viewRoute = $path.$viewRoute;
             }
-            return '<a title="Visualizar" href="' . $viewRoute . $id . '" class="icon-eye-open"></a>';
+            return '<a title="Visualizar" href="' . $viewRoute . $id . '" class="icon-eye-open" style="margin-right:5px;margin-left:5px"></a>';
         }
     }
 
@@ -247,7 +247,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
     public function getDeleteGridAction($id)
     {
         if ($this->deleteRoute)
-    	   return '<a title="Excluir" onclick="confirmarRemocao(\''.$id.'\')" class="icon-trash"></a>';
+    	   return '<a title="Excluir" href="#" onclick="confirmarRemocao(\''.$id.'\')" class="icon-trash" style="margin-right:5px;margin-left:5px"></a>';
         else
            return '';
     }
