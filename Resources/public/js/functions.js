@@ -6,6 +6,8 @@
 
 if (typeof console == 'undefined') console = { log: function() {} };
 
+var numberPattern = /\d+/g;
+
 function removeItem()
 {
 	var grandPa = $(this).parent().parent();
@@ -88,43 +90,38 @@ function removeMultiItem()
 	grandPa.find('.icon-minus').each(hideMultiMinus);
 }
 
+function incrementNumber (value) {
+	values = value.match(numberPattern);
+	for(var i = 0; values.length < i; $i++) {
+		values[i]++;
+	}
+	return parseInt(values[0]) + 1;
+}
+
 function addNumber()
 {
-	var numberPattern = /\d+/g;
-	
-	var number = $(this).parent().parent().children().length;
-	if ($(this).prop('required') || $(this).parent().hasClass('nospaceuse')) {
-		var number = $(this).parent().parent().parent().children().length;
-	}
-	
 	if ($(this).attr('name')) {
-		$(this).attr('name', $(this).attr('name').replace( numberPattern , number ))
+		console.log($(this).attr('name'));
+		$(this).attr('name', $(this).attr('name').replace( numberPattern , incrementNumber ))
 	}
 	if ($(this).prop('id')) {
-		$(this).prop('id', $(this).prop('id').replace( numberPattern , number ))
+		$(this).prop('id', $(this).prop('id').replace( numberPattern , incrementNumber ))
 	}
 	if ($(this).attr('targetId')) {
-		$(this).attr('targetId', $(this).attr('targetId').replace( numberPattern , number ))
+		$(this).attr('targetId', $(this).attr('targetId').replace( numberPattern , incrementNumber ))
 	}
 }
 
 function addMultiNumber()
 {
-	var numberPattern = /\d+/g;
-	var number = $(this).parent().parent().parent().children().length -1;
-
-	if ($(this).prop('required') || $(this).parent().hasClass('nospaceuse')) {
-		var number = $(this).parent().parent().parent().parent().children().length;
-	}
-	
 	if ($(this).attr('name')) {
-		$(this).attr('name', $(this).attr('name').replace( numberPattern , number ))
+		$(this).attr('name', $(this).attr('name').replace( numberPattern , incrementNumber ))
 	}
 	if ($(this).prop('id')) {
-		$(this).prop('id', $(this).prop('id').replace( numberPattern , number ))
+		$(this).prop('id', $(this).prop('id').replace( numberPattern , incrementNumber ))
 	}
 	if ($(this).attr('targetId')) {
-		$(this).attr('targetId', $(this).attr('targetId').replace( numberPattern , number ))
+		$(this).attr('targetId', $(this).attr('targetId').replace( numberPattern , incrementNumber ))
 	}
 }
 
@@ -310,14 +307,25 @@ function errorPlacement (error, element) {
 		var spanClass = element[0].outerHTML.match(/(span\d)/);
 		if (!spanClass)
 			var container = $('<span class="validationSpan"></span>');
-		else
+		else {
+			if (element.hasClass('dateBR')) {
+				value = parseInt(spanClass[0].substr(4)) + 1;
+				spanClass[0] = 'span'+ value;
+			}
 			var container = $('<span class="'+spanClass[0]+' validationSpan"></span>');
+		}
 		
 		if (!element.parent().hasClass('nospaceuse')) {
 			container.insertAfter(element)
 			container.append(element);
 			if (error) {
-				error.insertAfter(element);
+				if (element.hasClass('dateBR')) {
+					var br = $('<br />').insertAfter(element.parent().find('.ui-datepicker-trigger'))
+					error.insertAfter(br);
+				} 
+				else {
+					error.insertAfter(element);
+				}
 			}
 		} else {
 			var oldParent = element.parent();
@@ -329,7 +337,13 @@ function errorPlacement (error, element) {
 		}
 	}
 	else  if (error) {
-		error.insertAfter(element);
+		if (element.hasClass('dateBR')) {
+			var br = $('<br />').insertAfter(element.parent().find('.ui-datepicker-trigger'))
+			error.insertAfter(br);
+		} 
+		else {
+			error.insertAfter(element);
+		}
 	}
 	$('textarea').each(textAreaLimit);
 //	mask();
@@ -451,6 +465,9 @@ $(document).ready(function() {
     
     //máscaras
     mask();
+    
+    //ícone de calendário apenas para desktop
+    $('.ui-datepicker-trigger').addClass('visible-desktop')
     
 	//Validação de formulário
 	$('form').validate(validateOptions);

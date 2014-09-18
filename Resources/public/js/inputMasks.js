@@ -31,7 +31,7 @@ function onlyIntegers(e)
      (key >= 35 && key <= 40) ||
      (key >= 48 && key <= 57) ||
      (key >= 96 && key <= 105));
- }
+}
 
 function numOnKeyDown(keyCode){
 //	console.log(keyCode);
@@ -83,6 +83,10 @@ function numOnKeyDown(keyCode){
 function mask() {
 	
     $('.dateBR').datepicker({
+    	showOn: "button",
+        buttonImage: "../../bundles/sansiscorebase/images/ico/ico-calendar.png",
+        buttonImageOnly: true,
+        buttonText: "Selecionar data",
         changeMonth: true,
         changeYear: true,
         onSelect: function() {
