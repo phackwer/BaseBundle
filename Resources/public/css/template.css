@@ -598,28 +598,8 @@ strong.title{
     border: medium none !important;
     color: #555555 !important;
 }
-.box_borda{
-    background: none repeat scroll 0 0 #F0F0F0;
-    -webkit-border-radius: 8px;
-    border-radius: 8px 8px 8px 8px;
-    -webkit-box-shadow:  1px 5px 10px 1px rgba(0,0,0,0.5);
-    box-shadow: 1px 5px 10px 1px rgba(0,0,0,0.5);
-    float: left;
-    padding: 15px 0;
-    width: 100%;
-    margin-bottom: 30px;
-    min-width: 310px;
-    overflow:hidden;
-}
 .section .table .tab-content div.tab-pane{
     padding: 15px;
-}
-
-.box_borda .padding{
-    padding: 0 15px;
-}
-.box_borda .paddingAll{
-    padding: 20px 5px;
 }
 
 .maps{
@@ -661,19 +641,27 @@ h3{
 
 /* DIV BOX */
 
-.box_borda {
+.box_borda{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.88) !important;
     background: none repeat scroll 0 0 #f6f6f6 !important;
+    background: none repeat scroll 0 0 rgba(246, 246, 246, 0.8) !important;
     -webkit-border-radius: 8px;
     border-radius: 8px 8px 8px 8px;
-    -webkit-box-shadow:  0px 8px 10px 1px rgba(0,0,0,0.5);
-    box-shadow: 0px 8px 10px 1px rgba(0,0,0,0.5);
+    -webkit-box-shadow:  1px 5px 10px 1px rgba(0,0,0,0.5);
+    box-shadow: 1px 5px 10px 1px rgba(0,0,0,0.5);
     float: left;
     padding: 15px 0;
     width: 100%;
     margin-bottom: 30px;
+    min-width: 310px;
+    overflow:hidden;
 }
+
 .box_borda .padding{
     padding: 0 15px;
+}
+.box_borda .paddingAll{
+    padding: 20px 5px;
 }
 
 .tabs-left>.nav-tabs {
@@ -813,7 +801,8 @@ textarea{
     position: absolute;
     top: -10px;
     background-color: #f6f6f6 ;
-    padding: 0 10px;
+    background-color: rgba(230,230,230, 0.7) ;
+    padding: 0 5px;
     width: auto;
 }
 

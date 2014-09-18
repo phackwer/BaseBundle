@@ -172,15 +172,14 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
     {
         $i = 0;
         $array = array();
+        $id = null;
         
         foreach ($pagination as $item) {
             $j = 0;
             
-//             var_dump($item);
-            
             foreach($item as $key => $val){
                 if ($j == 0) {
-                    $array[$i]['id'] = $val;
+                    $id = $array[$i]['id'] = $val;
                 }
                 else {
                     if (!isset($array[$i]['cell'])) {
@@ -207,8 +206,6 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
             $i++;
         }
         
-//         var_dump($array);
-    
         return $array;
     }
 

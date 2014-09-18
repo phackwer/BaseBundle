@@ -115,7 +115,7 @@
         
       </div>
       <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+        <button class="btn" data-dismiss="modal" id="cancelConfirmButton" aria-hidden="true">Cancelar</button>
         <button class="btn btn-primary" id="confirmButton">Confirmar</button>
       </div>
     </div>
@@ -180,11 +180,13 @@
           <div class="">
             <div class="box">
                 {% for label, flashes in app.session.flashbag.all %}
+                    <div id="flashes-{{ label }}"> 
                     {% for flash in flashes %}
                         <div class="alert alert-{{ label }}">
                           {{ flash | replace({"\n":'<br />'}) | raw | trans({},'messages')}}
                         </div>
                     {% endfor %}
+                    </div>
                 {% endfor %}
               {% block body %}
               

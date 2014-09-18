@@ -504,4 +504,6 @@ $(document).ready(function() {
 	//Mostra primeira aba cmo estilo selecionado (por algum motivo, não mostra por padrão)
     $('.aba').find('.first').addClass('active');
     
+    window.setTimeout(function(){$('#flashes-success').slideUp(500)},3000);
+    
 });
