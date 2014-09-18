@@ -268,9 +268,11 @@ function textAreaLimit(){
 	}
 	if(!$(this).parent().hasClass('nospaceuse')){
 		var spanClass = $(this)[0].outerHTML.match(/(span\d)/);
-		var container = $('<span class="'+spanClass[0]+' nospaceuse"></span>');
+		if (!spanClass)
+			var container = $('<span class="nospaceuse"></span>');
+		else
+			var container = $('<span class="'+spanClass[0]+' nospaceuse"></span>');
 		container.addClass('span');
-//		$(this).replaceWith(container);
 		container.insertAfter($(this));
 		container.append($(this));
 	}
@@ -306,7 +308,10 @@ function errorPlacement (error, element) {
 //	unmask()
 	if(!element.parent().hasClass('validationSpan')){
 		var spanClass = element[0].outerHTML.match(/(span\d)/);
-		var container = $('<span class="'+spanClass[0]+' validationSpan"></span>');
+		if (!spanClass)
+			var container = $('<span class="validationSpan"></span>');
+		else
+			var container = $('<span class="'+spanClass[0]+' validationSpan"></span>');
 		
 		if (!element.parent().hasClass('nospaceuse')) {
 			container.insertAfter(element)
@@ -449,4 +454,8 @@ $(document).ready(function() {
     
 	//Validação de formulário
 	$('form').validate(validateOptions);
+	
+	//Mostra primeira aba cmo estilo selecionado (por algum motivo, não mostra por padrão)
+    $('.aba').find('.first').addClass('active');
+    
 });
