@@ -90,16 +90,45 @@ function removeMultiItem()
 	grandPa.find('.icon-minus').each(hideMultiMinus);
 }
 
-function incrementNumber (value) {
+function incrementNumber (value)
+{
 	values = value.match(numberPattern);
 	for(var i = 0; values.length < i; $i++) {
 		values[i]++;
 	}
-	return parseInt(values[0]) + 1;
+	
+	var numberId = parseInt(values[0]) + 1
+
+	var number = $(this).parent().parent().children().length;
+	
+	if ($(this).prop('required') || $(this).parent().hasClass('nospaceuse')) {
+		var number = $(this).parent().parent().parent().children().length;
+	}
+	
+	return (numberId > number) ? numberId : number;
+}
+
+function incrementMultiNumber (value)
+{
+	values = value.match(numberPattern);
+	for(var i = 0; values.length < i; $i++) {
+		values[i]++;
+	}
+	
+	var numberId = parseInt(values[0]) + 1
+
+	var number = $(this).parent().parent().parent().children().length -1;
+
+	if ($(this).prop('required') || $(this).parent().hasClass('nospaceuse')) {
+		var number = $(this).parent().parent().parent().parent().children().length;
+	}
+	
+	return (numberId > number) ? numberId : number;
 }
 
 function addNumber()
 {
+	
 	if ($(this).attr('name')) {
 		console.log($(this).attr('name'));
 		$(this).attr('name', $(this).attr('name').replace( numberPattern , incrementNumber ))
