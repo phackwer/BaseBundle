@@ -89,13 +89,13 @@ body{
 /* - HEADER
 /* ---- */
 
-.rvfs-1 p, .rvfs-1 div, .rvfs-1 td{ font-size: 97% }
-.rvfs-2 p, .rvfs-2 div, .rvfs-2 td{ font-size: 98% }
-.rvfs-3 p, .rvfs-3 div, .rvfs-3 td{ font-size: 99% }
-.rvfs-4 p, .rvfs-4 div, .rvfs-4 td{ font-size: 100% }
-.rvfs-5 p, .rvfs-5 div, .rvfs-5 td{ font-size: 101% }
-.rvfs-6 p, .rvfs-6 div, .rvfs-6 td{ font-size: 102% }
-.rvfs-7 p, .rvfs-7 div, .rvfs-7 td{ font-size: 103% }
+.rvfs-1 label, .rvfs-1 span, .rvfs-1 li, .rvfs-1 p, .rvfs-1 div, .rvfs-1 td{ font-size: 97% }
+.rvfs-2 label, .rvfs-2 span, .rvfs-2 li, .rvfs-2 p, .rvfs-2 div, .rvfs-2 td{ font-size: 98% }
+.rvfs-3 label, .rvfs-1 label.rvfs-3 span, .rvfs-3 li, .rvfs-3 p, .rvfs-3 div, .rvfs-3 td{ font-size: 99% }
+.rvfs-4 label, .rvfs-4 span, .rvfs-4 li, .rvfs-4 p, .rvfs-4 div, .rvfs-4 td{ font-size: 100% }
+.rvfs-5 label, .rvfs-5 span, .rvfs-5 li, .rvfs-5 p, .rvfs-5 div, .rvfs-5 td{ font-size: 101% }
+.rvfs-6 label, .rvfs-6 span, .rvfs-6 li, .rvfs-6 p, .rvfs-6 div, .rvfs-6 td{ font-size: 102% }
+.rvfs-7 label, .rvfs-7 span, .rvfs-7 li, .rvfs-7 p, .rvfs-7 div, .rvfs-7 td{ font-size: 103% }
 
 /* Barra Brasil */
 
