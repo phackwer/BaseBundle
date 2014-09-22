@@ -304,7 +304,7 @@ function textAreaLimit(){
 	}
 	
 	if ($('#counter' + $(this).prop('id')).length == 0) {
-		$('<div id="counter' + $(this).prop('id') + '" class="textCounter">' + maxsize + ' / ' + $(this).val().length + ' caracteres restantes</div>').insertAfter($(this));
+		$('<div id="counter' + $(this).prop('id') + '" class="textCounter">' + maxsize + ' / ' + (maxsize - $(this).val().length) + ' caracteres restantes</div>').insertAfter($(this));
 	}
 	
 	$(this).keydown(function(e){
@@ -324,7 +324,7 @@ function textAreaLimit(){
 	$(this).keyup(function(e){
 		$(this).val($(this).val().substr(0,maxsize));
 		var target = $('#counter' + $(this).prop('id'));
-		target.html(maxsize + ' / ' + $(this).val().length + ' caracteres restantes');
+		target.html(maxsize + ' / ' + (maxsize - $(this).val().length) + ' caracteres restantes');
 	});
 	
 	$(this).trigger('keyup');

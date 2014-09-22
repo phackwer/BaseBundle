@@ -494,6 +494,11 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         
         return $query;
     }
+    
+    function getSearchQueryGroupBy()
+    {
+        return ' group by g.id ';
+    }
 
     function searchQuery(Request $req)
     {
@@ -524,12 +529,23 @@ abstract class EntityServiceAbstract extends ServiceAbstract
             $query->setDQL($query->getDQL() . $and . ' g.statusTuple <> 0');
         }
         
+        $query->setDQL($query->getDQL() . $this->getSearchQueryGroupBy());
+        
         if (isset($orderby)) {
             $query->setDQL($query->getDQL() . ' order by ' . $orderby . ' ' . $order);
         }
         
-//         echo  $query->getDQL();die;
-        
         return $query->setHydrationMode(Query::HYDRATE_ARRAY);
+    }
+    
+    /**
+     * Permite que outras entidades sejam consultadas para apresentação no grid de resposta
+     * 
+     * @param integer $id
+     * @return array
+     */
+    public function getSearchSubCells($id)
+    {
+        return array();
     }
 }

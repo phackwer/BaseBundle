@@ -8,6 +8,7 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use \Doctrine\ORM\Query;
 
 /**
  * Classe que implementa um controller padrão para CRUDs
@@ -146,9 +147,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
         $query->setFirstResult($page * $rows - $rows)
               ->setMaxResults($rows);
         
-        $pagination = new Paginator($query, $fetchJoinCollection = true);
-        
-        $pagination;
+        $pagination = new Paginator($query, true);
         
         //Objeto de resposta
         $data = new \StdClass();
@@ -180,6 +179,22 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
             foreach($item as $key => $val){
                 if ($j == 0) {
                     $id = $array[$i]['id'] = $val;
+                    $subcells = $this->getService()->getSearchSubCells($id);
+                    
+                    if ($subcells){
+                        foreach ($subcells as $skey => $sval) {
+                            if (!isset($array[$i]['cell'])) {
+                                $array[$i]['cell'] = array();
+                            }
+                            
+                            if ($val instanceof \DateTime) {
+                                $sval = $sval->format('d/m/Y');
+                            }
+                            
+                            $array[$i]['cell'][$skey] = $sval;
+                        }
+                    }
+                    
                 }
                 else {
                     if (!isset($array[$i]['cell'])) {
@@ -208,87 +223,6 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
         
         return $array;
     }
-
-//     /****************************************************************************************
-//      * KNP
-//      */
-
-//     /**
-//      * Realiza a pesquisa paginada
-//      * @return \StdClass
-//      */
-//     public function getGridData()
-//     {
-//         //Busca a query que será utilizada na pesquisa para a grid
-//         $method = $this->searchQuery;
-//         $query = $this->getService()->$method($this->getRequest());
-    
-//         //pagina a ser retornada
-//         $page = $this->getRequest()->query->get('page', 1);
-//         //quantidade de linhas a serem retornadas por página
-//         $rows = $this->getRequest()->query->get('rows');
-    
-//         //Realização da pesquisa paginada
-//         $paginator  = $this->get('knp_paginator');
-//         $pagination = $paginator->paginate( $query, $page , $rows );
-
-//         //Objeto de resposta
-//         $data = new \StdClass();
-//         $data->page     =  $page;
-//         $data->total    =  ceil( $pagination->getTotalItemCount() / $rows);
-//         $data->records  =  $pagination->getTotalItemCount();
-//         //linhas da resposta - o método abaixo pode (e provavelmente deve)
-//         //ser implantado de acordo com as necessidades da aplicação
-//         $data->rows     = $this->prepareGridRows($pagination);
-
-//         return $data;
-//     }
-
-//     /**
-//      *  Prepara a resposta para o Grid processando cada uma das linhas retornadas
-//      *  e acrescentando automaticamente uma coluna de Ação
-//      *
-//      * @param Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination  $pagination
-//      */
-//     public function prepareGridRows(\Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination  $pagination)
-//     {
-//         $i = 0;
-//         $array = array();
-//         foreach ($pagination->getItems() as $item ){
-//             $j = 0;
-//             foreach($item as $key => $val){
-//                 if ($j == 0) {
-//                     $array[$i]['id'] = $val;
-//                 }
-//                 else {
-//                     if (!isset($array[$i]['cell']))
-//                         $array[$i]['cell'] = array();
-
-//                     if ($val instanceof \DateTime)
-//                         $val = $val->format('d/m/Y');
-
-//                     $array[$i]['cell'][$key] = $val;
-//                 }
-//                 $j++;
-//             }
-
-//             //Aqui é adicionada a coluna de ações
-//             $actions = $this->getGridActions($array[$i]['id'], $item);
-
-//             if ($actions) {
-//                 $array[$i]['cell']['Acao'] = $actions;
-//                 $array[$i]['cell']['acao'] = $actions;
-//             }
-
-//             $i++;
-//         }
-
-//         return $array;
-//     }
-    
-    /****************************************************************************************
-     * FIM
-     */
 
     /**
      * Retorna o link para a ação de Edição no Grid
