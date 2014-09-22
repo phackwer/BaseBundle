@@ -378,6 +378,77 @@ function errorPlacement (error, element) {
 //	mask();
 }
 
+function errorPlacement (error, element) {
+//	unmask()
+	if (element.is(':checkbox')){
+		var parent = element.parent().parent();
+		var getSpanFrom = element.parent();
+	}
+	else{
+		var parent = element.parent();
+		var getSpanFrom = element;
+	}
+	
+	if(!parent.hasClass('validationSpan')){
+		var spanClass = getSpanFrom[0].outerHTML.match(/(span\d)/);
+		if (!spanClass)
+			var container = $('<span class="validationSpan"></span>');
+		else {
+			if (element.hasClass('dateBR')) {
+				value = parseInt(spanClass[0].substr(4)) + 1;
+				spanClass[0] = 'span'+ value;
+			}
+			var container = $('<span class="'+spanClass[0]+' validationSpan"></span>');
+		}
+		
+		if (!parent.hasClass('nospaceuse')) {
+
+			if (element.is(':checkbox')) {
+				container.insertAfter($('label[for="'+element.prop('id')+'"]'));
+				container.append($('label[for="'+element.prop('id')+'"]'));
+			} else {
+				container.insertAfter(element)
+				container.append(element);
+			}
+			if (error) {
+				if (element.hasClass('dateBR')) {
+					var br = $('<br />').insertAfter(parent.find('.ui-datepicker-trigger'))
+					error.insertAfter(br);
+				}
+				else if (element.is(':checkbox')) {
+					error.insertAfter($('label[for="'+element.prop('id')+'"]'));
+					error.html('<span>&#8593;</span> Selecione pelo menos um item.');
+				}
+				else {
+					error.insertAfter(element);
+				}
+			}
+		} else {
+			var oldParent = parent;
+			container.insertAfter(oldParent)
+			container.append(oldParent);
+			if (error) {
+				error.insertAfter(oldParent);
+			}
+		}
+	}
+	else  if (error) {
+		if (element.hasClass('dateBR')) {
+			var br = $('<br />').insertAfter(parent.find('.ui-datepicker-trigger'))
+			error.insertAfter(br);
+		} 
+		else if (element.is(':checkbox')) {
+			error.insertAfter($('label[for="'+element.prop('id')+'"]'));
+			error.html('<span>&#8593;</span> Selecione pelo menos um item.');
+		}
+		else {
+			error.insertAfter(element);
+		}
+	}
+	$('textarea').each(textAreaLimit);
+//	mask();
+}
+
 function findTabPane(element){
 	$('.tab-pane').each(function(){
 		if ($(this).find('#' + element.prop('id')).length > 0){

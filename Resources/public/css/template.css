@@ -892,6 +892,11 @@ textarea{
     height: 150px;
 }
 
+input[type="checkbox"]
+{
+    margin-left:-22px;
+}
+
 .validationSpan{
     margin-bottom: 10px;
     margin-left: 0px !important;
