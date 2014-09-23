@@ -332,54 +332,6 @@ function textAreaLimit(){
 
 function errorPlacement (error, element) {
 //	unmask()
-	if(!element.parent().hasClass('validationSpan')){
-		var spanClass = element[0].outerHTML.match(/(span\d)/);
-		if (!spanClass)
-			var container = $('<span class="validationSpan"></span>');
-		else {
-			if (element.hasClass('dateBR')) {
-				value = parseInt(spanClass[0].substr(4)) + 1;
-				spanClass[0] = 'span'+ value;
-			}
-			var container = $('<span class="'+spanClass[0]+' validationSpan"></span>');
-		}
-		
-		if (!element.parent().hasClass('nospaceuse')) {
-			container.insertAfter(element)
-			container.append(element);
-			if (error) {
-				if (element.hasClass('dateBR')) {
-					var br = $('<br />').insertAfter(element.parent().find('.ui-datepicker-trigger'))
-					error.insertAfter(br);
-				} 
-				else {
-					error.insertAfter(element);
-				}
-			}
-		} else {
-			var oldParent = element.parent();
-			container.insertAfter(oldParent)
-			container.append(oldParent);
-			if (error) {
-				error.insertAfter(oldParent);
-			}
-		}
-	}
-	else  if (error) {
-		if (element.hasClass('dateBR')) {
-			var br = $('<br />').insertAfter(element.parent().find('.ui-datepicker-trigger'))
-			error.insertAfter(br);
-		} 
-		else {
-			error.insertAfter(element);
-		}
-	}
-	$('textarea').each(textAreaLimit);
-//	mask();
-}
-
-function errorPlacement (error, element) {
-//	unmask()
 	if (element.is(':checkbox')){
 		var parent = element.parent().parent();
 		var getSpanFrom = element.parent();
