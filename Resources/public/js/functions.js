@@ -429,7 +429,6 @@ function invalidHandler(event, validator)
 	    $("#errorDialog").modal('show');
 	}
 }
-
 //Sobrescreva para definir comportamento específico para o formulário em questão
 var validateOptions = {
 	ignore: '',

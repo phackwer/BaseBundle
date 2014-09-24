@@ -304,7 +304,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                                 $innerClassAttr = explode('\\', $class);
                                 $innerClassAttr = lcfirst($innerClassAttr[count($innerClassAttr) - 1]);
                                 
-                                $val['id'] = $val[$attrToId];
+                                echo $val['id'] = $val[$attrToId];
                             }
                             $inner = $this->populateEntities($val, $class, $entity);
                             if ($inner) {
@@ -312,6 +312,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                                 $entity->$method($inner);
                             }
                         }
+                        
                         continue;
                     }
                 }

@@ -18,16 +18,4 @@ class DefaultController extends ControllerAbstract
         $this->getRequest()->getSession()->clear();
         return $this->redirectByRouteName('sansis_core_base_homepage');
     }
-
-    public function sessionInfoAction() {
-        return $this->render(
-            "SanSISCoreBaseBundle:Default:session.html.twig",
-            array(
-                'nome'      => @$_SESSION['NO_PESSOA'],
-                'cpf'       => @$_SESSION['NU_CPF_CNPJ_PESSOA'],
-                'perfil'    => @$_SESSION['DS_PERFIL'],
-                'versao'    => @$_SESSION['sysVersion'],
-            )
-        );
-    }
 }
