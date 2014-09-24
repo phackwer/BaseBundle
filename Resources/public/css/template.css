@@ -937,3 +937,7 @@ li.span{
     margin-left: 0px;
     margin-bottom: 0px;
 }
+
+.clonable.span{
+    margin-left: 0px;
+}

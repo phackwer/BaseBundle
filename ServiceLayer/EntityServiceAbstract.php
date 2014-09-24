@@ -289,6 +289,23 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                     }
                     if ($allInt){
                         foreach($value as $key=>$val){
+                            /**
+                             * Tratamento para ManyToMany
+                             */
+                            $strDoc = $ref->getProperty($attr)->getDocComment();
+                            if (strstr($strDoc,'ManyToMany')){
+                                $begin = substr($strDoc, strpos($strDoc, 'inverseJoinColumns={@ORM\JoinColumn(name="') + strlen('inverseJoinColumns={@ORM\JoinColumn(name="'));
+                                $almost = explode('_',substr($begin, 0, strpos($begin, "\",")));
+                                $attrToId = '';
+                                foreach ($almost as $vall) {
+                                    $attrToId .= ucfirst($vall);
+                                }
+                                $attrToId = lcfirst($attrToId);
+                                $innerClassAttr = explode('\\', $class);
+                                $innerClassAttr = lcfirst($innerClassAttr[count($innerClassAttr) - 1]);
+                                
+                                $val['id'] = $val[$attrToId];
+                            }
                             $inner = $this->populateEntities($val, $class, $entity);
                             if ($inner) {
                                 $this->getEntityManager()->persist($inner);

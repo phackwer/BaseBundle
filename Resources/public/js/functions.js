@@ -192,6 +192,7 @@ function adjustNewItem(newFill, original, addNumberFunction)
     unmask();    
     //Ajusta
     newFill.find('input').val('');
+    newFill.find(':checkbox').prop('checked', false);
     newFill.find('textarea').val('');
     newFill.find('select').find(':selected').prop('selected', false);
     newFill.find('select').find('option').first().prop('selected', true);
@@ -481,7 +482,8 @@ $(document).ready(function() {
     		$('.navbar').filter('.nav').css({'width':''});
     		$('#BoxMenuPrincipal').removeClass("nf-nav");
     		$('.validationSpan').find(':checkbox').css('margin-left', '-20px');
-    	}else if ($(window).innerWidth() > 767 && $(window).innerWidth() < 980) {
+    	}
+    	else if ($(window).innerWidth() > 767 && $(window).innerWidth() < 980) {
     		$('.nav-collapse').find('.dropdown-submenu').find('.dropdown-menu').addClass('f-dropdown-menu');
             $('.nav-collapse').find('.dropdown-submenu').find('.f-dropdown-menu').removeClass('dropdown-menu');
     		$('.navbar').filter('.nav').css({'width':'100%'});

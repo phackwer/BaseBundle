@@ -178,6 +178,7 @@ function mask() {
 function unmask() {
 	
     $('.dateBR').unmask();
+    $('.ui-datepicker-trigger').remove();
 
     $('.date_mmyyyy').unmask();
 
