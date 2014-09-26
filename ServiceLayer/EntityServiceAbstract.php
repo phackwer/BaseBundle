@@ -326,7 +326,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                 $entity->$method($value);
                 if (
                     is_object($value) && 
-                    !strstr('DateTime', get_class($value)) && 
+                    !strstr(get_class($value), 'DateTime') && 
                     !strstr($method, 'setId')
                 ) {
                     $this->getEntityManager()->persist($value);
@@ -344,7 +344,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
      *         
      * @throws NoImplementationException
      */
-    public function validateRootEntity()
+    public function validateRootEntity(Request $req)
     {
         $this->validate($this->getRootEntity());
     }
@@ -357,7 +357,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
      *         
      * @throws NoImplementationException
      */
-    public function verifyRootEntity()
+    public function verifyRootEntity(Request $req)
     {
     }
 
@@ -367,8 +367,8 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         try {
             $this->setRootEntityForFlush($req);
             $this->populateRootEntity($req);
-            $this->validateRootEntity();
-            $this->verifyRootEntity();
+            $this->validateRootEntity($req);
+            $this->verifyRootEntity($req);
             $this->getEntityManager()->flush();
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
