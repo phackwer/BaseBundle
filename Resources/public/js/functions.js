@@ -412,11 +412,13 @@ function invalidHandler(event, validator)
 	    $("#errorDialog").modal('show');
 	}
 }
+submitHandler = null;
 //Sobrescreva para definir comportamento específico para o formulário em questão
 var validateOptions = {
 	ignore: '',
 	errorPlacement: errorPlacement,
-	invalidHandler: invalidHandler
+	invalidHandler: invalidHandler,
+	submitHandler: submitHandler 
 };
 
 $(document).ready(function() {
