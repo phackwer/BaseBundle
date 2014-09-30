@@ -124,7 +124,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         if (! $this->rootEntity) {
             $class = $this->rootEntityName;
             $this->rootEntity = new $class();
-//             $this->getEntityManager()->persist($this->rootEntity);
+            $this->getEntityManager()->persist($this->rootEntity);
         }
         
         return $this->rootEntity;
@@ -177,9 +177,9 @@ abstract class EntityServiceAbstract extends ServiceAbstract
 //         var_dump($_POST);
 //         var_dump($this->rootEntity);die;
         $this->populateEntities($req, $this->rootEntity, null);
-        echo '<pre>';
-        print_r($_POST);die;
-        var_dump($this->rootEntity);die;
+//         echo '<pre>';
+//         print_r($_POST);die;
+//         var_dump($this->rootEntity);die;
     }
     
     /**
@@ -200,7 +200,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
             }
             else {
                 $entity->setStatusTuple(0);
-//                 $this->getEntityManager()->persist($entity);
+                $this->getEntityManager()->persist($entity);
                 return $entity;
             }
         }
@@ -324,7 +324,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                             }
                             $inner = $this->populateEntities($val, $class, $entity);
                             if ($inner) {
-//                                 $this->getEntityManager()->persist($inner);
+                                $this->getEntityManager()->persist($inner);
                                 $entity->$method($inner);
                             }
                         }
@@ -346,7 +346,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                     !strstr(get_class($value), 'Doctrine') &&
                     !strstr($method, 'setId')
                 ) {
-//                     $this->getEntityManager()->persist($value);
+                    $this->getEntityManager()->persist($value);
                 }
             }
         }
