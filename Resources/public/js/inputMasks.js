@@ -80,6 +80,57 @@ function numOnKeyDown(keyCode){
 	}
 }
 
+function validyDatesOnly(e) {
+	var key = e.keyCode;
+	if (key == 8 || 
+	     key == 9 ||
+	     key == 46 ||
+	     (key >= 35 && key <= 40)
+	     ){
+		return true;
+	}
+	var currNumber = numOnKeyDown(key);
+	
+	if (isNaN(currNumber)){
+		e.preventDefault();
+		return false;
+	}
+	
+	var data = ($(this).val().replace(/_/g,'')).split('/');
+    var dia = data[0];
+    var mes = data[1];
+    var ano = data[2];
+    
+    if (((dia + '').length) < 2){
+		dia = parseInt(dia + ''  + currNumber);
+	}
+
+    if (((mes + '').length) < 2){
+    	mes = parseInt(mes + ''  + currNumber);
+	}
+
+    if (((ano + '').length) < 4){
+    	ano = parseInt(ano + ''  + currNumber);
+	}
+    
+    if (isNaN(dia) || dia > 31) {
+    	e.preventDefault();
+	};
+    if (isNaN(mes) || mes > 12) {
+    	e.preventDefault();
+	};
+    if (!isNaN(mes) && (mes == 4 || mes == 6 || mes == 9 || mes == 11) && dia == 31){
+    	e.preventDefault();
+    }
+    if (!isNaN(mes) && mes == 2 && (dia > 29 || ( !isNaN(ano) && (ano + '').length == 4 && (dia == 29 && ano % 4 != 0)))){
+    	e.preventDefault();
+    };
+    if (data[0] + '' + currNumber == '00' || data[1] + '' + currNumber == '00'){
+    	e.preventDefault();
+    }
+	
+}
+
 function mask() {
 	
     $('.dateBR').datepicker({
@@ -92,56 +143,7 @@ function mask() {
         onSelect: function() {
         	$(this).trigger('blur');
         }
-    }).keydown(function(e) {
-    	var key = e.keyCode;
-    	if (key == 8 || 
-		     key == 9 ||
-		     key == 46 ||
-		     (key >= 35 && key <= 40)
-		     ){
-    		return true;
-    	}
-    	var currNumber = numOnKeyDown(key);
-    	
-    	if (isNaN(currNumber)){
-    		e.preventDefault();
-    		return false;
-    	}
-    	
-    	var data = ($(this).val().replace(/_/g,'')).split('/');
-        var dia = data[0];
-        var mes = data[1];
-        var ano = data[2];
-        
-        if (((dia + '').length) < 2){
-			dia = parseInt(dia + ''  + currNumber);
-		}
-
-	    if (((mes + '').length) < 2){
-	    	mes = parseInt(mes + ''  + currNumber);
-		}
-
-	    if (((ano + '').length) < 4){
-	    	ano = parseInt(ano + ''  + currNumber);
-		}
-        
-        if (isNaN(dia) || dia > 31) {
-        	e.preventDefault();
-    	};
-        if (isNaN(mes) || mes > 12) {
-        	e.preventDefault();
-    	};
-        if (!isNaN(mes) && (mes == 4 || mes == 6 || mes == 9 || mes == 11) && dia == 31){
-        	e.preventDefault();
-        }
-        if (!isNaN(mes) && mes == 2 && (dia > 29 || ( !isNaN(ano) && (ano + '').length == 4 && (dia == 29 && ano % 4 != 0)))){
-        	e.preventDefault();
-        };
-        if (data[0] + '' + currNumber == '00' || data[1] + '' + currNumber == '00'){
-        	e.preventDefault();
-        }
-    	
-    }).mask('99/99/9999');
+    }).keydown(validyDatesOnly).mask('99/99/9999');
 
     $.mask.definitions['H'] = "[0-2]";
     $.mask.definitions['h'] = "[0-9]";
@@ -177,7 +179,9 @@ function mask() {
 
 function unmask() {
 	
+	$('.dateBR').datepicker( "destroy" );
     $('.dateBR').unmask();
+    $('.dateBR').unbind('keydown', validyDatesOnly);
     $('.ui-datepicker-trigger').remove();
 
     $('.date_mmyyyy').unmask();

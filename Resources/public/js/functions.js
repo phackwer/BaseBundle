@@ -120,9 +120,7 @@ function incrementMultiNumber (value)
 
 function addNumber()
 {
-	
 	if ($(this).attr('name')) {
-		console.log($(this).attr('name'));
 		$(this).attr('name', $(this).attr('name').replace( numberPattern , incrementNumber ))
 	}
 	if ($(this).prop('id')) {
@@ -130,21 +128,30 @@ function addNumber()
 	}
 	if ($(this).attr('targetId')) {
 		$(this).attr('targetId', $(this).attr('targetId').replace( numberPattern , incrementNumber ))
+	}
+	if ($(this).attr('for')) {
+		$(this).attr('for', $(this).attr('for').replace( numberPattern , incrementNumber ))
+	}
+	if ($(this).attr('dateCompare')) {
+		$(this).attr('dateCompare', $(this).attr('dateCompare').replace( numberPattern , incrementNumber ))
 	}
 }
 
-function addMultiNumber()
-{
-	if ($(this).attr('name')) {
-		$(this).attr('name', $(this).attr('name').replace( numberPattern , incrementNumber ))
-	}
-	if ($(this).prop('id')) {
-		$(this).prop('id', $(this).prop('id').replace( numberPattern , incrementNumber ))
-	}
-	if ($(this).attr('targetId')) {
-		$(this).attr('targetId', $(this).attr('targetId').replace( numberPattern , incrementNumber ))
-	}
-}
+//function addMultiNumber()
+//{
+//	if ($(this).attr('name')) {
+//		$(this).attr('name', $(this).attr('name').replace( numberPattern , incrementNumber ))
+//	}
+//	if ($(this).prop('id')) {
+//		$(this).prop('id', $(this).prop('id').replace( numberPattern , incrementNumber ))
+//	}
+//	if ($(this).attr('targetId')) {
+//		$(this).attr('targetId', $(this).attr('targetId').replace( numberPattern , incrementNumber ))
+//	}
+//	if ($(this).attr('for')) {
+//		$(this).attr('for', $(this).attr('for').replace( numberPattern , incrementNumber ))
+//	}
+//}
 
 function reindexMultiNumberLabel(index)
 {
@@ -171,7 +178,7 @@ function addMultiItem() {
     newFill.insertAfter($(this).parent().parent());
     
     //Ajusta campos e valores
-    adjustNewItem(newFill, $(this), addMultiNumber);
+    adjustNewItem(newFill, $(this), addNumber);
     //Reindexa o título
     $(this).parent().parent().parent().find('h5:visible').each(reindexMultiNumberLabel);
     
@@ -190,7 +197,7 @@ function adjustNewItem(newFill, original, addNumberFunction)
     newFill.find('select').find('option').first().prop('selected', true);
 
     //renomeia todos adicionando um valor ao número do contador
-    newFill.find('input, select, textarea, .textCounter').each(addNumberFunction);
+    newFill.find('input, select, textarea, .textCounter, label').each(addNumberFunction);
     newFill.find('textarea').each(textAreaLimit);
     
     //retira o botão de adição do clone
