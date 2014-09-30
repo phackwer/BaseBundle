@@ -176,6 +176,7 @@ function adjustNewItem(newFill, original, addNumberFunction)
     //Ajusta
     newFill.find('input').not(':checkbox').not(':radio').val('');
     newFill.find(':checkbox').prop('checked', false);
+    newFill.find(':checkbox').prop('disabled', false);
     newFill.find('textarea').val('');
     newFill.find('select').find(':selected').prop('selected', false);
     newFill.find('select').find('option').first().prop('selected', true);
