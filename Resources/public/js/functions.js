@@ -19,18 +19,14 @@ function removeItem()
 		{
 	     	var name = idField.attr('name');
 	     	idField.attr('name', name.replace('[id]','[idDel]') );
-			$(this).parent().hide();
+	     	idField.insertAfter(grandPa)
 		}
-		else {
-			$(this).parent().remove();
-		}
+		$(this).parent().remove();
 		//se tiver o botão de plus, ele deve ser movido para o último item da listagem
 		var plus = $(this).parent().find('.icon-plus');
 		if (plus) {
 			plus.insertAfter(grandPa.find('.icon-minus').last());
-			if(!idField.val()) {
-				plus.click(addItem);
-			}
+			plus.click(addItem);
 		}
 		//se tiver conteúdo no label, tem que manter
 		var label = $(this).parent().find('label');
@@ -59,18 +55,14 @@ function removeMultiItem()
 		{
 	     	var name = idField.attr('name');
 	     	idField.attr('name', name.replace('[id]','[idDel]') );
-			$(this).parent().parent().hide();
+	     	idField.insertAfter(grandPa);
 		}
-		else {
-			$(this).parent().parent().remove();
-		}
+		$(this).parent().parent().remove();
 		//se tiver o botão de plus, ele deve ser movido para o último item da listagem
 		var plus = $(this).parent().find('.icon-plus');
 		if (plus) {
 			plus.insertAfter(grandPa.find('.icon-minus').last());
-			if(!idField.val()) {
-				plus.click(addMultiItem);
-			}
+			plus.click(addMultiItem);
 		}
 		//se tiver conteúdo no label, tem que manter
 		var label = $(this).parent().find('label');
