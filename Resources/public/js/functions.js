@@ -174,7 +174,7 @@ function adjustNewItem(newFill, original, addNumberFunction)
     //Retira máscaras para evitar referências erradas de targets
     unmask();    
     //Ajusta
-    newFill.find('input').not(':checkbox').not(':radio').val('');
+    newFill.find('input:not([notCleanable])').not(':checkbox').not(':radio').val('');
     newFill.find(':checkbox').prop('checked', false);
     newFill.find(':checkbox').prop('disabled', false);
     newFill.find('textarea').val('');

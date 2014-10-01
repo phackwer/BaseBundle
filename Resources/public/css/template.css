@@ -21,11 +21,17 @@ a:active, button:active { position: relative; }
 table { border-collapse: collapse; border-spacing: 0; }
 
 body{
+    /* AZUL */
     background-color: #3D6FBF;
-    /*background-color: #2244BF;/**/
+    /* OCRE */
+    /*background-color: #AA9966;/**/
+    /* DOURADO */
+    /*background-color: #FFDD88;/**/
+    /* LILAS */
+    /*background-color: #DD66FF;/**/
     
     /* Diversos papéis de parede do BaseCoreBundle  - coloque em um CSS específico do projeto*/
-    background: url('../images/bkg/000.jpg')  no-repeat center center fixed;/**/
+    /*background: url('../images/bkg/000.jpg')  no-repeat center center fixed;/**/
     /*background: url('../images/bkg/001.jpg')  no-repeat center center fixed;/**/
     /*background: url('../images/bkg/002.jpg')  no-repeat center center fixed;/**/
     /*background: url('../images/bkg/003.jpg')  no-repeat center top fixed;/**/
