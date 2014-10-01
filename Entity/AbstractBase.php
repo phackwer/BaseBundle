@@ -1,6 +1,8 @@
 <?php
 namespace SanSIS\Core\BaseBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  *
  * @author pablo.sanchez
@@ -28,7 +30,7 @@ abstract class AbstractBase
         foreach ($methods as $method) {
             if ('get' === substr($method, 0, 3)) {
                 $value = $this->$method();
-                if (\is_array($value)) {
+                if (\is_array($value) || $value instanceof ArrayCollection) {
                     $subvalues = array();
                     foreach ($value as $key => $subvalue) {
                         if ($subvalue instanceof AbstractBase && $parent != $subvalue) {
