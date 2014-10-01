@@ -172,7 +172,11 @@ function addMultiItem() {
 function adjustNewItem(newFill, original, addNumberFunction)
 {
     //Retira máscaras para evitar referências erradas de targets
-    unmask();    
+    unmask();
+//    //Retira validação de formulário
+//    $('form').unbind();
+//    $('form').removeData('validate');
+//    $('form').removeData('validator');
     //Ajusta
     newFill.find('input:not([notCleanable])').not(':checkbox').not(':radio').val('');
     newFill.find(':checkbox').prop('checked', false);
@@ -198,6 +202,8 @@ function adjustNewItem(newFill, original, addNumberFunction)
 
     //Recoloca as máscaras
     mask();
+    //Recoloca validação de formulário
+//    $('form').validate(validateOptions);
 }
 
 function hideMinus(index)

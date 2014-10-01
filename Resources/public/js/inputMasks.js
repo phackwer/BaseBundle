@@ -179,9 +179,9 @@ function mask() {
 
 function unmask() {
 	
+	$('.dateBR').unbind();
 	$('.dateBR').datepicker("destroy");
     $('.dateBR').unmask();
-    $('.dateBR').unbind('keydown', validyDatesOnly);
     $('.ui-datepicker-trigger').remove();
 
     $('.date_mmyyyy').unmask();
