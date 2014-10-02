@@ -936,12 +936,12 @@ textarea{
 
 li span{
     float: left;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
 }
 
 li.span{
     margin-left: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
 }
 
 .clonable.span{

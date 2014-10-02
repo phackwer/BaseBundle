@@ -390,7 +390,12 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
         	$this->get('session')->set('SanSISSaveResult', $this->getService()->getRootEntity());
             MessageService::addMessage('error', 'MSG_E000');
             if (in_array($this->get('kernel')->getEnvironment(), array('dev')))
-                $this->addMessage($e->getMessage(), 'error');
+                $this->addMessage(
+                    $e->getMessage()."\n".
+                    $e->getLine()."\n".
+                    $e->getCode()."\n".
+                    $e->getTraceAsString()."\n"
+                    , 'error');
             return $this->redirectByReferer(302);
         }
     }

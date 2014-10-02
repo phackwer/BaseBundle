@@ -394,10 +394,10 @@ function errorPlacement (error, element) {
 				error.insertAfter(element);
 			}
 		}
-		$('textarea').each(textAreaLimit);
 	}
 }
 
+//Abre o tab correto em caso de erro em uma tab que não esteja visível ainda.
 function findTabPane(element){
 	$('.tab-pane').each(function(){
 		if ($(this).find('#' + element.prop('id')).length > 0){
@@ -418,8 +418,12 @@ function invalidHandler(event, validator)
 		$("#errorDialogBody").html(message);
 	    $("#errorDialog").modal('show');
 	}
+	event.preventDefault();
 }
+
+//Para permitir sobrescrita mais facilmente
 submitHandler = null;
+
 //Sobrescreva para definir comportamento específico para o formulário em questão
 var validateOptions = {
 	ignore: '',

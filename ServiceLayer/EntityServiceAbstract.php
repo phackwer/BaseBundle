@@ -12,13 +12,19 @@ use \SanSIS\Core\BaseBundle\EntityRepository\AbstractBase as EntityRepository;
 use \SanSIS\Core\BaseBundle\Entity\AbstractBase as Entity;
 
 /**
- * @TODO Tratar Collections e Files no upload 
+ * @TODO Tratar Files no upload - deverá ser antes do flush para utilizar a 
+ * mesma transaction e ter, de alguma forma, a remoção dos arquivos subidos 
+ * em caso de exceção  
  * 
  * @author phackwer
- *
  */
 abstract class EntityServiceAbstract extends ServiceAbstract
 {
+    /**
+     * Suspende a persistência e printa a entidade populada na tela.
+     * @var bool
+     */
+    public $debug = false;
 
     /**
      * @var string - nome da classe da entidade raiz da service
@@ -124,7 +130,9 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         if (! $this->rootEntity) {
             $class = $this->rootEntityName;
             $this->rootEntity = new $class();
-            $this->getEntityManager()->persist($this->rootEntity);
+            if (!$this->debug) {
+                $this->getEntityManager()->persist($this->rootEntity);
+            }
         }
         
         return $this->rootEntity;
@@ -174,12 +182,12 @@ abstract class EntityServiceAbstract extends ServiceAbstract
      */
     public function populateRootEntity(Request $req)
     {
-//         var_dump($_POST);
-//         var_dump($this->rootEntity);die;
         $this->populateEntities($req, $this->rootEntity, null);
-//         echo '<pre>';
-//         print_r($_POST);die;
-//         var_dump($this->rootEntity);die;
+        if ($this->debug) {
+            echo '<pre>';
+            print_r($_POST);die;
+            print_r($this->rootEntity);die;
+        }
     }
     
     /**
@@ -200,7 +208,9 @@ abstract class EntityServiceAbstract extends ServiceAbstract
             }
             else {
                 $entity->setStatusTuple(0);
-                $this->getEntityManager()->persist($entity);
+                if (!$this->debug) {
+                    $this->getEntityManager()->persist($entity);
+                }
                 return $entity;
             }
         }
@@ -324,7 +334,9 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                             }
                             $inner = $this->populateEntities($val, $class, $entity);
                             if ($inner) {
-                                $this->getEntityManager()->persist($inner);
+                                if (!$this->debug) {
+                                    $this->getEntityManager()->persist($inner);
+                                }
                                 $entity->$method($inner);
                             }
                         }
@@ -346,7 +358,9 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                     !strstr(get_class($value), 'Doctrine') &&
                     !strstr($method, 'setId')
                 ) {
-                    $this->getEntityManager()->persist($value);
+                    if (!$this->debug) {
+                        $this->getEntityManager()->persist($value);
+                    }
                 }
             }
         }
