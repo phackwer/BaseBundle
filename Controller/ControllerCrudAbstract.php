@@ -230,9 +230,9 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      * @param integer $id
      * @return string
      */
-    public function getEditGridAction($id)
+    public function getEditGridAction($id, $status_tuple = null)
     {
-        if ($this->editRoute)
+        if ($this->editRoute && $status_tuple != 2)
     	   return '<a title="Editar" href="'.$this->generateUrl($this->editRoute).'?id='.$id.'" class="icon-edit" style="margin-right:5px;margin-left:5px"></a>';
         else
            return '';
@@ -271,9 +271,9 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      * @param integer $id
      * @return string
      */
-    public function getDeleteGridAction($id)
+    public function getDeleteGridAction($id, $status_tuple = null)
     {
-        if ($this->deleteRoute)
+        if ($this->deleteRoute && $status_tuple != 2)
     	   return '<a title="Excluir" href="#" onclick="confirmarRemocao(\''.$id.'\')" class="icon-trash" style="margin-right:5px;margin-left:5px"></a>';
         else
            return '';
@@ -290,8 +290,8 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
     {
         $actions = '';
         $actions .= $this->getViewGridAction($id);
-        $actions .= $this->getEditGridAction($id);
-        $actions .= $this->getDeleteGridAction($id);
+        $actions .= $this->getEditGridAction($id, $item['statusTuple']);
+        $actions .= $this->getDeleteGridAction($id, $item['statusTuple']);
 
         return $actions;
     }

@@ -218,7 +218,8 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         if (!$parent) {
             $entity = $newClass;
             $setParentMethod = null;
-        } else {
+        } 
+        else {
             if (isset($values['id']) && $values['id']){
                 $entity = $this->getEntityManager()->getRepository($newClass)->findOneBy(array('id' => $values['id']));
                 if (method_exists($entity,'setTerm')) {
@@ -395,15 +396,15 @@ abstract class EntityServiceAbstract extends ServiceAbstract
     public function flushRootEntity(Request $req)
     {
     	
-        try {
+//         try {
             $this->setRootEntityForFlush($req);
             $this->populateRootEntity($req);
             $this->validateRootEntity($req);
             $this->verifyRootEntity($req);
             $this->getEntityManager()->flush();
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
+//         } catch (\Exception $e) {
+//             throw new \Exception($e->getMessage());
+//         }
     }
 
     /**
@@ -447,7 +448,12 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         $this->getRootEntity($id);
         
         if (!$this->checkStatusTuple($this->getRootEntity())) {
-            $this->getEntityManager()->remove($this->rootEntity);
+            if (!$this->rootEntity->getStatusTuple() != 2) {
+                $this->getEntityManager()->remove($this->rootEntity);
+            }
+            else {
+                throw new \Exception('Este registro não é removível!');
+            }
         }
         else {
             $this->rootEntity->setStatusTuple(0);

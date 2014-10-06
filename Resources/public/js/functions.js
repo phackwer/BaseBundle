@@ -270,11 +270,13 @@ function transformToReadForm() {
     hrefRemove = $('.foto').parent();
     $('.foto').each(function(){$(this).insertBefore($(this).parent())});
     hrefRemove.each(function(){$(this).remove()});
+    $('.dateBR').datepicker("destroy");
     
     $('#cancel_bt').html('Voltar');
     
     $('#cancel_bt').unbind('click',cancelData);
     $('#cancel_bt').click(function(){window.history.back()});
+    $('#cancel_bt').addClass('btn-primary');
 }
 
 function cancelData()
@@ -328,72 +330,76 @@ function textAreaLimit(){
 }
 
 function errorPlacement (error, element) {
-	if (element) {
-		if (element.is(':checkbox')){
-			var parent = element.parent().parent();
-			var getSpanFrom = element.parent();
-		}
-		else{
-			var parent = element.parent();
-			var getSpanFrom = element;
-		}
-		
-		if(!parent.hasClass('validationSpan')){
-			var spanClass = getSpanFrom[0].outerHTML.match(/(span\d)/);
-			if (!spanClass)
-				var container = $('<span class="validationSpan"></span>');
-			else {
-				if (element.hasClass('dateBR')) {
-					value = parseInt(spanClass[0].substr(4)) + 1;
-					spanClass[0] = 'span'+ value;
-				}
-				var container = $('<span class="'+spanClass[0]+' validationSpan"></span>');
+	try {
+		if (element) {
+			if (element.is(':checkbox')){
+				var parent = element.parent().parent();
+				var getSpanFrom = element.parent();
+			}
+			else{
+				var parent = element.parent();
+				var getSpanFrom = element;
 			}
 			
-			if (!parent.hasClass('nospaceuse')) {
-	
-				if (element.is(':checkbox')) {
-					container.insertAfter($('label[for="'+element.prop('id')+'"]'));
-					container.append($('label[for="'+element.prop('id')+'"]'));
-				} else {
-					container.insertAfter(element)
-					container.append(element);
-				}
-				if (error) {
+			if(!parent.hasClass('validationSpan')){
+				var spanClass = getSpanFrom[0].outerHTML.match(/(span\d)/);
+				if (!spanClass)
+					var container = $('<span class="validationSpan"></span>');
+				else {
 					if (element.hasClass('dateBR')) {
-						var br = $('<br />').insertAfter(parent.find('.ui-datepicker-trigger'))
-						error.insertAfter(br);
+						value = parseInt(spanClass[0].substr(4)) + 1;
+						spanClass[0] = 'span'+ value;
 					}
-					else if (element.is(':checkbox')) {
-						error.insertAfter($('label[for="'+element.prop('id')+'"]'));
-						error.html('<span>&#8593;</span> Selecione pelo menos um item.');
+					var container = $('<span class="'+spanClass[0]+' validationSpan"></span>');
+				}
+				if (!parent.hasClass('nospaceuse') && container) {
+		
+					if (element.is(':checkbox')) {
+						container.insertAfter($('label[for="'+element.prop('id')+'"]'));
+						container.append($('label[for="'+element.prop('id')+'"]'));
+					} else {
+						container.insertAfter(element)
+						container.append(element);
 					}
-					else {
-						error.insertAfter(element);
+					
+					if (error) {
+						if (element.hasClass('dateBR')) {
+							var br = $('<br />').insertAfter(parent.find('.ui-datepicker-trigger'))
+							error.insertAfter(br);
+						}
+						else if (element.is(':checkbox')) {
+							error.insertAfter($('label[for="'+element.prop('id')+'"]'));
+							error.html('<span>&#8593;</span> Selecione pelo menos um item.');
+						}
+						else {
+							error.insertAfter(element);
+						}
+					}
+				} else if (container) {
+					var oldParent = parent;
+					container.insertAfter(oldParent)
+					container.append(oldParent);
+					if (error) {
+						error.insertAfter(oldParent);
 					}
 				}
-			} else {
-				var oldParent = parent;
-				container.insertAfter(oldParent)
-				container.append(oldParent);
-				if (error) {
-					error.insertAfter(oldParent);
+			}
+			else  if (error) {
+				if (element.hasClass('dateBR')) {
+					var br = $('<br />').insertAfter(parent.find('.ui-datepicker-trigger'))
+					error.insertAfter(br);
+				} 
+				else if (element.is(':checkbox')) {
+					error.insertAfter($('label[for="'+element.prop('id')+'"]'));
+					error.html('<span>&#8593;</span> Selecione pelo menos um item.');
+				}
+				else {
+					error.insertAfter(element);
 				}
 			}
 		}
-		else  if (error) {
-			if (element.hasClass('dateBR')) {
-				var br = $('<br />').insertAfter(parent.find('.ui-datepicker-trigger'))
-				error.insertAfter(br);
-			} 
-			else if (element.is(':checkbox')) {
-				error.insertAfter($('label[for="'+element.prop('id')+'"]'));
-				error.html('<span>&#8593;</span> Selecione pelo menos um item.');
-			}
-			else {
-				error.insertAfter(element);
-			}
-		}
+	} catch (err) {
+		//faça nada
 	}
 }
 
@@ -426,6 +432,7 @@ submitHandler = null;
 
 //Sobrescreva para definir comportamento específico para o formulário em questão
 var validateOptions = {
+//	debug: true,
 	ignore: '',
 	errorPlacement: errorPlacement,
 	invalidHandler: invalidHandler,

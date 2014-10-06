@@ -177,7 +177,7 @@
                     <div id="flashes-{{ label }}"> 
                     {% for flash in flashes %}
                         <div class="alert alert-{{ label }}">
-                          {{ flash | replace({"\n":'<br />'}) | raw | trans({},'messages')}}
+                          {{ flash | replace({"\n":'<br />'}) | raw }}
                         </div>
                     {% endfor %}
                     </div>
