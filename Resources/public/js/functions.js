@@ -173,10 +173,6 @@ function adjustNewItem(newFill, original, addNumberFunction)
 {
     //Retira máscaras para evitar referências erradas de targets
     unmask();
-//    //Retira validação de formulário
-//    $('form').unbind();
-//    $('form').removeData('validate');
-//    $('form').removeData('validator');
     //Ajusta
     newFill.find('input:not([notCleanable])').not(':checkbox').not(':radio').val('');
     newFill.find(':checkbox').prop('checked', false);
@@ -438,18 +434,6 @@ function invalidHandler(event, validator)
 	      : 'Erros encontrados no formulário. Corrija-os para prosseguir.';
 		$("#errorDialogBody").html(message);
 	    $("#errorDialog").modal('show');
-	    
-//	    console.log(validator.errorList);
-//	    console.log($('form').validate);
-//	    console.log();
-//	    var validator = $('form').data('validator');
-//	    for (var js_i in validator.errorList){
-//	    	if (validator.errorList[js_i].element.type == 'checkbox'){
-//	    		validator.errorList[js_i].message = '<span>&#8593;</span> Selecione pelo menos um item.';
-//	    	}
-//	    }
-//	    
-//	    $('form').data('validator', validator)
 	}
 	event.preventDefault();
 }
@@ -459,7 +443,7 @@ submitHandler = null;
 
 //Sobrescreva para definir comportamento específico para o formulário em questão
 var validateOptions = {
-	debug: true,
+//	debug: true,
 	ignore: '',
 	errorPlacement: errorPlacement,
 	invalidHandler: invalidHandler,
