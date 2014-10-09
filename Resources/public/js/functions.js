@@ -356,8 +356,14 @@ function errorPlacement (error, element) {
 		
 					if (element.is(':checkbox')) {
 						console.log(element.attr('name'));
-						container.insertAfter($('label[for="'+element.prop('id')+'"]'));
-						container.append($('label[for="'+element.prop('id')+'"]'));
+						
+						checkboxes = $('input[name="'+ element.attr('name') +'"]');
+						checkboxes.each(function(){
+							checkContainer = container.clone();
+							checkContainer.insertAfter($('label[for="'+$(this).prop('id')+'"]'));
+							checkContainer.append($('label[for="'+$(this).prop('id')+'"]'));
+						});
+						
 					} else {
 						container.insertAfter(element)
 						container.append(element);
@@ -369,8 +375,12 @@ function errorPlacement (error, element) {
 							error.insertAfter(br);
 						}
 						else if (element.is(':checkbox')) {
-							error.insertAfter($('label[for="'+element.prop('id')+'"]'));
-							error.html('<span>&#8593;</span> Selecione pelo menos um item.');
+							checkboxes = $('input[name="'+ element.attr('name') +'"]');
+							checkboxes.each(function(){
+								errorCheck = error.clone();
+								errorCheck.insertAfter($('label[for="'+$(this).prop('id')+'"]'));
+								errorCheck.html('<span>&#8593;</span> Selecione pelo menos um item.');
+							});
 						}
 						else {
 							error.insertAfter(element);
@@ -391,8 +401,12 @@ function errorPlacement (error, element) {
 					error.insertAfter(br);
 				} 
 				else if (element.is(':checkbox')) {
-					error.insertAfter($('label[for="'+element.prop('id')+'"]'));
-					error.html('<span>&#8593;</span> Selecione pelo menos um item.');
+					checkboxes = $('input[name="'+ element.attr('name') +'"]');
+					checkboxes.each(function(){
+						errorCheck = error.clone();
+						errorCheck.insertAfter($('label[for="'+$(this).prop('id')+'"]'));
+						errorCheck.html('<span>&#8593;</span> Selecione pelo menos um item.');
+					});
 				}
 				else {
 					error.insertAfter(element);
@@ -424,6 +438,18 @@ function invalidHandler(event, validator)
 	      : 'Erros encontrados no formulário. Corrija-os para prosseguir.';
 		$("#errorDialogBody").html(message);
 	    $("#errorDialog").modal('show');
+	    
+//	    console.log(validator.errorList);
+//	    console.log($('form').validate);
+//	    console.log();
+//	    var validator = $('form').data('validator');
+//	    for (var js_i in validator.errorList){
+//	    	if (validator.errorList[js_i].element.type == 'checkbox'){
+//	    		validator.errorList[js_i].message = '<span>&#8593;</span> Selecione pelo menos um item.';
+//	    	}
+//	    }
+//	    
+//	    $('form').data('validator', validator)
 	}
 	event.preventDefault();
 }
@@ -433,7 +459,7 @@ submitHandler = null;
 
 //Sobrescreva para definir comportamento específico para o formulário em questão
 var validateOptions = {
-//	debug: true,
+	debug: true,
 	ignore: '',
 	errorPlacement: errorPlacement,
 	invalidHandler: invalidHandler,
