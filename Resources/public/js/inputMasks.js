@@ -34,7 +34,6 @@ function onlyIntegers(e)
 }
 
 function numOnKeyDown(keyCode){
-//	console.log(keyCode);
 	switch (keyCode)
 	{
 		case 48:

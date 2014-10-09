@@ -351,8 +351,6 @@ function errorPlacement (error, element) {
 				if (!parent.hasClass('nospaceuse') && container) {
 		
 					if (element.is(':checkbox')) {
-						console.log(element.attr('name'));
-						
 						checkboxes = $('input[name="'+ element.attr('name') +'"]');
 						checkboxes.each(function(){
 							checkContainer = container.clone();

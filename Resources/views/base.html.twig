@@ -86,6 +86,21 @@
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
         <button class="btn btn-primary" id="renewSession">Renovar</button>
       </div>
+    </div>
+      
+    
+    <!-- Modal Waits -->
+    <div id="waitDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Mensagem do sistema</h3>
+      </div>
+      <div class="modal-body" id="waitDialogBody">
+        Por favor, aguarde...
+      </div>
+      <div class="modal-footer">
+{#         <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fechar</button>#}
+      </div>
     </div>  
     
     <!-- Modal Errors -->
@@ -100,7 +115,7 @@
       <div class="modal-footer">
         <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fechar</button>
       </div>
-    </div>  
+    </div>
     
     <!-- Modal Confirm -->
     <div id="confirmDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -362,6 +377,15 @@
             });
             {% endblock %}
 
+            var waitDots = '';
+            
+            function setWaitMessage(){
+            	$('#waitDialogBody').html('Por favor, aguarde' + waitDots);
+            	waitDots = waitDots + '.';
+                if (waitDots == '....') waitDots = '';
+                window.setTimeout(setWaitMessage,1000);
+            }
+
             $(document).ready(function() {
 
             	var sectionHeight = $(window).innerHeight() - ($('.header').outerHeight() + $('#BoxRodapePrincipal').outerHeight());
@@ -376,6 +400,8 @@
                         showResetButton: true
                     }
                 });
+
+                window.setTimeout(setWaitMessage,1000);
             });
 
         </script>
