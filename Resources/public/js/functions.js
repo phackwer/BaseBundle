@@ -182,8 +182,9 @@ function adjustNewItem(newFill, original, addNumberFunction)
     newFill.find('select').find('option').first().prop('selected', true);
 
     //renomeia todos adicionando um valor ao número do contador
-    newFill.find('input, select, textarea, .textCounter, label').each(addNumberFunction);
+    newFill.find('input, select, textarea, .textCounter, label, img').each(addNumberFunction);
     newFill.find('textarea').each(textAreaLimit);
+    newFill.find('.choosePhoto').attr('src', '../../bundles/sansiscorebase/images/camera-icon.jpg');
     
     //retira o botão de adição do clone
     newFill.find('.icon-plus').remove();
@@ -282,6 +283,7 @@ function cancelData()
 	}
 }
 
+//Limita textareas com contados
 function textAreaLimit(){
 	var maxsize = $(this).attr('maxlength');
 	if (!maxsize || maxsize == 0 || maxsize == 'undefined') {
@@ -325,7 +327,48 @@ function textAreaLimit(){
 	$(this).trigger('keyup');
 }
 
-function errorPlacement (error, element) {
+//Define seleção de imagens para upload
+function choosePhoto()
+{
+	var targetId = $(this).attr('targetId');
+	var target = $('#' + targetId);
+	if (!target[0]) {
+		console.log(targetId);
+		var targetId = $(this).prop('id') + '_upload';
+	}
+	target = $('#' + targetId);
+    
+    $(target).click();
+}
+
+//Apresenta imagem na hora da seleção
+function readURL(input)
+{
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+        	
+        	console.log(e.target.result);
+        	
+        	var idTarget = $('#' + input.id).attr('targetId');
+        	var target= $('#' + idTarget);
+        	if (!target[0]) {
+        	    target = $('.' + idTarget);
+        	}
+        	target.each(function(){
+        		$(this).attr('src', e.target.result);
+                $('label[for="'+ $(this).attr('id') +'"]').hide();
+        	})
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+//Local das mensagens de erro
+function errorPlacement (error, element)
+{
 	try {
 		if (element) {
 			if (element.is(':checkbox')){
@@ -450,6 +493,10 @@ var validateOptions = {
 
 $(document).ready(function() {
 	
+	//Imagens para upload
+    $('.choosePhoto').click(choosePhoto);
+    $('.imageUpload').change(function() {readURL(this);});
+	
 	//Funções para edição de objetos
 	$('.single-line').parent().find('.icon-minus').click(removeItem);
 	$('.single-line').parent().find('.icon-plus').click(addItem);
@@ -550,9 +597,6 @@ $(document).ready(function() {
     
     //máscaras
     mask();
-    
-    //ícone de calendário apenas para desktop
-    $('.ui-datepicker-trigger').addClass('visible-desktop')
     
 	//Validação de formulário
 	$('form').validate(validateOptions);

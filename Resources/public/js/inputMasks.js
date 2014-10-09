@@ -130,8 +130,8 @@ function validyDatesOnly(e) {
 	
 }
 
-function mask() {
-	
+function mask()
+{
     $('.dateBR').datepicker({
     	showOn: "button",
         buttonImage: "../../bundles/sansiscorebase/images/ico/ico-calendar.png",
@@ -143,6 +143,9 @@ function mask() {
         	$(this).trigger('blur');
         }
     }).keydown(validyDatesOnly).mask('99/99/9999');
+    
+   //ícone de calendário apenas para desktop
+    $('.ui-datepicker-trigger').addClass('visible-desktop')
 
     $.mask.definitions['H'] = "[0-2]";
     $.mask.definitions['h'] = "[0-9]";
@@ -176,8 +179,8 @@ function mask() {
 	 });
 }
 
-function unmask() {
-	
+function unmask()
+{
 	$('.dateBR').unbind();
 	$('.dateBR').datepicker("destroy");
     $('.dateBR').unmask();
