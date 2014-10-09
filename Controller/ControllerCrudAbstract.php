@@ -288,10 +288,14 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      */
     public function getGridActions($id, $item = null)
     {
+        $statusTuple = null;
+        if (isset($item['statusTuple'])){
+            $statusTuple = $item['statusTuple'];
+        }
         $actions = '';
         $actions .= $this->getViewGridAction($id);
-        $actions .= $this->getEditGridAction($id, $item['statusTuple']);
-        $actions .= $this->getDeleteGridAction($id, $item['statusTuple']);
+        $actions .= $this->getEditGridAction($id, $statusTuple);
+        $actions .= $this->getDeleteGridAction($id, $statusTuple);
 
         return $actions;
     }
