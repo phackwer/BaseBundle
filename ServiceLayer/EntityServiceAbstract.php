@@ -560,7 +560,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         $keys = $req->query->keys();
         $searchData = array();
         foreach ($keys as $key) {
-            if ($req->query->get($key))
+            if ($req->query->has($key))
                 $searchData[$key] = $req->query->get($key);
         }
         

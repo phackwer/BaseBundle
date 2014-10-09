@@ -355,6 +355,7 @@ function errorPlacement (error, element) {
 				if (!parent.hasClass('nospaceuse') && container) {
 		
 					if (element.is(':checkbox')) {
+						console.log(element.attr('name'));
 						container.insertAfter($('label[for="'+element.prop('id')+'"]'));
 						container.append($('label[for="'+element.prop('id')+'"]'));
 					} else {
