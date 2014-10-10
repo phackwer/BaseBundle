@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use SanSIS\Core\BaseBundle\ServiceLayer\ServiceData;
+use SanSIS\Core\BaseBundle\Service\ServiceData;
 use SanSIS\Core\BaseBundle\Doctrine\ORM\Mapping\OracleQuoteStrategy;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;

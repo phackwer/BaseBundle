@@ -1,0 +1,439 @@
+<div class="filder {{ span }}">
+
+	<ul>
+		<li>
+			<h5 class="row {{ maxpspan }} legenda">Dados básicos</h5>
+		</li>
+		
+        <li>
+		    <label class="row span3">Tipo de entidade:  <font color="red"><b>*</b></font></label>
+		    <select class="{{ maxinputspan }}" name="idLegalBodyType" id="idLegalBodyType" required="required" {% if entityData.id is defined and entityData.id is not null %}readonly="readonly" disabled="disabled"{% endif %}>
+		        <option value="">Selecione abaixo</option>
+	            {% for val,item in formData.legalBodyType %}
+                <option value="{{ val }}" {% if entityData.idLegalBodyType.id is defined and entityData.idLegalBodyType.id == val %}selected{% endif %}>{{ item }}</option>
+                {% endfor %}
+	        </select>
+		</li>
+		
+		<li>
+		  <label class="row span3">Nome:  <font color="red"><b>*</b></font></label>
+		  <input class="{{ maxinputspan }}" name="name" id="name" type="text" value="{{ entityData.name }}" required="required" minlength="3" maxlength="512">
+		</li>
+		
+		<li id="earliestDateLi">
+		    <label class="row span3" id="earliestDateLabel">Início de existência:</label>
+		      <input class="span2 dateBR notFuture" name="earliestDate" id="earliestDate" dateCompare="#latestDate" type="text" value="{{ entityData.earliestDate ? entityData.earliestDate | date("d/m/Y") : '' }}">
+		      <!--<input type="checkbox" class="aacr2"> <label for="prodaprox">Aproximada</label>-->
+	    </li>
+
+		<li id="latestDateLi">
+		    <label class="row span3" id="latestDateLabel">Fim de existência:</label>
+		    <input class="span2 dateBR notFuture" name="latestDate" id="latestDate" notFuture type="text" value="{{ entityData.latestDate ? entityData.latestDate | date("d/m/Y") : '' }}">
+		    <!--<input type="checkbox" class="aacr2"> <label for="prodaprox">Aproximada</label>-->
+	    </li>
+			
+        <li id="liNaturalidade">
+            <label class="row span3" id="natuLabel">Naturalidade:</label>
+            <input class="{{ maxinputspan }}" name="placeOfBirth" id="placeOfBirth" type="text" value="{{ entityData.placeOfBirth }}" maxlength="512">
+        </li>
+		
+	</ul>
+	
+</div>
+
+<div class="filder {{ span }}" id="adicionais">
+	<ul>
+		<li>
+			<h5 class="row {{ maxpspan }} legenda">Informações adicionais</h5>
+		</li>
+		
+		<li id="liCpf" style="display:none">
+		  <label class="row span3">CPF:</label>
+		  <input name="person[id]" type="hidden" value="{% if entityData.person.id is defined %}{{ entityData.person.id }}{% endif %}">
+		  <input class="{{ maxinputspan }} cpf" name="person[cpf]" id="cpf" type="text" value="{% if entityData.person.cpf is defined %}{{ entityData.person.cpf }}{% endif %}">
+		</li>
+		
+		<li id="liCnpj" style="display:none">
+		  <label class="row span3">CNPJ:</label>
+		  <input name="organization[id]" type="hidden" value="{% if entityData.organization.id is defined %}{{ entityData.organization.id }}{% endif %}">
+		  <input class="{{ maxinputspan }} cnpj" name="organization[cnpj]" id="cnpj" type="text" value="{% if entityData.organization.cnpj is defined %}{{ entityData.organization.cnpj }}{% endif %}">
+		</li>
+		
+		<li>
+    		<label class="row span3">País:</label>
+    		<select class="{{ midinputspan }}" name="idCountry" id="idCountry" {% if entityData.country is not empty %}style="display: none"{% endif %}>
+    				<option value="">Selecione abaixo</option>
+        	        {% for val,item in formData.country %}
+                        <option value="{{ val }}" {% if entityData.idCountry.id is defined and entityData.idCountry.id == val %}selected{% endif %}>{{ item }}</option>
+                    {% endfor %}
+    		</select>
+    		<input class="{{ midinputspan }}" name="country" id="country" type="text" value="{{ entityData.country }}" {% if entityData.country is empty %}style="display: none"{% endif %} maxlength="512">
+    		<input type="checkbox" id="freeCountry" style="margin-left: 10px;"> <label for="freeCountry">Não listado</label>
+		</li>
+		
+		<li>
+    		<label class="row span3">Estado / Província:</label>
+    		<select class="{{ midinputspan }}" name="idStateProvince" id="idStateProvince" {% if entityData.stateProvince is not empty %}style="display: none"{% endif %}>
+    		        {% if formData.stateProvince is defined and formData.stateProvince | length > 0 %}
+        		        {% for val,item in formData.stateProvince %}
+                            <option value="{{ val }}" {% if entityData.idStateProvince.id is defined and entityData.idStateProvince.id == val %}selected{% endif %}>{{ item }}</option>
+                        {% endfor %}
+    		        {% else %}
+    				<option value="">Selecione o país antes</option>
+    				{% endif %}
+    		</select>
+    		<input class="{{ midinputspan }}" name="stateProvince" id="stateProvince" type="text" value="{{ entityData.stateProvince }}" {% if entityData.stateProvince is empty %}style="display: none"{% endif %} maxlength="512">
+    		<input type="checkbox" id="freeStateProvince" style="margin-left: 10px;"> <label for="freeStateProvince">Não listado</label>
+		</li>
+		
+		<li>
+    		<label class="row span3">Cidade:</label>
+    		<select class="{{ midinputspan }}" name="idCity" id="idCity" {% if entityData.city is not empty %}style="display: none"{% endif %}>
+    				{% if formData.city is defined and formData.city | length > 0 %}
+        		        {% for val,item in formData.city %}
+                            <option value="{{ val }}" {% if entityData.idCity.id is defined and entityData.idCity.id == val %}selected{% endif %}>{{ item }}</option>
+                        {% endfor %}
+    		        {% else %}
+    				<option value="">Selecione e estado / província antes</option>
+    				{% endif %}
+    		</select>
+    		<input class="{{ midinputspan }}" name="city" id="city" type="text" value="{{ entityData.city }}" {% if entityData.city is empty %}style="display: none"{% endif %} maxlength="512">
+    		<input type="checkbox" id="freeCity" style="margin-left: 10px;"> <label for="freeCity">Não listada</label>
+		</li>
+		
+		<li>
+		  <label class="row span3">Endereço:</label>
+		  <input class="{{ maxinputspan }}" name="address" id="address" type="text" value="{{ entityData.address }}" maxlength="512">
+		</li>
+		
+		<li>
+		  <label class="row span3">CEP    :</label>
+		  <input class="{{ maxinputspan }}" name="zipcode" id="zipcode" type="text" value="{{ entityData.zipcode }}" maxlength="50">
+		</li>
+		
+		<li>
+		  <label class="row span3">Telefone:</label>
+		  <input class="{{ maxinputspan }} phone" name="phone" id="phone" type="text" value="{{ entityData.phone }}" maxlength="256">
+		</li>
+		
+		<li>
+		  <label class="row span3">E-mail:</label>
+		  <input class="{{ maxinputspan }}" name="email" id="email" type="email" value="{{ entityData.email }}" maxlength="512">
+		</li>
+		
+		<li>
+		  <label class="row span3">Site da web:</label>
+		  <input class="{{ maxinputspan }}" name="url" id="url" type="url" url="url" value="{{ entityData.url }}" maxlength="512">
+		</li>
+	</ul>
+	
+</div>
+
+<div class="filder {{ span }}" id="mantenedora">
+	<ul>
+		<li>
+			<h5 class="row {{ maxpspan }} legenda">Informações organizacionais</h5>
+		</li>
+		
+	</ul>
+	
+	<ul>
+		<li>
+		  <label class="row span3">Entidade mantenedora:</label>
+		  <input name="organization[idLegalBodyParent][id]" id="idLegalBodyParent" type="hidden" value="{% if entityData.organization.idLegalBodyParent.id is defined %}{{ entityData.organization.idLegalBodyParent.id }}{% endif %}">
+  		  <input  sourcePath="{{ path('get_organization_by_name') }}" 
+                  targetId = 'idLegalBodyParent'
+                  exceptId = 'id'
+		          class="{{ maxinputspan }} autocomplete" 
+		          name="organization[idLegalBodyParent][name]" 
+		          id="professionalRelation" type="text" 
+		          value="{% if entityData.organization.idLegalBodyParent.name is defined %}{{ entityData.organization.idLegalBodyParent.name }}{% endif %}">
+		          <a class="icon-search" style="font-size:14px;margin-left:5px"></a>
+		</li>
+	</ul>
+	
+</div>
+
+<div class="filder {{ span }}" id="mantenedora">
+	<ul>
+		<li>
+			<h5 class="row {{ maxpspan }} legenda">Anotações</h5>
+		</li>
+		<li>
+		    <label class="row span3">Anotações:</label>
+            <textarea class="{{ maxinputspan }}" name="annotation" id="annotation">{{ entityData.annotation }}</textarea>
+        </li>
+    </ul>
+</div>
+
+<script>
+
+function changeLabel()
+{
+	var val = $('#idLegalBodyType').val();
+	if (val == 1){
+		$('#earliestDateLi').show();
+		$('#latestDateLi').show();
+		$('#earliestDateLabel').html('Data de nascimento:');
+		$('#latestDateLabel').html('Data de falecimento:');
+		$('#liCpf').show();
+		$('#liCnpj').hide();
+		$('#cnpj').val('');
+		$('#mantenedora').hide();
+		$('#adicionais').show();
+		$('#liNaturalidade').show();
+		$('#natuLabel').html('Naturalidade:');
+
+		$('input[name="actor[rolePF][][idRole]"]').prop('required', true);
+		$('input[name="actor[rolePJ][][idRole]"]').prop('required', false);
+		$('input[name="actor[roleFM][][idRole]"]').prop('required', false);
+	}
+	else if ( val == 2) {
+		$('#earliestDateLi').show();
+		$('#latestDateLi').show();
+		$('#earliestDateLabel').html('Data de criação:');
+		$('#latestDateLabel').html('Data de extinção:');
+		$('#liCpf').hide();
+		$('#liCnpj').show();
+		$('#cpf').val('');
+		$('#mantenedora').show();
+		$('#adicionais').show();
+		$('#liNaturalidade').hide();
+
+		$('input[name="actor[rolePF][][idRole]"]').prop('required', false);
+		$('input[name="actor[rolePJ][][idRole]"]').prop('required', true);
+		$('input[name="actor[roleFM][][idRole]"]').prop('required', false);
+	} else if ( val == 3){
+		$('#earliestDateLi').hide();
+		$('#latestDateLi').hide();
+		$('#earliestDate').val('');
+		$('#latestDate').val('');
+		$('#liCpf').hide();
+		$('#liCnpj').hide();
+		$('#cpf').val('');
+		$('#cnpj').val('');
+		$('#mantenedora').hide();
+		$('#adicionais').hide();
+		$('#liNaturalidade').show();
+		$('#natuLabel').html('Local de origem:');
+		$('input[name="actor[rolePF][][idRole]"]').prop('required', false);
+		$('input[name="actor[rolePJ][][idRole]"]').prop('required', false);
+		$('input[name="actor[roleFM][][idRole]"]').prop('required', true);
+	} else {
+		$('#earliestDateLi').hide();
+		$('#latestDateLi').hide();
+		$('#liCpf').hide();
+		$('#liCnpj').hide();
+		$('#mantenedora').hide();
+		$('#adicionais').hide();
+		$('#liNaturalidade').hide();
+		$('input[name="actor[rolePF][][idRole]"]').prop('required', false);
+		$('input[name="actor[rolePJ][][idRole]"]').prop('required', false);
+		$('input[name="actor[roleFM][][idRole]"]').prop('required', false);
+	}
+
+	$('form').validate(validateOptions);
+}
+
+function checkUniqueCPF ()
+{
+	$("#waitDialog").modal('show');
+	$.ajax({
+        type: "GET",
+        url: "{{ path('check_unique_cpf') }}",
+        data: { 
+            id:  $('#id').val(),
+            cpf: $('#cpf').val(),
+        },
+        dataType: 'json'
+    })
+    .success(function(resp) {
+    	$("#waitDialog").modal('hide');
+    	if (!resp){
+    		if ($('label[for="cpf"]').length == 0)
+    		    errorPlacement($('<label for="cpf" class="error" id="uniqueCpf"><span>&#8593;</span> CPF já cadastrado na base de dados!</label>'), $('#cpf'));
+    		else{
+    			$('label[for="cpf"]').show();
+    			$('label[for="cpf"]').html('<span>&#8593;</span> CPF já cadastrado na base de dados!');
+	    	}
+    	}
+    	else {
+	    	if ($('label[for="cpf"]').length > 0) {
+	    		$('label[id="uniqueCpf"]').remove();
+	    	}
+    	}
+    }).error(function(data){
+        $("#waitDialog").modal('hide');
+    });
+}
+
+function changeStateprovince()
+{
+	if ($(this).val()){
+		$('#idCity').show();
+        $("#waitDialog").modal('show');
+		$.ajax({
+	           type: "GET",
+	           url: "{{ path('get_cities_by_state_province') }}",
+	           data: { idStateProvince: $('#idStateProvince').val() }
+	       }).success(function(data){
+    	    $("#waitDialog").modal('hide');
+            $("#idCity").empty();
+            $("#idCity").append('<option value="">Selecione abaixo</option>');
+            $.each(data, function(i, item){
+                $("#idCity").append('<option value="'+item.id+'">'+item.term+'</option>');
+            }).error(function(data){
+         	   $("#waitDialog").modal('hide');
+     	   });
+        });
+	} else {
+    	$('#idCity').show();
+    	$("#idCity").empty();
+    	$('#idCity').val();
+    	$("#idCity").append('<option value="">Selecione e estado / província antes</option>');
+    }
+}
+
+function changeCountry()
+{
+	if ($(this).val() == 1){
+		showFreeCountry(false);
+		$("#waitDialog").modal('show');
+		$.ajax({
+	           type: "GET",
+	           url: "{{ path('get_states_provinces_by_country') }}",
+	           data: { idCountry: $('#idCountry').val() }
+	       }).success(function(data){
+	    	   $("#waitDialog").modal('hide');
+               $("#idStateProvince").empty();
+               $("#idStateProvince").append('<option value="">Selecione abaixo</option>');
+               $.each(data, function(i, item){
+                   $("#idStateProvince").append('<option value="'+item.id+'">'+item.term+'</option>');
+               });
+           }).error(function(data){
+        	   $("#waitDialog").modal('hide');
+    	   });
+    } else if ($(this).val()) {
+    	$('#city').show();
+    	$('#stateProvince').show();
+    	$('#city').val();
+    	$('#stateProvince').val();
+    	
+    	$('#idCity').hide();
+    	$('#idStateProvince').hide();
+    	$('#idCity').val();
+    	$('#idStateProvince').val();
+	}
+    else {
+    	$('#idCity').show();
+    	$('#idStateProvince').show();
+    	$("#idCity").empty();
+    	$("#idStateProvince").empty();
+    	$('#idCity').val();
+    	$('#idStateProvince').val();
+    	$("#idCity").append('<option value="">Selecione e estado / província antes</option>');
+    	$("#idStateProvince").append('<option value="">Selecione o país antes</option>');
+    	$('#city').hide();
+    	$('#stateProvince').hide();
+    }
+}
+
+function showFreeCity(flag){
+	if (flag) {
+		$('#idCity').hide();
+		$('#idCity').val('');
+		$('#city').show();
+		$('#freeCity').prop('checked', true);
+	} else {
+		$('#idCity').show();
+		$('#city').val('');
+		$('#city').hide();
+		$('#freeCity').prop('checked', false);
+    }
+}
+
+function showFreeStateProvince(flag){
+	showFreeCity(flag);
+	if (flag) {
+		$('#idStateProvince').hide();
+		$('#idStateProvince').val('');
+		$('#stateProvince').show();
+		$('#freeCity').attr('disabled', true);
+		$('#freeStateProvince').prop('checked', true);
+	} else {
+		$('#idStateProvince').show();
+		$('#stateProvince').val('');
+		$('#stateProvince').hide();
+		$('#freeCity').attr('disabled', false);
+		$('#freeStateProvince').prop('checked', false);
+    }
+}
+
+function showFreeCountry(flag){
+	showFreeStateProvince(flag)
+	if (flag) {
+		$('#idCountry').hide();
+		$('#idCountry').val('');
+		$('#country').show();
+		$('#freeStateProvince').attr('disabled', true);
+		$('#freeCountry').prop('checked', true);
+	} else {
+		$('#idCountry').show();
+		$('#country').hide();
+		$('#country').val('');
+		$('#freeStateProvince').attr('disabled', false);
+		$('#freeCountry').prop('checked', false);
+    }
+}
+
+function clickFreeCity(){showFreeCity($('#freeCity').is(':checked'))}
+function clickFreeStateProvince(){showFreeStateProvince($('#freeStateProvince').is(':checked'))}
+function clickFreeCountry(){showFreeCountry($('#freeCountry').is(':checked'))}
+
+$('#j_cadastroForm').submit(function(){
+	checkUniqueCPF();
+	var errorCpf = $('label[for="cpf"]')
+	if (
+    	(errorCpf.length && errorCpf.css('display') == 'inline') 
+	){
+  		$("#errorDialogBody").html('Erros encontrados no formulário. Corrija-os para prosseguir.');
+  	    $("#errorDialog").modal('show');
+	    
+		return false;
+    }
+	else{
+    	return true;
+    } 
+});
+
+$(document).ready(function() {
+    $('#idLegalBodyType').change(changeLabel);
+    $('#idCountry').change(changeCountry);
+    $('#idStateProvince').change(changeStateprovince);
+
+    $('#freeCity').click(clickFreeCity);
+    $('#freeStateProvince').click(clickFreeStateProvince);
+    $('#freeCountry').click(clickFreeCountry);
+
+    {% if entityData.city is not empty %}$('#freeCity').prop('checked', false).trigger('click');{% endif %}
+    
+    {% if entityData.stateProvince is not empty %}$('#freeStateProvince').prop('checked', false).trigger('click');{% endif %}
+    
+    {% if entityData.country is not empty %}$('#freeCountry').prop('checked', false).trigger('click');{% endif %}
+
+    changeLabel();
+
+//     $('#cpf').keyup(checkUniqueCPF);
+    $('#cpf').blur(checkUniqueCPF);
+    
+    $('#latestDate').keypress(function(){
+        $('#earliestDate').trigger('blur');
+    });
+    
+    $('#latestDate').change(function(){
+        $('#earliestDate').trigger('blur');
+    });
+
+    $('#idLegalBodyType').focus();    
+});
+</script>

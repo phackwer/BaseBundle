@@ -1,13 +1,13 @@
 <?php
-namespace SanSIS\Core\BaseBundle\ServiceLayer;
+namespace SanSIS\Core\BaseBundle\Service;
 
 use \Symfony\Component\HttpFoundation\Request;
 use \Doctrine\ORM\Query;
-use \SanSIS\Core\BaseBundle\ServiceLayer\ServiceAbstract;
-use \SanSIS\Core\BaseBundle\ServiceLayer\Exception\NoRootEntityException;
-use \SanSIS\Core\BaseBundle\ServiceLayer\Exception\NoImplementationException;
-use \SanSIS\Core\BaseBundle\ServiceLayer\Exception\WrongTypeRootEntityException;
-use \SanSIS\Core\BaseBundle\ServiceLayer\Exception\ValidationException;
+use \SanSIS\Core\BaseBundle\Service\ServiceAbstract;
+use \SanSIS\Core\BaseBundle\Service\Exception\NoRootEntityException;
+use \SanSIS\Core\BaseBundle\Service\Exception\NoImplementationException;
+use \SanSIS\Core\BaseBundle\Service\Exception\WrongTypeRootEntityException;
+use \SanSIS\Core\BaseBundle\Service\Exception\ValidationException;
 use \SanSIS\Core\BaseBundle\EntityRepository\AbstractBase as EntityRepository;
 use \SanSIS\Core\BaseBundle\Entity\AbstractBase as Entity;
 
@@ -254,7 +254,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
             $bpos = strpos($ref, 'extends ') + 8;
             $epos = strpos($ref, ' implements') - $bpos;
             $correctClass = substr($ref, $bpos, $epos);
-            $ref = new \ReflectionClass('\Ibram\CoreBundle\Entity\LegalBodyPerson');
+            $ref = new \ReflectionClass($correctClass);
         }
     
         $methods = get_class_methods($entity);

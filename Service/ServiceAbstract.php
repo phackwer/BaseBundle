@@ -1,5 +1,5 @@
 <?php
-namespace SanSIS\Core\BaseBundle\ServiceLayer;
+namespace SanSIS\Core\BaseBundle\Service;
 
 use \Doctrine\ORM\EntityManager;
 use \SanSIS\Core\BaseBundle\Doctrine\ORM\Mapping\OracleQuoteStrategy;

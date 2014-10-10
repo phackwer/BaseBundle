@@ -1,6 +1,6 @@
 <?php
 
-namespace SanSIS\Core\BaseBundle\ServiceLayer\Exception;
+namespace SanSIS\Core\BaseBundle\Service\Exception;
 
 class ValidationException extends \Exception
 {

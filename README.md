@@ -105,6 +105,6 @@ And your form field's names must follow the object infrastructure.
 Here are the objects you must extend from in order to get it working:
 
 - Controllers: \SanSIS\Core\BaseBundle\Controller\ControllerCrudAbstract
-- Services: \SanSIS\Core\BaseBundle\ServiceLayer\EntityServiceAbstract
+- Services: \SanSIS\Core\BaseBundle\Service\EntityServiceAbstract
 - Entities: \SanSIS\Core\BaseBundle\Entity\AbstractBase
 - Repositories: \SanSIS\Core\BaseBundle\EntityRepository\AbstractBase

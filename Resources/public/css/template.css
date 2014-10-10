@@ -1,4 +1,4 @@
-@charset "UTF-8";
+7@charset "UTF-8";
 
 /* -------------|
 /* - CSS RESET
@@ -625,7 +625,7 @@ strong.title{
     float: left;
     width: 97%;
     margin-top: 5px;
-    padding: 10px 5px 0px 5px;
+    padding: 20px 5px 0px 5px;
 }
 .filder ul{
     margin-bottom: 0px;

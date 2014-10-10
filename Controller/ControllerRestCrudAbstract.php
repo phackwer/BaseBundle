@@ -1,7 +1,7 @@
 <?php
 namespace SanSIS\Core\BaseBundle\Controller;
 
-use SanSIS\Core\BaseBundle\ServiceLayer\MessageService;
+use SanSIS\Core\BaseBundle\Service\MessageService;
 use SanSIS\Core\BaseBundle\Controller\ControllerAbstract;
 use SanSIS\Core\BaseBundle\Entity\AbstractBase;
 use Symfony\Component\HttpFoundation\Response;

@@ -1,9 +1,0 @@
-{% if nome is defined and nome is not null %}
-{{ nome | replace({'Leitura': '<b>Leitura</b>'}) | convert_encoding('UTF-8', 'ISO-8859-1') | raw }}
-    {% if perfil is defined and perfil is not null %}
-    - {{ perfil | convert_encoding('UTF-8', 'ISO-8859-1')}} |
-    {% endif %}
-{% endif %}
-{% if versao is defined and versao is not null %}
-V{{ versao }}
-{% endif %}

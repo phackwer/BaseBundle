@@ -1,0 +1,105 @@
+{% extends "::base.html.twig" %}
+
+{% set foto = 'true' %}
+{% set foto_path = '' %}
+{% if foto is defined and foto != '' %}
+	{% set span = 'span8' %}
+	{% set maxinputspan = 'span4' %}
+	{% set midinputspan = 'span2' %}
+	{% set maxpspan = 'span7' %}
+	{% set span5= 'span3' %}
+	{% else %}
+	{% set span = 'span11' %}
+	{% set maxinputspan = 'span6' %}
+	{% set midinputspan = 'span3' %}
+	{% set maxpspan = 'span10' %}
+	{% set span5= 'span5' %}
+{% endif %}
+
+{% block body %}
+
+<strong class="title span12">{% block box_title %}{{ formTitleAction }} registro de Entidade{% endblock %}</strong>
+
+<div class="aba">
+
+    {{ knp_menu_render('SanSISCoreBaseBundle:TabsCrudWithFiles:tabs',{'nav_type':'tabs'}) }}
+
+	<form action="{{ path('entity_save') }}" method="post" id="j_cadastroForm" enctype="multipart/form-data" style="position: relative;">
+		<div class="tab-content box_borda">
+		
+		<!-- Entidades OneToOne -->
+		<input type="hidden" id="id" name="id" value="{{ entityData.id }}">
+		<input name="actor[id]" type="hidden" value="{% if entityData.actor.id is defined %}{{ entityData.actor.id }}{% endif %}">
+		
+		<input type="hidden" name="actor[mainPhoto][id]" value=""/>
+		<input type="hidden" name="actor[mainPhoto][idRelationType]" value="5"/>
+		<input type="file" id="mainPhoto" targetId='mainPhotoView' class="imageUpload" name="actor[mainPhoto][resources][0][fileName]" style="visibility: hidden; width: 1px; height: 1px" />
+		
+		<div class="tab-pane active {{ span }} paddingAll" id="tab1">
+		     {% if foto is defined and foto != '' %}
+	         <div class="span3 hidden-desktop" style="margin: 0px 20px 30px 20px; position:relative; text-align: center ">
+	            {% if foto_path != '' %}
+                <img id="mainPhoto1" targetId="mainPhoto" class="choosePhoto mainPhotoView" src="{{ asset('bundles/ibramcore/images/uploaded/') }}{{ foto_path }}" style="width: 100%; border:1px solid #999999; box-shadow: 0px 4px 14px #000000;"/>
+                {% else %}
+                <img id="mainPhoto1" targetId="mainPhoto" class="choosePhoto mainPhotoView" src="{{ asset('bundles/sansiscorebase/images/camera-icon.jpg') }}" title="Imagem principal - clique para fazer o upload" style="width: 100%; border:1px solid #999999; box-shadow: 0px 4px 14px #000000;"/>
+                <br><br>
+                <label class="noImage" for="mainPhoto1">Nenhuma imagem selecionada</label>
+                {% endif %}
+	         </div>
+	         {% endif %}
+            {% include 'SanSISCoreBaseBundle:Entity:info.html.twig' %}
+		</div>
+		<div class="tab-pane {{ span }} paddingAll" id="tab2">
+            {% include 'SanSISCoreBaseBundle:Entity:files.html.twig' %}
+		</div>
+		{% if foto is defined and foto != '' %}
+        <div class="span3 visible-desktop" style="margin: 25px 10px 30px 40px; position:relative; text-align: center ">
+            {% if foto_path != '' %}
+            <img id="mainPhoto2" targetId="mainPhoto" class="choosePhoto mainPhotoView" src="{{ asset('bundles/ibramcore/images/uploaded/') }}{{ foto_path }}" style="width: 100%; border:1px solid #999999; box-shadow: 0px 4px 14px #000000;"/>
+            {% else %}
+            <img id="mainPhoto2" targetId="mainPhoto" class="choosePhoto mainPhotoView" src="{{ asset('bundles/sansiscorebase/images/camera-icon.jpg') }}" title="Imagem principal - clique para fazer o upload" style="width: 100%; border:1px solid #999999; box-shadow: 0px 4px 14px #000000;"/>
+            <br><br>
+            <label class="noImage" for="mainPhoto2">Nenhuma imagem selecionada</label>
+            {% endif %}
+        </div>
+        {% endif %}
+		
+	   <div class="row-fluid pull-left navigation">
+		    <a id="cancel_bt" style="margin: 0px 20px;" class="btn pull-left">Cancelar</a>
+		    <button type="submit" id="save_bt" class="btn btn-primary pull-right" style="margin: 0px 20px;">Salvar</button>
+		</div>
+        
+	</form>
+	
+</div>
+
+<script>
+
+    $('.aba').find('.first').addClass('active');
+
+    function fixGrid(grid, pager)
+    {
+    	$('#' + grid).setGridWidth(10);
+        var width = $('#' + pager).parent().parent().width();
+        $('#' + grid).setGridWidth(width);
+    }
+
+    function fixGrids(e)
+    {
+    	fixGrid('arqgrid', 'arqpager');
+    }
+
+    $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', fixGrids);
+    
+    $(window).bind('resize', fixGrids);
+
+    $(document).ready(function()
+    {
+    	if ($('.mainPhotoView').attr('src') != "{{ asset('bundles/sansiscorebase/images/camera-icon.jpg') }}") {
+            $('.noImage').hide();
+        }
+    });
+    
+</script>
+
+{% endblock %}

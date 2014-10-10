@@ -1,8 +1,26 @@
 parameters:
-  sansis_core_base.service_data_class: SanSIS\Core\BaseBundle\ServiceLayer\ServiceData
+  base.class:                          SanSIS\Core\BaseBundle\Service\BaseService
+  profile.class:                       SanSIS\Core\BaseBundle\Service\ProfileService
+  user.class:                          SanSIS\Core\BaseBundle\Service\UserService
+  entity.class:                        SanSIS\Core\BaseBundle\Service\EntityService
 
 services:
-  sansis_core_base.service_data_injector:
-    class: %sansis_core_base.service_data_class%
-    public: true
-    arguments: ['@service_container']
+
+  base.service:
+    class: %base.class%
+    arguments: ["@doctrine.orm.entity_manager", "default"]
+    
+  profile.service:
+    class: %profile.class%
+    arguments: ["@doctrine.orm.entity_manager", "default"]
+    
+  user.service:
+    class: %user.class%
+    arguments: ["@doctrine.orm.entity_manager", "default"]
+    calls:
+        - [setSecContext, ['@security.context']]
+        - [setSecFactory, ['@security.encoder_factory']]
+        
+  entity.service:
+    class: %entity.class%
+    arguments: ["@doctrine.orm.entity_manager", "default"]
