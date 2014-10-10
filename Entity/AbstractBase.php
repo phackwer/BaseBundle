@@ -10,7 +10,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 abstract class AbstractBase
 {
-
     public function fromArray(array $data)
     {
         foreach ($data as $key => $value) {
