@@ -12,6 +12,8 @@ class BaseController extends ControllerCrudAbstract
      */
     protected $service = 'base.service';
     
+    protected $loginView;
+    
     /**
      * Action para login utilizando a estrutura da SanSIS
      */
@@ -37,7 +39,7 @@ class BaseController extends ControllerCrudAbstract
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
     
-        return $this->render('SanSISCoreBaseBundle:Default:login.html.twig',
+        return $this->render($this->loginView,
             array(
                 // last username entered by the user
                 'last_username' => $lastUsername,

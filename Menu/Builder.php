@@ -40,16 +40,16 @@ class Builder extends ContainerAware
             'routeAbsolute' => true
         ));
         
-        $entitys = $menu->addChild('Entidades', array(
+        $entities = $menu->addChild('Entidades', array(
             'uri' => '#'
         ));
     
-        $entitys->addChild('Listar / pesquisar', array(
+        $entities->addChild('Listar / pesquisar', array(
             'route' => 'entity_index',
             'routeAbsolute' => true
         ));
     
-        $entitys->addChild('Criar novo registro', array(
+        $entities->addChild('Criar novo registro', array(
             'route' => 'entity_create',
             'routeAbsolute' => true
         ));
