@@ -12,7 +12,7 @@ class BaseController extends ControllerCrudAbstract
      */
     protected $service = 'base.service';
     
-    protected $loginView;
+    protected $loginView = 'SanSISCoreBaseBundle:Default:login.html.twig';
     
     /**
      * Action para login utilizando a estrutura da SanSIS
