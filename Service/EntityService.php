@@ -18,16 +18,12 @@ class EntityService extends BaseService
     {
         $query = $this->getRootRepository()
                       ->createQueryBuilder('g')
-                      ->LeftJoin('g.actor', 'a')
-                      ->LeftJoin('a.pseudonym', 'p')
                       ->getQuery();
         
         if ($searchData) {
             $and = ' where ';
             if (isset($searchData['name'])) {
                 $query->setDQL($query->getDQL() . $and . '( g.name like :name');
-                $and = ' or ';
-                $query->setDQL($query->getDQL() . $and . 'p.pseudonym like :name )');
                 $query->setParameter(':name', '%' . str_replace(' ', '%', $searchData['name']) . '%');
                 $and = ' and ';
             }
@@ -39,29 +35,6 @@ class EntityService extends BaseService
         }
         
         return $query;
-    }
-    
-    /**
-     * Permite que outras entidades sejam consultadas para apresentação no grid de resposta
-     *
-     * @param integer $id
-     * @return array
-     */
-    public function getSearchSubCells($id)
-    {
-        $actor = $this->getEntityManager()->getRepository('SanSIS\Core\BaseBundle\Entity\Actor')->findOneBy(array('idLegalBody' => $id));
-        
-        $arr = array();
-        
-        $arr['pseudonym'] = $virgula = '';
-        if ($actor) {
-            foreach ($actor->getPseudonym() as $p){
-                $arr['pseudonym'] .=  $virgula.$p->getPseudonym();
-                $virgula = ', ';
-            }
-        }
-        
-        return $arr;
     }
     
     /**
