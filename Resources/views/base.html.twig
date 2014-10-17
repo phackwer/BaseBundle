@@ -87,7 +87,6 @@
         <button class="btn btn-primary" id="renewSession">Renovar</button>
       </div>
     </div>
-      
     
     <!-- Modal Waits -->
     <div id="waitDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -131,7 +130,6 @@
         <button class="btn btn-primary" id="confirmButton">Confirmar</button>
       </div>
     </div>
-    
     
   <!-- FIM DIÁLOGOS PADRÃO -->
     <div class="header">
@@ -379,12 +377,12 @@
 
             var waitDots = '';
             
-            function setWaitMessage(){
-            	$('#waitDialogBody').html('Por favor, aguarde' + waitDots);
-            	waitDots = waitDots + '.';
-                if (waitDots == '....') waitDots = '';
-                window.setTimeout(setWaitMessage,1000);
-            }
+//             function setWaitMessage(){
+//             	$('#waitDialogBody').html('Por favor, aguarde' + waitDots);
+//             	waitDots = waitDots + '.';
+//                 if (waitDots == '....') waitDots = '';
+//                 window.setTimeout(setWaitMessage,1000);
+//             }
 
             $(document).ready(function() {
 
@@ -401,7 +399,7 @@
                     }
                 });
 
-                window.setTimeout(setWaitMessage,1000);
+//                 window.setTimeout(setWaitMessage,1000);
             });
 
         </script>

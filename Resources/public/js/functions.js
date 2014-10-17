@@ -278,9 +278,22 @@ function transformToReadForm() {
 
 function cancelData()
 {
-	if (confirm('Tem certeza que deseja descartar os dados?')){
-		window.history.back();
-	}
+	$("#cancelConfirmButton").removeClass('btn-success');
+	$("#cancelConfirmButton").html('Cancelar');
+	$("#confirmDialogBody").html("Tem certeza que deseja descartar os dados informados?");
+	$("#confirmDialog").modal('show');
+	$("#confirmButton").show();
+	
+	$("#confirmButton").unbind('click');
+	
+	$("#confirmButton").click(function() {
+    	$("#cancelConfirmButton").addClass('btn-success');
+    	$("#cancelConfirmButton").html('Fechar');
+        $("#searchBt").trigger('click');
+        $("#confirmButton").hide();
+        $("#confirmDialogBody").html("Descartando dados...");
+        window.setTimeout(function(){window.history.back();}, 1000);
+	});
 }
 
 //Limita textareas com contados
