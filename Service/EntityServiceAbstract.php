@@ -351,8 +351,13 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                 else if ($class && strstr($method, 'setId')) {
                     $value = $this->getEntityManager()->getRepository($class)->findOneBy(array('id' => $value));
                 }
+                else if (strstr($strDoc,'float') && $value) {
+                    if (strstr($value, ','))
+                        $value = (float) str_replace(',','.',str_replace('.','',$value));
+                }
                 
                 $entity->$method($value);
+                
                 if (
                     is_object($value) && 
                     !strstr(get_class($value), 'DateTime') &&

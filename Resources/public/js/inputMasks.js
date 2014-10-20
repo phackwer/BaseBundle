@@ -158,6 +158,7 @@ function mask()
     $('.money').maskMoney({ allowNegative: true, thousands:'.', decimal:','});
     $('.float').maskMoney({ allowNegative: true, thousands:'', decimal:'.'});
     $('.float-br').maskMoney({ allowNegative: true, thousands:'', decimal:','});
+    $('.money, .float, .float-br').attr('maxlength', 18);
     
 	$('.phone').mask('(99)(99) 9999-9999?9');
 	$('.cpf').mask('999.999.999-99');
