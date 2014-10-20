@@ -345,24 +345,26 @@ function choosePhoto()
 {
 	var targetId = $(this).attr('targetId');
 	var target = $('#' + targetId);
+	
 	if (!target[0]) {
-		console.log(targetId);
+		
 		var targetId = $(this).prop('id') + '_upload';
 	}
+	
 	target = $('#' + targetId);
-    
+	
     $(target).click();
 }
 
 //Apresenta imagem na hora da seleção
 function readURL(input)
 {
+	var input = document.getElementById(input.id);
     if (input.files && input.files[0]) {
+    	
         var reader = new FileReader();
 
         reader.onload = function (e) {
-        	
-        	console.log(e.target.result);
         	
         	var idTarget = $('#' + input.id).attr('targetId');
         	var target= $('#' + idTarget);
@@ -376,6 +378,25 @@ function readURL(input)
         }
 
         reader.readAsDataURL(input.files[0]);
+    } else if (input.value) {
+    	
+    	var idTarget = $('#' + input.id).attr('targetId');
+    	var target= $('#' + idTarget);
+    	if (!target[0]) {
+    	    target = $('.' + idTarget);
+    	}
+    	
+    	target.each(function(){
+    		
+    		message  = "Seu navegador não é compatível com a pré-visualização em tempo real.<br>" 
+    		message += "Por favor, utilize a versão mais atualizada para evitar esta mensagem."
+    		
+    		$("#errorDialogBody").html(message);
+    	    $("#errorDialog").modal('show');
+
+    		
+            $('label[for="'+ $(this).attr('id') +'"]').hide();
+    	})
     }
 }
 
