@@ -96,30 +96,30 @@ entity_delete:
     pattern:  /entity/delete
     defaults: { _controller: SanSISCoreBaseBundle:Entity:delete }
     
-get_states_provinces_by_country:
+base_get_states_provinces_by_country:
     pattern: /data/get_states_provinces_by_country
     defaults: { _controller: SanSISCoreBaseBundle:Base:getStatesProvincesByCountry }
     
-get_cities_by_state_province:
+base_get_cities_by_state_province:
     pattern: /data/get_cities_by_state_province
     defaults: { _controller: SanSISCoreBaseBundle:Base:getCitiesByStateProvince }
     
-get_organization_by_name:
+base_get_organization_by_name:
     pattern: /data/get_entity_by_name
     defaults: { _controller: SanSISCoreBaseBundle:Base:getOrganizationByName }
     
-get_entity_by_name:
+base_get_entity_by_name:
     pattern: /data/get_entity_by_name
     defaults: { _controller: SanSISCoreBaseBundle:Base:getEntityByName }
     
-get_measure_unities_by_type:
+base_get_measure_unities_by_type:
     pattern: /data/get_measure_unities_by_type
     defaults: { _controller: SanSISCoreBaseBundle:Base:getMeasureUnitiesByType }
     
-check_unique_cpf:
+base_check_unique_cpf:
     pattern: /data/check_unique_cpf
     defaults: { _controller: SanSISCoreBaseBundle:Base:checkUniqueCpf }
     
-check_unique_username:
+base_check_unique_username:
     pattern: /data/check_unique_username
     defaults: { _controller: SanSISCoreBaseBundle:Base:checkUniqueUsername }

@@ -398,6 +398,13 @@ abstract class EntityServiceAbstract extends ServiceAbstract
     {
     }
 
+    /**
+     * Caso exista upload de arquivos, manipule-os aqui
+     */
+    public function handleUploads(Request $req)
+    {
+    }
+
     public function flushRootEntity(Request $req)
     {
     	
@@ -406,6 +413,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
             $this->populateRootEntity($req);
             $this->validateRootEntity($req);
             $this->verifyRootEntity($req);
+            $this->handleUploads($req);
             $this->getEntityManager()->flush();
 //         } catch (\Exception $e) {
 //             throw new \Exception($e->getMessage());

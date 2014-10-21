@@ -359,25 +359,59 @@ function choosePhoto()
 //Apresenta imagem na hora da seleção
 function readURL(input)
 {
-	var input = document.getElementById(input.id);
     if (input.files && input.files[0]) {
     	
         var reader = new FileReader();
-
+        
         reader.onload = function (e) {
-        	
-        	var idTarget = $('#' + input.id).attr('targetId');
-        	var target= $('#' + idTarget);
-        	if (!target[0]) {
-        	    target = $('.' + idTarget);
+        	//Se imagem maior que X, 
+        	if (e.target.result.length > 2048000) {
+        		
+        		var jInput = $('#' + input.id);
+                
+                var idTarget = jInput.attr('targetId');
+            	var target= $('#' + idTarget);
+            	if (!target[0]) {
+            	    target = $('.' + idTarget);
+            	}
+        		
+        		var newJInput = jInput.clone(true,true);
+        		jInput.replaceWith(newJInput);
+        		
+	        	target.each(function(){
+	        		$(this).attr('src', '../../bundles/sansiscorebase/images/camera-icon.jpg')
+	                $('label[for="'+ $(this).attr('id') +'"]').show();
+	        	})
+        		
+        		message  = "Imagem excede o tamanho máximo permitido de 2048000 bytes" 
+        		
+        		$("#errorDialogBody").html(message);
+        	    $("#errorDialog").modal('show');
         	}
-        	target.each(function(){
-        		$(this).attr('src', e.target.result);
-                $('label[for="'+ $(this).attr('id') +'"]').hide();
-        	})
+        	else {
+	        	var reader = new FileReader();
+	            
+	            reader.onload = function (e) {
+	            	
+	            	var jInput = $('#' + input.id);
+	                
+	                var idTarget = jInput.attr('targetId');
+	            	var target= $('#' + idTarget);
+	            	if (!target[0]) {
+	            	    target = $('.' + idTarget);
+	            	}
+	            	
+	            	target.each(function(){
+	            		$(this).attr('src', e.target.result);
+	                    $('label[for="'+ $(this).attr('id') +'"]').hide();
+	            	})
+	            }
+	            reader.readAsDataURL(input.files[0]);
+        	}
         }
-
-        reader.readAsDataURL(input.files[0]);
+        
+        reader.readAsBinaryString(input.files[0]);
+        
     } else if (input.value) {
     	
     	var idTarget = $('#' + input.id).attr('targetId');
