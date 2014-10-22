@@ -8,36 +8,56 @@ if (typeof console == 'undefined') console = { log: function() {} };
 
 var numberPattern = /\d+/g;
 
+function confirmRemoveItem()
+{
+	$("#cancelConfirmButton").removeClass('btn-success');
+	$("#cancelConfirmButton").html('Cancelar');
+	$("#confirmDialogBody").html("Tem certeza que descartar estes dados?<br>Para cancelar esta remoção, basta cancelar a edição do final do formulário.");
+	$("#confirmDialog").modal('show');
+	$("#confirmButton").show();
+	
+	$("#confirmButton").unbind('click');
+	
+	$("#confirmButton")[0].target = $(this);
+	
+	if ($(this).hasClass('single-line'))
+		$("#confirmButton").click(removeItem);
+	if ($(this).hasClass('multi-line'))
+		$("#confirmButton").click(removeMultiItem);
+}
+
 function removeItem()
 {
-	var grandPa = $(this).parent().parent();
+	var target = $("#confirmButton")[0].target;
+	$("#confirmDialog").modal('hide');
+	var grandPa = target.parent().parent();
 	if (grandPa.children().length > 1) {
 
 		//Renomeia o campo id do objeto para idDel, marcando para remoção do lado do server
-		var idField = $(this).parent().find('input:hidden');
+		var idField = target.parent().find('input:hidden');
 		if(idField.val())
 		{
 	     	var name = idField.attr('name');
 	     	idField.attr('name', name.replace('[id]','[idDel]') );
 	     	idField.insertAfter(grandPa)
 		}
-		$(this).parent().remove();
+		target.parent().remove();
 		//se tiver o botão de plus, ele deve ser movido para o último item da listagem
-		var plus = $(this).parent().find('.icon-plus');
+		var plus = target.parent().find('.icon-plus');
 		if (plus) {
 			plus.insertAfter(grandPa.find('.icon-minus').last());
 			plus.click(addItem);
 		}
 		//se tiver conteúdo no label, tem que manter
-		var label = $(this).parent().find('label');
+		var label = target.parent().find('label');
 		if (label.html() != '&nbsp;&nbsp;&nbsp;') {
 			grandPa.find('span:visible').first().find('label').html(label.html());
 		}
 	} else {
-		$(this).parent().find('input').val('');
-		$(this).parent().find('textarea').val('');
-		$(this).parent().find('select').find(':selected').prop('selected', false);
-		$(this).parent().find('select').find('option').first().prop('selected', true);
+		target.parent().find('input').val('');
+		target.parent().find('textarea').val('');
+		target.parent().find('select').find(':selected').prop('selected', false);
+		target.parent().find('select').find('option').first().prop('selected', true);
 		alert('É preciso ter um item pelo menos. O campo será deixado em branco para exclusão no banco de dados.')
 	}
 
@@ -46,36 +66,39 @@ function removeItem()
 
 function removeMultiItem()
 {
-	var grandPa = $(this).parent().parent().parent();
+	var target = $("#confirmButton")[0].target;
+	$("#confirmDialog").modal('hide');
+	
+	var grandPa = target.parent().parent().parent();
 	if (grandPa.children().length > 2) {
 
 		//Renomeia o campo id do objeto para idDel, marcando para remoção do lado do server
-		var idField = $(this).parent().find('input:hidden');
+		var idField = target.parent().find('input:hidden');
 		if(idField.val())
 		{
 	     	var name = idField.attr('name');
 	     	idField.attr('name', name.replace('[id]','[idDel]') );
 	     	idField.insertAfter(grandPa);
 		}
-		$(this).parent().parent().remove();
+		target.parent().parent().remove();
 		//se tiver o botão de plus, ele deve ser movido para o último item da listagem
-		var plus = $(this).parent().find('.icon-plus');
+		var plus = target.parent().find('.icon-plus');
 		if (plus) {
 			plus.insertAfter(grandPa.find('.icon-minus').last());
 			plus.click(addMultiItem);
 		}
 		//se tiver conteúdo no label, tem que manter
-		var label = $(this).parent().find('label');
+		var label = target.parent().find('label');
 		if (label.html() != '&nbsp;&nbsp;&nbsp;') {
 			grandPa.find('span:visible').first().find('label').html(label.html());
 		}
 		//Se tiver h5, tem que renumerar
 		grandPa.find('h5:visible').each(reindexMultiNumberLabel);
 	} else {
-		$(this).parent().find('input').val('');
-		$(this).parent().find('textarea').val('');
-		$(this).parent().find('select').find(':selected').prop('selected', false);
-		$(this).parent().find('select').find('option').first().prop('selected', true);
+		target.parent().find('input').val('');
+		target.parent().find('textarea').val('');
+		target.parent().find('select').find(':selected').prop('selected', false);
+		target.parent().find('select').find('option').first().prop('selected', true);
 		alert('É preciso ter um item pelo menos. O campo será deixado em branco para exclusão no banco de dados.')
 	}
 
@@ -356,16 +379,80 @@ function choosePhoto()
     $(target).click();
 }
 
+//
+function removePhoto()
+{
+	$("#cancelConfirmButton").removeClass('btn-success');
+	$("#cancelConfirmButton").html('Cancelar');
+	$("#confirmDialogBody").html("Tem certeza que descartar esta imagem?<br>Para cancelar esta remoção, basta cancelar a edição do final do formulário.");
+	$("#confirmDialog").modal('show');
+	$("#confirmButton").show();
+	
+	$("#confirmButton").unbind('click');
+	
+	var targetId = $(this).attr('targetId');
+	var input = $('#' + targetId);
+	
+	if (!input[0]) {
+		var targetId = $(this).prop('id') + '_upload';
+	}
+	
+	$("#confirmButton").attr('targetId', targetId);
+	
+	$("#confirmButton").click(function() {
+		
+		var jInput = $('#' + $("#confirmButton").attr('targetId'));
+        
+        var idTarget = jInput.attr('targetId');
+    	var target= $('#' + idTarget);
+    	if (!target[0]) {
+    	    target = $('.' + idTarget);
+    	}
+		
+		var newJInput = jInput.clone(true,true);
+		jInput.replaceWith(newJInput);
+		
+		target.each(function(){
+    		$(this).attr('src', '../../bundles/sansiscorebase/images/camera-icon.jpg')
+    		$('label[for="'+ $(this).attr('id') +'"]').each( function () {
+    			if ($(this).hasClass('choosePhoto')) {
+    				$(this).show();
+    			}
+    			else if ($(this).hasClass('removePhoto')) {
+    				$(this).hide();
+    			}
+			});
+    	})		
+		
+    	$("#cancelConfirmButton").addClass('btn-success');
+    	$("#cancelConfirmButton").html('Fechar');
+        $("#searchBt").trigger('click');
+        $("#confirmButton").hide();
+        $("#confirmDialogBody").html("Descartando imagem...");
+        window.setTimeout(function(){$("#confirmDialog").modal('hide');}, 1000);
+	});
+}
+
+//Converte data url para blob
+function dataURItoBlob(dataURI)
+{
+	var dataTYPE = dataURI.split(';')[0].split(':')[1];
+    var binary = atob(dataURI.split(',')[1]), array = [];
+    for(var i = 0; i < binary.length; i++) array.push(binary.charCodeAt(i));
+    return new Blob([new Uint8Array(array)], {type: dataTYPE});
+}
+
 //Apresenta imagem na hora da seleção
 function readURL(input)
 {
     if (input.files && input.files[0]) {
     	
-        var reader = new FileReader();
+    	var reader = new FileReader();
         
-        reader.onload = function (e) {
+        reader.onload = function (e)
+        {
         	//Se imagem maior que X, 
-        	if (e.target.result.length > 2048000) {
+        	if (dataURItoBlob(e.target.result).size > 2048000) {
         		
         		var jInput = $('#' + input.id);
                 
@@ -378,21 +465,16 @@ function readURL(input)
         		var newJInput = jInput.clone(true,true);
         		jInput.replaceWith(newJInput);
         		
-	        	target.each(function(){
-	        		$(this).attr('src', '../../bundles/sansiscorebase/images/camera-icon.jpg')
-	                $('label[for="'+ $(this).attr('id') +'"]').show();
-	        	})
-        		
         		message  = "Imagem excede o tamanho máximo permitido de 2048000 bytes" 
         		
         		$("#errorDialogBody").html(message);
         	    $("#errorDialog").modal('show');
         	}
         	else {
-	        	var reader = new FileReader();
+	        	var readerInner = new FileReader();
 	            
-	            reader.onload = function (e) {
-	            	
+	        	readerInner.onload = function (e)
+	        	{
 	            	var jInput = $('#' + input.id);
 	                
 	                var idTarget = jInput.attr('targetId');
@@ -403,14 +485,21 @@ function readURL(input)
 	            	
 	            	target.each(function(){
 	            		$(this).attr('src', e.target.result);
-	                    $('label[for="'+ $(this).attr('id') +'"]').hide();
+	            		$('label[for="'+ $(this).attr('id') +'"]').each( function () {
+	            			if ($(this).hasClass('choosePhoto')) {
+	            				$(this).hide();
+	            			}
+	            			else if ($(this).hasClass('removePhoto')) {
+	            				$(this).show();
+	            			}
+        				});
 	            	})
 	            }
-	            reader.readAsDataURL(input.files[0]);
+	        	readerInner.readAsDataURL(input.files[0]);
         	}
         }
         
-        reader.readAsBinaryString(input.files[0]);
+        reader.readAsDataURL(input.files[0]);
         
     } else if (input.value) {
     	
@@ -563,14 +652,15 @@ $(document).ready(function() {
 	
 	//Imagens para upload
     $('.choosePhoto').click(choosePhoto);
+    $('.removePhoto').click(removePhoto);
     $('.imageUpload').change(function() {readURL(this);});
 	
 	//Funções para edição de objetos
-	$('.single-line').parent().find('.icon-minus').click(removeItem);
+	$('.single-line').parent().find('.icon-minus').click(confirmRemoveItem);
 	$('.single-line').parent().find('.icon-plus').click(addItem);
 	$('.single-line').parent().find('.icon-minus').each(hideMinus);
 
-	$('.multi-line').parent().find('.icon-minus').click(removeMultiItem);
+	$('.multi-line').parent().find('.icon-minus').click(confirmRemoveItem);
 	$('.multi-line').parent().find('.icon-plus').click(addMultiItem);
 	$('.multi-line').parent().find('.icon-minus').each(hideMultiMinus);
 	

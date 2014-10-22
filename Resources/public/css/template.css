@@ -87,7 +87,7 @@ body{
 
 .section{
     background-color: #CFCFCF;
-    background-color: rgba(200,200,200,0.7);
+    background-color: rgba(200,200,200,0.5);
     /*min-height: 800px !important;*/
 }
 
@@ -167,8 +167,8 @@ body{
     padding-top: 21px;
 }
 .titulo_sistema {
-    text-shadow: 0px 3px 3px #000000;
-    filter: dropshadow(color=#000000, offx=0, offy=3);
+    text-shadow: 2px 2px 3px #000000;
+    filter: dropshadow(color=#000000, offx=2, offy=2);
     float: left;
     padding: 10px;
     white-space: nowrap;
@@ -550,6 +550,8 @@ span.ng-binding{
 /* FORMATO DO TITULO */
 
 strong.title{
+    text-shadow: 0px 0px 3px #ffffff;
+    filter: dropshadow(color=#ffffff, offx=0, offy=0);
     border-bottom: 2px solid #222222;
     color: #222222;
     display: block;
@@ -807,7 +809,7 @@ textarea{
     position: absolute;
     top: -10px;
     background-color: #f6f6f6 ;
-    background-color: rgba(230,230,230, 0.7) ;
+    background-color: rgba(217,217,217, 0.7) ;
     padding: 0 5px;
     width: auto;
 }
