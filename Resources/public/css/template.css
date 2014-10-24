@@ -809,7 +809,7 @@ textarea{
     position: absolute;
     top: -10px;
     background-color: #f6f6f6 ;
-    background-color: rgba(217,217,217, 0.7) ;
+    background-color: rgba(220,220,220, 0.7) ;
     padding: 0 5px;
     width: auto;
 }

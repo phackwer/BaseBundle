@@ -393,6 +393,8 @@ function removePhoto()
 	var targetId = $(this).attr('targetId');
 	var input = $('#' + targetId);
 	
+	console.log($(this));
+	
 	if (!input[0]) {
 		var targetId = $(this).prop('id') + '_upload';
 	}
@@ -402,6 +404,15 @@ function removePhoto()
 	$("#confirmButton").click(function() {
 		
 		var jInput = $('#' + $("#confirmButton").attr('targetId'));
+		
+		var removeTarget = $('[name="' + jInput.attr('removeTarget') +'"]');
+		if (removeTarget.val()) {
+			removeField = removeTarget.clone();
+			var name = removeField.attr('name');
+			removeField.attr('name', name.replace('[id]','[idDelResource]') );
+			removeField.insertAfter(removeTarget);
+			removeTarget.val('');
+		}
         
         var idTarget = jInput.attr('targetId');
     	var target= $('#' + idTarget);
@@ -464,6 +475,27 @@ function readURL(input)
         		
         		var newJInput = jInput.clone(true,true);
         		jInput.replaceWith(newJInput);
+        		
+        		var removeTarget = $('[name="' + jInput.attr('removeTarget') +'"]');
+        		if (removeTarget.val()) {
+        			removeField = removeTarget.clone();
+        			var name = removeField.attr('name');
+        			removeField.attr('name', name.replace('[id]','[idDelResource]') );
+        			removeField.insertAfter(removeTarget);
+        			removeTarget.val('');
+        		}
+        		
+        		target.each(function(){
+            		$(this).attr('src', '../../bundles/sansiscorebase/images/camera-icon.jpg')
+            		$('label[for="'+ $(this).attr('id') +'"]').each( function () {
+            			if ($(this).hasClass('choosePhoto')) {
+            				$(this).show();
+            			}
+            			else if ($(this).hasClass('removePhoto')) {
+            				$(this).hide();
+            			}
+        			});
+            	})	
         		
         		message  = "Imagem excede o tamanho máximo permitido de 2048000 bytes" 
         		
