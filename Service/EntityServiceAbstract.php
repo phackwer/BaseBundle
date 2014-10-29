@@ -186,7 +186,8 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         if ($this->debug) {
             echo '<pre>';
             print_r($_POST);die;
-            print_r($this->rootEntity);die;
+            //só descomente em casos extremos
+            //print_r($this->rootEntity);die;
         }
     }
     
@@ -222,6 +223,15 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         else {
             if (isset($values['id']) && $values['id']){
                 $entity = $this->getEntityManager()->getRepository($newClass)->findOneBy(array('id' => $values['id']));
+                if (!$entity){
+                	echo '<pre>';
+                	echo ">>>>>Este erro jamais deve acontecer. Revise o mapeamento<<<<\n";
+                	echo '>>>>>Entidade não existente!!!!'.$entity."<<<<\n";
+                	echo '>>>>>'.$newClass."<<<<\n";
+                	print_r($values);
+                	print_r($_POST);
+                	die('Este erro jamais deve acontecer. Revise o mapeamento');
+                };
                 if (method_exists($entity,'setTerm')) {
                     return $entity;
                 }
@@ -245,7 +255,20 @@ abstract class EntityServiceAbstract extends ServiceAbstract
             }
         }
         
-        $ref = new \ReflectionClass($entity);
+        try {
+            $ref = new \ReflectionClass($entity);
+        } catch (\Exception $e) {
+        	echo '<pre>';
+        	echo ">>>>>Este erro jamais deve acontecer. Revise o mapeamento<<<<\n";
+        	echo '>>>>>Entidade não existente!!!!'.$entity."<<<<\n";
+        	echo '>>>>>'.$newClass."<<<<\n";
+        	print_r($values);
+        	print_r($_POST);
+//         	if ($this->debug)
+//         		print_r($this->rootEntity);
+        	die('Este erro jamais deve acontecer. Revise o mapeamento');
+            throw new \Exception($entity. ">>>>" .$e->getMessage());
+        }
         
         /**
          * Corrige o retorno de uma classe de proxy que impossibilita a leitura dos comentários corretos da classe
