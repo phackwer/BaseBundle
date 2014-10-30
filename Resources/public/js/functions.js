@@ -34,7 +34,7 @@ function removeItem()
 	if (grandPa.children().length > 1) {
 
 		//Renomeia o campo id do objeto para idDel, marcando para remoção do lado do server
-		var idField = target.parent().find('input:hidden');
+		var idField = target.parent().find('input:hidden').first();
 		if(idField.val())
 		{
 	     	var name = idField.attr('name');
