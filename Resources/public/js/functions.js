@@ -175,7 +175,8 @@ function addItem() {
     adjustNewItem(newFill,$(this), addNumber);
     
     //esconde o label duplicado
-    newFill.find('label').html("&nbsp;&nbsp;&nbsp;").addClass('visible-desktop');$(this).parent().parent().parent().find('h5:visible').each(reindexMultiNumberLabel);
+    newFill.find('label:not([notCleanable])').html("&nbsp;&nbsp;&nbsp;").addClass('visible-desktop');
+    $(this).parent().parent().parent().find('h5:visible').each(reindexMultiNumberLabel);
     $(this).parent().parent().find('.icon-minus').each(hideMinus);
 };
 
