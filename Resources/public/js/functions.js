@@ -125,7 +125,6 @@ function incrementNumber (value)
 
 function incrementMultiNumber (value)
 {
-	values = value.match(numberPattern);
 	for(var i = 0; values.length < i; $i++) {
 		values[i]++;
 	}
@@ -141,10 +140,20 @@ function incrementMultiNumber (value)
 	return (numberId > number) ? numberId : number;
 }
 
+/**
+ * Incrementa número apenas a partir de determinado ponto
+ */
 function addNumber()
 {
-	if ($(this).attr('name')) {
-		$(this).attr('name', $(this).attr('name').replace( numberPattern , incrementNumber ))
+	var keepNamePattern =  $(this).attr('keepNamePattern');
+	if (!keepNamePattern) {
+		keepNamePattern = '';
+	}
+	
+	if ($(this).attr('name')) {		
+		var name = $(this).attr('name').replace(keepNamePattern, '');
+		name = name.replace( numberPattern , incrementNumber );
+		$(this).attr('name', keepNamePattern + name)
 	}
 	if ($(this).prop('id')) {
 		$(this).prop('id', $(this).prop('id').replace( numberPattern , incrementNumber ))
@@ -153,10 +162,14 @@ function addNumber()
 		$(this).attr('targetId', $(this).attr('targetId').replace( numberPattern , incrementNumber ))
 	}
 	if ($(this).attr('for')) {
-		$(this).attr('for', $(this).attr('for').replace( numberPattern , incrementNumber ))
+		var name = $(this).attr('for').replace(keepNamePattern, '');
+		name = name.replace( numberPattern , incrementNumber );
+		$(this).attr('for', keepNamePattern + name)
 	}
 	if ($(this).attr('dateCompare')) {
-		$(this).attr('dateCompare', $(this).attr('dateCompare').replace( numberPattern , incrementNumber ))
+		var name = $(this).attr('dateCompare').replace(keepNamePattern, '');
+		name = name.replace( numberPattern , incrementNumber );
+		$(this).attr('dateCompare', keepNamePattern + name)
 	}
 }
 
