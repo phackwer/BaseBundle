@@ -949,3 +949,9 @@ li.span{
 .clonable.span{
     margin-left: 0px;
 }
+
+.jqGridOverflowColumn{
+	overflow: hidden !important;
+	height: 18px;
+	width:100%;
+}

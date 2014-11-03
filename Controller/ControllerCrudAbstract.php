@@ -191,7 +191,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
                                 $sval = $sval->format('d/m/Y');
                             }
                             
-                            $array[$i]['cell'][$skey] = $sval;
+                            $array[$i]['cell'][$skey] = '<div class="jqGridOverflowColumn">'.$sval.'</div>';
                         }
                     }
                     
@@ -205,7 +205,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
                             $val = $val->format('d/m/Y');
                     }
 
-                    $array[$i]['cell'][$key] = $val;
+                    $array[$i]['cell'][$key] = '<div class="jqGridOverflowColumn">'.$val.'</div>';;
                 }
                 $j++;
                     
