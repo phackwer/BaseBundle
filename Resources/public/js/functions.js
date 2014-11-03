@@ -51,7 +51,7 @@ function removeItem()
 		//se tiver conteúdo no label, tem que manter
 		var label = target.parent().find('label');
 		if (label.html() != '&nbsp;&nbsp;&nbsp;') {
-			grandPa.find('span:visible').first().find('label').html(label.html());
+			grandPa.find('span:visible').first().find('label').html(label.html()).removeClass('visible-desktop');
 		}
 	} else {
 		target.parent().find('input').val('');
@@ -90,7 +90,7 @@ function removeMultiItem()
 		//se tiver conteúdo no label, tem que manter
 		var label = target.parent().find('label');
 		if (label.html() != '&nbsp;&nbsp;&nbsp;') {
-			grandPa.find('span:visible').first().find('label').html(label.html());
+			grandPa.find('span:visible').first().find('label').html(label.html()).removeClass('visible-desktop');
 		}
 		//Se tiver h5, tem que renumerar
 		grandPa.find('h5:visible').each(reindexMultiNumberLabel);
