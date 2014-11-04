@@ -11,6 +11,8 @@ use Doctrine\ORM\PersistentCollection;
  */
 abstract class AbstractBase
 {
+	static protected $toArray = array();
+	
     public function fromArray(array $data)
     {
         foreach ($data as $key => $value) {

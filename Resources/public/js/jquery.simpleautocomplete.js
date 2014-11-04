@@ -59,8 +59,11 @@
 					selClass = typeof( options.selectedClassName ) != "undefined" ? options.selectedClassName : selClass;
 					
 					attrCB = typeof( options.attrCallBack ) != "undefined" ? options.attrCallBack : attrCB;
+					console.log(( options.identifier ))
 					if( typeof( options.identifier ) == "string" )
-					getOptions.identifier = options.identifier;
+						getOptions.identifier = options.identifier;
+					if( typeof( options.identifier ) == "function" )
+						getOptions.identifier = options.identifier();
 
 					if( typeof( options.extraParamFromInput ) != "undefined" )
 					getOptions.extraParam = $( options.extraParamFromInput ).val();

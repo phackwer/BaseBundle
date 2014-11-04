@@ -272,11 +272,20 @@ function autoCompleteField()
 	
 	var exceptId = $(this).attr('exceptId');
 	if (exceptId) {
-		if (exceptId.indexOf('#') == -1) {
-			exceptId = '#' + exceptId;
+		try {
+			exceptId = eval(exceptId);
+			if (typeof( eval(exceptId) ) == 'function') {
+				exceptId = eval(exceptId);
+				exceptId = exceptId();
+			}
 		}
-		
-		exceptId = $(exceptId).val();
+		catch(err) {
+			if (exceptId.indexOf('#') == -1) {
+				exceptId = '#' + exceptId;
+			}
+			exceptId = $(exceptId).val();
+		}
+
 	} else {
 		exceptId = null
 	}

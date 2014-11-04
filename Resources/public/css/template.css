@@ -955,3 +955,7 @@ li.span{
 	height: 18px;
 	width:100%;
 }
+
+.alert{
+	font-size: 1.3em !important;
+}
