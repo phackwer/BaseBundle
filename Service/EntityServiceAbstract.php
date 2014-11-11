@@ -574,7 +574,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
         }
     }
     
-    function getSearchQuery($searchData)
+    function getSearchQuery(&$searchData)
     {
         $query = $this->getRootRepository()->createQueryBuilder('g')->getQuery();
         
@@ -585,6 +585,9 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                     $query->setDQL($query->getDQL() . $and . 'g.' . $field . ' like :' . $field . ' ');
                     $query->setParameter($field, '%' . str_replace(' ', '%', $criteria) . '%');
                     $and = ' and ';
+                }
+                else {
+                	unset($searchData[$field]);
                 }
             }
         }
