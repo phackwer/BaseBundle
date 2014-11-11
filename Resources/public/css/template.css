@@ -7,7 +7,6 @@
 * {
     margin: 0;
     padding: 0;
-    border: none;
     text-decoration: none;
     font-family: inherit;
     outline: none !important;
@@ -421,7 +420,7 @@ body{
     height: auto;
     padding: 10px 0;
     width: 100%;
-/*     position: fixed; */
+    position: fixed;
     bottom: 0;
     color: #FFFFFF;
     font-size: 1.2em;
