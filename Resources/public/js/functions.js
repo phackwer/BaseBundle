@@ -627,7 +627,7 @@ function errorPlacement (error, element)
 					} else {
 						container.insertAfter(element)
 						container.append(element);
-						if (!element.is(':visible')) {
+						if (element.css('display') == 'none') {
 							container.hide();
 						}
 					}
@@ -653,7 +653,7 @@ function errorPlacement (error, element)
 					var oldParent = parent;
 					container.insertAfter(oldParent)
 					container.append(oldParent);
-					if (!oldParent.is(':visible')) {
+					if (oldParent.css('display') == 'none') {
 						container.hide();
 					}
 					if (error) {
