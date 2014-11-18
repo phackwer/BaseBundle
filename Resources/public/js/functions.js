@@ -324,6 +324,8 @@ function transformToReadForm() {
     hrefRemove = $('.foto').parent();
     $('.foto').each(function(){$(this).insertBefore($(this).parent())});
     hrefRemove.each(function(){$(this).remove()});
+    $('.choosePhoto').each(function(){$(this).remove()});
+    $('.removePhoto').each(function(){$(this).remove()});
     $('.dateBR').datepicker("destroy");
     
     $('#cancel_bt').html('Voltar');
