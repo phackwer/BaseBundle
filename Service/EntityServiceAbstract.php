@@ -109,7 +109,18 @@ abstract class EntityServiceAbstract extends ServiceAbstract
     {
         return $this->getRootEntity($id)->toArray();
     }
-
+    
+    /**
+     * Retorna um array com os dados da entidade raiz vazia para a criação
+     * Sobrescreva caso precise da entidade pré-populada
+     *
+     * @return array
+     */
+    public function getNewRootEntityData()
+    {
+    	return $this->getRootEntity()->toArray();
+    }
+    
     /**
      * Obtém a entidade raiz da service já mapeada para persistência pelo EntityManager
      *
@@ -127,7 +138,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
             $this->rootEntity = $this->getRootRepository()->find($id);
         }
         
-        if (! $this->rootEntity) {
+        if (!$this->rootEntity) {
             $class = $this->rootEntityName;
             $this->rootEntity = new $class();
             if (!$this->debug) {

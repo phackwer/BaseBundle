@@ -317,7 +317,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
         if ($this->get('session')->has('SanSISSaveResult') && $this->get('session')->get('SanSISSaveResult') instanceof AbstractBase) {
             $entityData = $this->get('session')->get('SanSISSaveResult')->toArray();
         } else {
-            $entityData = $this->getService()->getRootEntityData();
+            $entityData = $this->getService()->getNewRootEntityData();
         }
 
         if ($this->get('session')->has('SanSISSaveResult')) {
@@ -378,7 +378,6 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      */
     public function saveAction()
     {
-    	
         try {
             $this->getService()->save($this->getRequest());
             MessageService::addMessage('success', 'MSG_S001');

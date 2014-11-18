@@ -8,6 +8,17 @@ if (typeof console == 'undefined') console = { log: function() {} };
 
 var numberPattern = /\d+/g;
 
+function switchDateFields()
+{
+	if ($(this).is(':checked')) {
+		$(this).parent().find('.dateBR').prop('disabled', true).val('').hide().parent().hide();
+		$(this).parent().find('.aacr2').prop('disabled', false).val('').show();
+	} else {
+		$(this).parent().find('.dateBR').prop('disabled', false).val('').show().parent().show();
+		$(this).parent().find('.aacr2').prop('disabled', true).val('').hide();
+	}
+}
+
 function confirmRemoveItem()
 {
 	$("#cancelConfirmButton").removeClass('btn-success');
@@ -616,6 +627,9 @@ function errorPlacement (error, element)
 					} else {
 						container.insertAfter(element)
 						container.append(element);
+						if (!element.is(':visible')) {
+							container.hide();
+						}
 					}
 					
 					if (error) {
@@ -639,6 +653,9 @@ function errorPlacement (error, element)
 					var oldParent = parent;
 					container.insertAfter(oldParent)
 					container.append(oldParent);
+					if (!oldParent.is(':visible')) {
+						container.hide();
+					}
 					if (error) {
 						error.insertAfter(oldParent);
 					}
@@ -665,6 +682,12 @@ function errorPlacement (error, element)
 	} catch (err) {
 		//faça nada
 	}
+	$('.validationSpan').each(function(){
+		if ($(this).html() == ''){
+			$(this).remove();
+		}
+	})
+	
 }
 
 //Abre o tab correto em caso de erro em uma tab que não esteja visível ainda.
