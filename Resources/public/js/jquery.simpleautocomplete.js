@@ -59,7 +59,6 @@
 					selClass = typeof( options.selectedClassName ) != "undefined" ? options.selectedClassName : selClass;
 					
 					attrCB = typeof( options.attrCallBack ) != "undefined" ? options.attrCallBack : attrCB;
-					console.log(( options.identifier ))
 					if( typeof( options.identifier ) == "string" )
 						getOptions.identifier = options.identifier;
 					if( typeof( options.identifier ) == "function" )
@@ -71,8 +70,6 @@
 
 				kc = ( ( typeof( ev.charCode ) == 'undefined' || ev.charCode === 0 ) ? ev.keyCode : ev.charCode );
 				key = String.fromCharCode(kc);
-
-				//console.log(kc, key, ev );
 
 				if (kc == 27)
 				{

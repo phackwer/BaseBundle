@@ -7,6 +7,7 @@ use \Symfony\Component\Config\Loader\LoaderInterface;
 class Kernel extends \Symfony\Component\HttpKernel\Kernel
 {
     protected static $instance = null;
+    
     /**
      * Constructor.
      *
@@ -21,10 +22,12 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel
         
         if (!self::$instance)
             self::$instance = $this;
+        
+        // replace the default string type
+        \Doctrine\DBAL\Types\Type::overrideType('string', '\SanSIS\Core\BaseBundle\Doctrine\DBAL\Types\AutoEncodeStringType');
     }
     
     /**
-     * @TODO - Finalizar o getInstance
      * @throws \Exception
      */
     public static function getInstance()
