@@ -30,7 +30,11 @@ abstract class ServiceAbstract
     /**
      * @var \Symfony\Component\DependencyInjection\Container
      */
-    protected $container = null;
+    protected $container = null;    
+    
+    protected $secFactory = null;
+    
+    protected $secContext = null;
 
     /**
      * @param EntityManager $entityManager
@@ -40,6 +44,16 @@ abstract class ServiceAbstract
         $entityManager->getConfiguration()->setQuoteStrategy(new OracleQuoteStrategy());
         $this->setEntityManager($entityManager);
         $this->startTimer();
+    }
+    
+    public function setSecFactory(\Symfony\Component\Security\Core\Encoder\EncoderFactory $secFactory)
+    {
+        $this->secFactory = $secFactory;
+    }
+    
+    public function setSecContext(\Symfony\Component\Security\Core\SecurityContext $secContext)
+    {
+        $this->secContext = $secContext;
     }
 
     public function setServiceContainer($container)

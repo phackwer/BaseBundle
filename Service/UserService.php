@@ -3,26 +3,12 @@ namespace SanSIS\Core\BaseBundle\Service;
 
 use \Doctrine\ORM\Query;
 use \Symfony\Component\HttpFoundation\Request;
-use \Doctrine\Common\Collections\ArrayCollection;
+use \SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection;
 use \SanSIS\Core\BaseBundle\Entity\User;
 
 class UserService extends BaseService
 {
     protected $rootEntityName = '\SanSIS\Core\BaseBundle\Entity\LegalBody';
-    
-    protected $secFactory = null;
-    
-    protected $secContext = null;
-    
-    public function setSecFactory(\Symfony\Component\Security\Core\Encoder\EncoderFactory $secFactory)
-    {
-        $this->secFactory = $secFactory;
-    }
-    
-    public function setSecContext(\Symfony\Component\Security\Core\SecurityContext $secContext)
-    {
-        $this->secContext = $secContext;
-    }
     
     /**
      * Sobrescreve o método para pesquisar por tipo de pessoa
@@ -108,19 +94,6 @@ class UserService extends BaseService
             if(($person['user']['password'] == $person['user']['confirmPassword'])) {
                 $encoder = $this->secFactory->getEncoder($user);
                 $person['user']['confirmPassword'] = $person['user']['password'] = $encoder->encodePassword($person['user']['password'], $user->getSalt());
-        
-//                 if (isset($person['user']['oldPassword'])) {
-//                     $person['user']['oldPassword'] = $encoder->encodePassword($person['user']['oldPassword'], $user->getSalt());
-//                     if ($user->getId() && ($user->getPassword() != $person['user']['oldPassword'])){
-//                         $person['user']['password'] = '';
-//                         $req->request->set('person', $person);
-//                         //populate forçado para redirect correto do formulário
-//                         $this->populateRootEntity($req);
-//                         throw new \Exception('Senhas informadas inválidas');
-//                     }
-//                 }
-
-//                 die('certo');
             }
             else {
                 unset($person['user']['password']);

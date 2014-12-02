@@ -783,6 +783,7 @@ textarea{
 
 .ui-jqgrid tr.jqgrow td {
         white-space: normal !important;
+        overflow: hidden !important;
     }
     
 .ui-jqgrid {

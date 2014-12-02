@@ -3,7 +3,7 @@
 namespace SanSIS\Core\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * LegalBodyPerson
@@ -138,11 +138,11 @@ class LegalBodyPerson extends AbstractBase
     /**
      * Set professionalRelation
      *
-     * @param \Doctrine\Common\Collections\ArrayCollection $professionalRelation
+     * @param \SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection $professionalRelation
      * @innerEntity \SanSIS\Core\BaseBundle\Entity\LegalBodyRelation
      * @return LegalBodyPerson
      */
-    public function setProfessionalRelation(\Doctrine\Common\Collections\ArrayCollection $professionalRelation = null)
+    public function setProfessionalRelation(\SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection $professionalRelation = null)
     {
         $this->professionalRelation = $professionalRelation;
     
@@ -152,7 +152,7 @@ class LegalBodyPerson extends AbstractBase
     /**
      * Get professionalRelation
      *
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @return \SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection
      *
      */
     public function getProfessionalRelation()

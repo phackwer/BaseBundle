@@ -24,7 +24,8 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel
             self::$instance = $this;
         
         // replace the default string type
-        \Doctrine\DBAL\Types\Type::overrideType('string', '\SanSIS\Core\BaseBundle\Doctrine\DBAL\Types\AutoEncodeStringType');
+        \Doctrine\DBAL\Types\Type::overrideType(\Doctrine\DBAL\Types\Type::STRING, '\SanSIS\Core\BaseBundle\Doctrine\DBAL\Types\AutoEncodeStringType');
+        \Doctrine\DBAL\Types\Type::overrideType(\Doctrine\DBAL\Types\Type::TEXT, '\SanSIS\Core\BaseBundle\Doctrine\DBAL\Types\AutoEncodeTextType');
     }
     
     /**

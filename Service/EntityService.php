@@ -3,7 +3,7 @@ namespace SanSIS\Core\BaseBundle\Service;
 
 use \Doctrine\ORM\Query;
 use \Symfony\Component\HttpFoundation\Request;
-use \Doctrine\Common\Collections\ArrayCollection;
+use \SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection;
 
 class EntityService extends BaseService
 {

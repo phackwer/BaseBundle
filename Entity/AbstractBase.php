@@ -1,7 +1,7 @@
 <?php
 namespace SanSIS\Core\BaseBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**

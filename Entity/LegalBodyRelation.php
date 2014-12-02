@@ -3,7 +3,7 @@
 namespace SanSIS\Core\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * LegalBodyRelation
@@ -239,11 +239,11 @@ class LegalBodyRelation extends AbstractBase
     /**
      * Set profile
      *
-     * @param \Doctrine\Common\Collections\ArrayCollection $profile
+     * @param \SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection $profile
      * @innerEntity \SanSIS\Core\BaseBundle\Entity\Profile
      * @return Profile
      */
-    public function setProfile(\Doctrine\Common\Collections\ArrayCollection $profile = null)
+    public function setProfile(\SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection $profile = null)
     {
         $this->profile = $profile;
     
@@ -253,7 +253,7 @@ class LegalBodyRelation extends AbstractBase
     /**
      * Get profile
      *
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @return \SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection
      */
     public function getProfile()
     {

@@ -2,10 +2,15 @@
 
 namespace SanSIS\Core\BaseBundle\Doctrine\DBAL\Types;
 
-use Doctrine\DBAL\Types\StringType;
+use Doctrine\DBAL\Types\TextType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
-class AutoEncodeStringType extends StringType
+/**
+ * Type that maps an SQL CLOB to a PHP string.
+ *
+ * @since 2.0
+ */
+class AutoEncodeTextType extends TextType
 {
     /**
      * {@inheritdoc}
@@ -23,10 +28,11 @@ class AutoEncodeStringType extends StringType
      */
     public function convertToPHPValue($value, AbstractPlatform $p)
     {
+    	$value = is_resource($value) ? stream_get_contents($value) : $value;
+    	
     	$dbchar =  \AppKernel::getInstance()->getContainer()->getParameter('database_charset');
     	if ($dbchar == 'latin1') $dbchar = 'CP1252';
-
+    	
     	return mb_convert_encoding($value, 'UTF-8',$dbchar);
-
     }
 }

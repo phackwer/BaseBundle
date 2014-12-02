@@ -1,12 +1,55 @@
-/**
- * Arquivo responsável pelo JS GERAL
- *
- * Copyright(c) Todos os direitos reservados
- */
+
+/*********************************************
+ *     Arquivo responsável pelo JS GERAL     *
+ *********************************************
+ * Copyright(c) Todos os direitos reservados *
+ *********************************************/
 
 if (typeof console == 'undefined') console = { log: function() {} };
 
 var numberPattern = /\d+/g;
+
+/****************************
+ *     EDIÇÃO DE GRIDS      *
+ ****************************/
+
+function json2form(formId, json, index)
+{
+	 for (var i in json){
+		 if  (Array.isArray(json[i])) {
+			 if (index) {
+				 index += '['+i+']';
+			 } else {
+				 index = '['+i+']';
+			 }
+			 json2form(formId, json[i], index)
+		 }
+		 console.log(i);
+	 }
+}
+
+function editJsonRow(index, editDialog)
+{
+	alert(index);
+}
+
+function saveJsonRow(index, editDialog)
+{
+}
+
+function viewJsonRow(index, viewDialog)
+{
+	alert(index);
+}
+
+function deleteJsonRow(index)
+{
+	alert(index);
+}
+
+/***************************
+ ***** AACR2/CIDOC-DRM *****
+ ***************************/
 
 function switchDateFields()
 {
@@ -18,6 +61,10 @@ function switchDateFields()
 		$(this).parent().find('.aacr2').prop('disabled', true).val('').hide();
 	}
 }
+
+/****************************
+ ** MÚLTIPLAS SUBENTIDADES **
+ ****************************/
 
 function confirmRemoveItem()
 {
@@ -52,6 +99,15 @@ function removeItem()
 	     	idField.attr('name', name.replace('[id]','[idDel]') );
 	     	idField.insertAfter(grandPa)
 		}
+		
+		var idPhotoField = target.parent().find('.photoId').first();
+		if(idPhotoField.val())
+		{
+	     	var name = idPhotoField.attr('name');
+	     	idPhotoField.attr('name', name.replace('[id]','[idDelResource]') );
+	     	idPhotoField.insertAfter(grandPa)
+		}
+		
 		target.parent().remove();
 		//se tiver o botão de plus, ele deve ser movido para o último item da listagem
 		var plus = target.parent().find('.icon-plus');
@@ -84,13 +140,22 @@ function removeMultiItem()
 	if (grandPa.children().length > 2) {
 
 		//Renomeia o campo id do objeto para idDel, marcando para remoção do lado do server
-		var idField = target.parent().find('input:hidden');
+		var idField = target.parent().find('input:hidden').first();
 		if(idField.val())
 		{
 	     	var name = idField.attr('name');
 	     	idField.attr('name', name.replace('[id]','[idDel]') );
 	     	idField.insertAfter(grandPa);
 		}
+		
+		var idPhotoField = target.parent().parent().find('.photoId').first();
+		if(idPhotoField.val())
+		{
+	     	var name = idPhotoField.attr('name');
+	     	idPhotoField.attr('name', name.replace('[id]','[idDelResource]') );
+	     	idPhotoField.insertAfter(grandPa)
+		}
+		
 		target.parent().parent().remove();
 		//se tiver o botão de plus, ele deve ser movido para o último item da listagem
 		var plus = target.parent().find('.icon-plus');
@@ -151,9 +216,7 @@ function incrementMultiNumber (value)
 	return (numberId > number) ? numberId : number;
 }
 
-/**
- * Incrementa número apenas a partir de determinado ponto
- */
+//Incrementa número apenas a partir de determinado ponto
 function addNumber()
 {
 	var keepNamePattern =  $(this).attr('keepNamePattern');
@@ -190,8 +253,8 @@ function reindexMultiNumberLabel(index)
 	$(this).html($(this).html().replace( numberPattern , index ))
 }
 
-function addItem() {
-	
+function addItem()
+{
 	//clona
     var newFill = $(this).parent().clone(true, true);
     newFill.insertAfter($(this).parent());
@@ -204,7 +267,8 @@ function addItem() {
     $(this).parent().parent().find('.icon-minus').each(hideMinus);
 };
 
-function addMultiItem() {
+function addMultiItem() 
+{
 	//clona
     var newFill = $(this).parent().parent().clone(true, true);
     newFill.insertAfter($(this).parent().parent());
@@ -273,6 +337,11 @@ function hideMultiMinus(index)
 	}
 }
 
+
+/****************************
+ **      AUTOCOMPLETE      **
+ ****************************/
+
 function autoCompleteField()
 {
 	$(this).unbind('blur');
@@ -314,6 +383,10 @@ function autoCompleteField()
 	);
 }
 
+/****************************
+ **    SOMENTE LEITURA     **
+ ****************************/
+
 function transformToReadForm() {
     
     $('input, select, textarea').attr('readOnly', true);
@@ -335,6 +408,10 @@ function transformToReadForm() {
     $('#cancel_bt').addClass('btn-primary');
 }
 
+/****************************
+ **    CANCELAR EDIÇÃO     **
+ ****************************/
+
 function cancelData()
 {
 	$("#cancelConfirmButton").removeClass('btn-success');
@@ -355,7 +432,10 @@ function cancelData()
 	});
 }
 
-//Limita textareas com contados
+/****************************
+ **  CONTADOR DE TEXTAREA  **
+ ****************************/
+
 function textAreaLimit(){
 	var maxsize = $(this).attr('maxlength');
 	if (!maxsize || maxsize == 0 || maxsize == 'undefined') {
@@ -377,6 +457,7 @@ function textAreaLimit(){
 	}
 	
 	$(this).keydown(function(e){
+						
 		if ($(this).val().length > (maxsize - 1)) {
 			var key = e.keyCode;
 		    $(this).val($(this).val().substr(0,maxsize));
@@ -391,13 +472,20 @@ function textAreaLimit(){
 	});
 	
 	$(this).keyup(function(e){
-		$(this).val($(this).val().substr(0,maxsize));
+		if ($(this).val().length > (maxsize - 1)) {
+			$(this).val($(this).val().substr(0,maxsize));
+			e.preventDefault();
+		}
 		var target = $('#counter' + $(this).prop('id'));
 		target.html(maxsize + ' / ' + (maxsize - $(this).val().length) + ' caracteres restantes');
 	});
 	
 	$(this).trigger('keyup');
 }
+
+/****************************
+ **   UPLOAD DE IMAGENS    **
+ ****************************/
 
 //Define seleção de imagens para upload
 function choosePhoto()
@@ -415,7 +503,6 @@ function choosePhoto()
     $(target).click();
 }
 
-//
 function removePhoto()
 {
 	$("#cancelConfirmButton").removeClass('btn-success');
@@ -591,7 +678,10 @@ function readURL(input)
     }
 }
 
-//Local das mensagens de erro
+/*******************************************
+ **    AJUSTES PARA JQUERY VALIDATION     **
+ *******************************************/
+
 function errorPlacement (error, element)
 {
 	try {
@@ -693,7 +783,8 @@ function errorPlacement (error, element)
 }
 
 //Abre o tab correto em caso de erro em uma tab que não esteja visível ainda.
-function findTabPane(element){
+function findTabPane(element)
+{
 	$('.tab-pane').each(function(){
 		if ($(this).find('#' + element.prop('id')).length > 0){
 			tabId = $(this).prop('id');
@@ -727,6 +818,10 @@ var validateOptions = {
 	invalidHandler: invalidHandler,
 	submitHandler: submitHandler 
 };
+
+/***********************************************
+ **    APLICAÇÃO AUTOMÁTICA DE COMPONENTES    **
+ ***********************************************/
 
 $(document).ready(function() {
 	

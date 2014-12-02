@@ -221,6 +221,8 @@
 .acessibilidade .box strong.title {
     border-bottom: 2px solid #ffffff;
     color: #ffffff;
+    text-shadow: NONE;
+    filter: NONE;
 }
 .acessibilidade a{
     color: #ffffff !important;
