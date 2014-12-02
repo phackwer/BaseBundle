@@ -68,6 +68,7 @@ function switchDateFields()
 
 function confirmRemoveItem()
 {
+	window.href = "#"; 
 	$("#cancelConfirmButton").removeClass('btn-success');
 	$("#cancelConfirmButton").html('Cancelar');
 	$("#confirmDialogBody").html("Tem certeza que descartar estes dados?<br>Para cancelar esta remoção, basta cancelar a edição do final do formulário.");

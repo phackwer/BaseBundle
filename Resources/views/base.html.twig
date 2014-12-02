@@ -52,105 +52,7 @@
     
   </head>
   <body>
-  <!-- DIÁLOGOS PADRÃO DO SISTEMA -->
   
-    <!-- Modal Construction -->
-    <div id="emConstrucaoDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Em construção</h3>
-      </div>
-      <div class="modal-body" id="emConstrucao-dialog-body">
-{#       <p align=center><img src=https://pbs.twimg.com/profile_images/1050731134/oops_logo_1000mal1000.gif>#}
-      <p> Este item não encontra-se disponível no momento.
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Fechar</button>
-      </div>
-    </div>  
-
-    <!-- Modal About -->
-    <div id="aboutDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Sobre o sistema</h3>
-      </div>
-      <div class="modal-body" id="about-dialog-body">
-        {% block about %}
-            Este é o diálogo de exemplo para informações sobre o sistema.<br />
-            Veja o Builder.php do menu do BaseBundle para um exemplo de como implantar.<br />
-            Em seu base extendido você deverá definir o conteúdo dentro de um block chamado "about"<br /><br />
-            &copy; SanSIS<br />
-        {% endblock %}
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fechar</button>
-      </div>
-    </div>  
-    
-    <!-- Modal Session -->
-    <div id="sessionDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Mensagem do sistema</h3>
-      </div>
-      <div class="modal-body" id="sessionDialogBody">
-        
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-        <button class="btn btn-primary" id="renewSession">Renovar</button>
-      </div>
-    </div>
-    
-    <!-- Modal Waits -->
-    <div id="waitDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-header">
-        <h3 id="myModalLabel">Mensagem do sistema</h3>
-      </div>
-      <div class="modal-body" id="waitDialogBody">
-        Por favor, aguarde...
-      </div>
-      <div class="modal-footer">
-      </div>
-    </div>
-    
-    <script type="text/javascript">$("#waitDialog").modal({
-        		show	 : true,
-        		keyboard : false,
-        		backdrop : 'static'
-    		});</script>
-    
-    <!-- Modal Errors -->
-    <div id="errorDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Mensagem do sistema</h3>
-      </div>
-      <div class="modal-body" id="errorDialogBody">
-        
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fechar</button>
-      </div>
-    </div>
-    
-    <!-- Modal Confirm -->
-    <div id="confirmDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Confirmação</h3>
-      </div>
-      <div class="modal-body" id="confirmDialogBody">
-        
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" id="cancelConfirmButton" aria-hidden="true">Cancelar</button>
-        <button class="btn btn-primary" id="confirmButton">Confirmar</button>
-      </div>
-    </div>
-    
-  <!-- FIM DIÁLOGOS PADRÃO -->
     <div class="header">
       <div id="barra-topo">
         {% block top %}
@@ -286,6 +188,106 @@
         </div>
       </div>
     </footer>
+    
+  <!-- DIÁLOGOS PADRÃO DO SISTEMA -->
+  
+    <!-- Modal Construction -->
+    <div id="emConstrucaoDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Em construção</h3>
+      </div>
+      <div class="modal-body" id="emConstrucao-dialog-body">
+{#       <p align=center><img src=https://pbs.twimg.com/profile_images/1050731134/oops_logo_1000mal1000.gif>#}
+      <p> Este item não encontra-se disponível no momento.
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Fechar</button>
+      </div>
+    </div>  
+
+    <!-- Modal About -->
+    <div id="aboutDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Sobre o sistema</h3>
+      </div>
+      <div class="modal-body" id="about-dialog-body">
+        {% block about %}
+            Este é o diálogo de exemplo para informações sobre o sistema.<br />
+            Veja o Builder.php do menu do BaseBundle para um exemplo de como implantar.<br />
+            Em seu base extendido você deverá definir o conteúdo dentro de um block chamado "about"<br /><br />
+            &copy; SanSIS<br />
+        {% endblock %}
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fechar</button>
+      </div>
+    </div>  
+    
+    <!-- Modal Session -->
+    <div id="sessionDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Mensagem do sistema</h3>
+      </div>
+      <div class="modal-body" id="sessionDialogBody">
+        
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+        <button class="btn btn-primary" id="renewSession">Renovar</button>
+      </div>
+    </div>
+    
+    <!-- Modal Waits -->
+    <div id="waitDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <h3 id="myModalLabel">Mensagem do sistema</h3>
+      </div>
+      <div class="modal-body" id="waitDialogBody">
+        Por favor, aguarde...
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+    
+    <script type="text/javascript">$("#waitDialog").modal({
+        		show	 : true,
+        		keyboard : false,
+        		backdrop : 'static'
+    		});</script>
+    
+    <!-- Modal Errors -->
+    <div id="errorDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Mensagem do sistema</h3>
+      </div>
+      <div class="modal-body" id="errorDialogBody">
+        
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fechar</button>
+      </div>
+    </div>
+    
+    <!-- Modal Confirm -->
+    <div id="confirmDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Confirmação</h3>
+      </div>
+      <div class="modal-body" id="confirmDialogBody">
+        
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" id="cancelConfirmButton" aria-hidden="true">Cancelar</button>
+        <button class="btn btn-primary" id="confirmButton">Confirmar</button>
+      </div>
+    </div>
+    
+  <!-- FIM DIÁLOGOS PADRÃO -->
     {% endblock %}
         <script>
             window.jQuery || document.write('<script src="{{ asset('bundles/sansiscorebase/js/jquery.js') }}"><\/script>')
