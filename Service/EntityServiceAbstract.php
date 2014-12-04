@@ -211,7 +211,7 @@ abstract class EntityServiceAbstract extends ServiceAbstract
      * @return SanSIS\Core\BaseBundle\Entity\AbstractBase
      */
     public function populateEntities($values, $newClass, $parent, $arrayClass=null)
-    {
+    {   	
         if ($parent && isset($values['idDel']) && $values['idDel']){
             $entity = $this->getEntityManager()->getRepository($newClass)->findOneBy(array('id' => $values['idDel']));
             if (!$this->checkStatusTuple($entity)) {
