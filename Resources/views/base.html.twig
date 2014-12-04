@@ -169,6 +169,7 @@
                 </div>
             </div>
             {% block session_counter %}
+            {% if app.environment != 'dev' %}
             <div class="span6 visible-desktop">
                 <div id="BoxRodape_timer">
                     <p>
@@ -183,6 +184,7 @@
                     </p>
                 </div>
             </div>
+            {% endif %}
             {% endblock %} 
           </div>
         </div>
@@ -286,114 +288,115 @@
         <button class="btn btn-primary" id="confirmButton">Confirmar</button>
       </div>
     </div>
-    
   <!-- FIM DIÁLOGOS PADRÃO -->
     {% endblock %}
         <script>
             window.jQuery || document.write('<script src="{{ asset('bundles/sansiscorebase/js/jquery.js') }}"><\/script>')
             
             {% block session_counter_js %}
-            var sessionTimeFull = -1;
-            var sessionTime = -1;
-
-            $('#renewSession').click(function () {
-                $.ajax({
-                    type:'GET',
-                    data: {
-                        reset : true
-                    },
-                    url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-                }).done(function(data) {
-                        eval("dados = "+data);
-                        sessionTime = dados.time;
-
-                        window.setTimeout(function (){$.ajax({
-                            type:'GET',
-                            url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-                        }).done(function(data){
-                                eval("dados = "+data);
-                                sessionTime = dados.time;
-                                keepAliveLoop();
-                            });
-                        },1000);
-
-                        $("#sessionDialogBody").html("Sessão renovada!");
-                        renewSession
-                        $("#renewSession").hide();
-                        window.setTimeout(function(){$("#renewSession").show();$("#sessionDialog").modal('hide');}, 1000);
-                    });
-            });
-            
-            function keepAliveLoop() {
-                if(sessionTime > -1) {
-                    date = (new Date(0,0,0,0,0,sessionTime,0));
-            
-                    mins = parseInt(date.getMinutes());
-                    secs = ("0" + date.getSeconds()).slice(-2);
-            
-                    dateString = mins+"min "+secs;
-                    $(".keepAlive").html(dateString);
-                       
-                    switch(sessionTime) {
-                        case 0:
-                        	$("#renewSession").hide();
-                            $("#sessionDialogBody").html("Sua sessão expirou! Efetuando logout...");
-                            $("#sessionDialog").modal('show');
-            
-                            window.setTimeout(function(){window.location.href= '{{ path('logout') }}'},2000);
-            
-                            break;
-                        case  1: case  2: case  3: case  4: case  5: case  6: case  7: case  8: case  9: case 10:
-                        case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: case 19: case 20: 
-                        case 21: case 22: case 23: case 24: case 25: case 26: case 27: case 28: case 29:
-                        case 30:
-                            $("#sessionDialogBody").html("Sua sessão expira em " + sessionTime + " segundos, clique em renovar para evitar a perda do seu trabalho.");
-                            $("#sessionDialog").modal('show');
-                            break;
-                        case 180:
-                            $("#sessionDialogBody").html("Sua sessão está prestes a expirar, deseja renová-la agora?");
-                            $("#sessionDialog").modal('show');
-                            break;
-                    }
-            
-                    window.setTimeout(function (){$.ajax({
-                        type:'GET',
-                        url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-                    }).success(function(data){
-                            if (data) {
-                                eval("dados = "+data);
-                                sessionTime = dados.time;
-                                keepAliveLoop();
-                            }
-                        }).error(function(data){
-                            if (data) {
-                                eval("dados = "+data);
-                                sessionTime = dados.time;
-                                keepAliveLoop();
-                            }
-                        });
-                    },1000)
-                }
-            }
-            
-            $(document).ready(function(){
-            
-                $.ajax({
-                    type:'GET',
-                    data: {reset:true},
-                    url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-                }).done(function(data){
-                        eval("dados = "+data);
-                        sessionTime = dados.time;
-                        sessionTimeFull = sessionTime;
-            
-                        keepAliveLoop();
-                    });
-            
-                $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
-                    sessionTime = sessionTimeFull;
-                })
-            });
+            	{% if app.environment != 'dev' %}
+	            var sessionTimeFull = -1;
+	            var sessionTime = -1;
+	
+	            $('#renewSession').click(function () {
+	                $.ajax({
+	                    type:'GET',
+	                    data: {
+	                        reset : true
+	                    },
+	                    url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
+	                }).done(function(data) {
+	                        eval("dados = "+data);
+	                        sessionTime = dados.time;
+	
+	                        window.setTimeout(function (){$.ajax({
+	                            type:'GET',
+	                            url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
+	                        }).done(function(data){
+	                                eval("dados = "+data);
+	                                sessionTime = dados.time;
+	                                keepAliveLoop();
+	                            });
+	                        },1000);
+	
+	                        $("#sessionDialogBody").html("Sessão renovada!");
+	                        renewSession
+	                        $("#renewSession").hide();
+	                        window.setTimeout(function(){$("#renewSession").show();$("#sessionDialog").modal('hide');}, 1000);
+	                    });
+	            });
+	            
+	            function keepAliveLoop() {
+	                if(sessionTime > -1) {
+	                    date = (new Date(0,0,0,0,0,sessionTime,0));
+	            
+	                    mins = parseInt(date.getMinutes());
+	                    secs = ("0" + date.getSeconds()).slice(-2);
+	            
+	                    dateString = mins+"min "+secs;
+	                    $(".keepAlive").html(dateString);
+	                       
+	                    switch(sessionTime) {
+	                        case 0:
+	                        	$("#renewSession").hide();
+	                            $("#sessionDialogBody").html("Sua sessão expirou! Efetuando logout...");
+	                            $("#sessionDialog").modal('show');
+	            
+	                            window.setTimeout(function(){window.location.href= '{{ path('logout') }}'},2000);
+	            
+	                            break;
+	                        case  1: case  2: case  3: case  4: case  5: case  6: case  7: case  8: case  9: case 10:
+	                        case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: case 19: case 20: 
+	                        case 21: case 22: case 23: case 24: case 25: case 26: case 27: case 28: case 29:
+	                        case 30:
+	                            $("#sessionDialogBody").html("Sua sessão expira em " + sessionTime + " segundos, clique em renovar para evitar a perda do seu trabalho.");
+	                            $("#sessionDialog").modal('show');
+	                            break;
+	                        case 180:
+	                            $("#sessionDialogBody").html("Sua sessão está prestes a expirar, deseja renová-la agora?");
+	                            $("#sessionDialog").modal('show');
+	                            break;
+	                    }
+	            
+	                    window.setTimeout(function (){$.ajax({
+	                        type:'GET',
+	                        url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
+	                    }).success(function(data){
+	                            if (data) {
+	                                eval("dados = "+data);
+	                                sessionTime = dados.time;
+	                                keepAliveLoop();
+	                            }
+	                        }).error(function(data){
+	                            if (data) {
+	                                eval("dados = "+data);
+	                                sessionTime = dados.time;
+	                                keepAliveLoop();
+	                            }
+	                        });
+	                    },1000)
+	                }
+	            }
+	            
+	            $(document).ready(function(){
+	            
+	                $.ajax({
+	                    type:'GET',
+	                    data: {reset:true},
+	                    url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
+	                }).done(function(data){
+	                        eval("dados = "+data);
+	                        sessionTime = dados.time;
+	                        sessionTimeFull = sessionTime;
+	            
+	                        keepAliveLoop();
+	                    });
+	            
+	                $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+	                    sessionTime = sessionTimeFull;
+	                })
+	            });
+	            {% endif %}
             {% endblock %}
 
             var waitDots = '';

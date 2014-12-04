@@ -1,4 +1,3 @@
-
 /*********************************************
  *     Arquivo responsável pelo JS GERAL     *
  *********************************************
@@ -318,7 +317,7 @@ function adjustNewItem(newFill, original, addNumberFunction)
 
 function hideMinus(index)
 {
-	var visibleChildren = $(this).parent().parent().find('span:visible').filter('.clonable').length
+	var visibleChildren = $(this).parent().parent().find('span').filter('.clonable').length
 	if (visibleChildren == 1) {
 		$(this).hide();
 	}
@@ -329,7 +328,7 @@ function hideMinus(index)
 
 function hideMultiMinus(index)
 {
-	var visibleChildren = $(this).parent().parent().parent().find('ul:visible').filter('.clonable').length;
+	var visibleChildren = $(this).parent().parent().parent().find('ul').filter('.clonable').length;
 	if (visibleChildren == 1) {
 		$(this).hide();
 	}
