@@ -176,7 +176,7 @@ body{
 .titulo_sistema span.img_separador{
     background: url("../images/bkg/topo_barra_divisao.png") no-repeat left center;
     float: left;
-    height: 70px;
+    height: 100%;
     margin-left: 0;
     margin-top: -10px;
     width: 21px;
@@ -193,6 +193,7 @@ body{
     padding: 0;
 /*     text-shadow: none; */
     text-transform: none;
+    white-space: normal;
 }
 .titulo_sistema h2 {
     color: #FFFFFF;
