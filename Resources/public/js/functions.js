@@ -127,6 +127,8 @@ function removeItem()
 		target.parent().find('select').find('option').first().prop('selected', true);
 		alert('É preciso ter um item pelo menos. O campo será deixado em branco para exclusão no banco de dados.')
 	}
+	
+	window.hasChanges = true;
 
 	grandPa.find('.icon-minus').each(hideMinus);
 }
@@ -177,6 +179,8 @@ function removeMultiItem()
 		target.parent().find('select').find('option').first().prop('selected', true);
 		alert('É preciso ter um item pelo menos. O campo será deixado em branco para exclusão no banco de dados.')
 	}
+	
+	window.hasChanges = true;
 
 	grandPa.find('.icon-minus').each(hideMultiMinus);
 }
@@ -311,8 +315,7 @@ function adjustNewItem(newFill, original, addNumberFunction)
 
     //Recoloca as máscaras
     mask();
-    //Recoloca validação de formulário
-//    $('form').validate(validateOptions);
+    window.hasChanges = true;
 }
 
 function hideMinus(index)
@@ -564,6 +567,7 @@ function removePhoto()
         $("#confirmButton").hide();
         $("#confirmDialogBody").html("Descartando imagem...");
         window.setTimeout(function(){$("#confirmDialog").modal('hide');}, 1000);
+        window.hasChanges = true;
 	});
 }
 
@@ -948,5 +952,18 @@ $(document).ready(function() {
     else {
     	$('.validationSpan').find(':checkbox').css('margin-left', '0px');
     }
+    
+    /**
+     * bloqueio de saída sem salvar quando houverem alterações
+     */
+    window.hasChanges = false;
+    $('input, textarea').keyup(function(){window.hasChanges = true;});
+    
+    window.onbeforeunload = function(){
+        if(window.hasChanges){
+            return 'As alterações realizadas no registro serão perdidas. \nTem certeza que deseja sair sem salvar?';
+        }
+        return null;
+    };
     
 });
