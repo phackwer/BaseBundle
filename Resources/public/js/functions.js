@@ -12,36 +12,67 @@ var numberPattern = /\d+/g;
  *     EDIÇÃO DE GRIDS      *
  ****************************/
 
-function json2form(formId, json, index)
+function dumpJson2Form(jsonData, formIdTarget, path){
+	
+}
+
+function json2form(editForm, index, jsonData, path)
 {
-	 for (var i in json){
-		 if  (Array.isArray(json[i])) {
-			 if (index) {
-				 index += '['+i+']';
-			 } else {
-				 index = '['+i+']';
+	 for (var i in jsonData){
+		 iPath = path + '[' + i + ']';
+		 if  (Array.isArray(jsonData[i]) || typeof jsonData[i] === 'object') {
+			 //se for número, é um item de listagem e deve multiplicar o clonable que existir para o campo
+			 if (!isNaN(i)){//} && i != 0){
+				tpath = path.replace('[', '');
+				tpath = tpath.replace(']', '');
+				tpath = '#' + tpath + '_' + (i-1);
+				if ($(tpath)[0]) {
+					console.log($(tpath)[0].outerHTML);
+					newFill = $(tpath).clone(true, true);
+				    newFill.insertAfter($(tpath));
+				    
+				    adjustNewItem(newFill,$(tpath), addNumber);
+//				    console.log(iPath + ' >> ' + jsonData[i]);
+				}
 			 }
-			 json2form(formId, json[i], index)
+			 
+			 json2form(editForm, index, jsonData[i], iPath)
+		 } else {
+			 field = editForm.find('input[name=\'' + iPath + '\']');
+			 if (!field[0]) {
+				 field = editForm.find('select[name=\'' + iPath + '\']');
+			 }
+			 if (!field[0]) {
+				 field = editForm.find('textarea[name=\'' + iPath + '\']');
+			 }
+			 
+			 if (field[0] && field[0] != '') {
+				 field.val(jsonData[i]);
+			 }
 		 }
-		 console.log(i);
+//		 console.log(iPath + ' >> ' + jsonData[i]);
 	 }
 }
 
-function editJsonRow(index, editDialog)
+function editJsonRow(id, index, editArray, editDialogId)
+{
+	var data = editArray['rows'][index];
+	$("#" + editDialogId).modal('show');
+	editForm = $("#" + editDialogId).find('form');
+	editForm.find('input[name=\'currIndex\']').val(index);
+	json2form(editForm, index, data, '');
+}
+
+function saveJsonRow(id, index, editArray, editDialog)
+{
+}
+
+function viewJsonRow(id, index, viewArray, viewDialog)
 {
 	alert(index);
 }
 
-function saveJsonRow(index, editDialog)
-{
-}
-
-function viewJsonRow(index, viewDialog)
-{
-	alert(index);
-}
-
-function deleteJsonRow(index)
+function deleteJsonRow(id, index, deleteArray)
 {
 	alert(index);
 }
@@ -466,7 +497,7 @@ function textAreaLimit(){
 		    $(this).val($(this).val().substr(0,maxsize));
 
 		     // allow backspace, tab, delete, home, end, pageup, pagedown, arrows, numbers and keypad numbers ONLY
-		     if (key == 8 || key == 9 || key == 46 || (key >= 35 && key <= 40));
+		     if (key == 8 || key == 9 || key == 46 || (key >= 35 && key <= 40))
 		     	return;
 		    
 			e.preventVault();
@@ -957,7 +988,13 @@ $(document).ready(function() {
      * bloqueio de saída sem salvar quando houverem alterações
      */
     window.hasChanges = false;
-    $('input, textarea').keyup(function(){window.hasChanges = true;});
+    $('input, textarea').keydown(function(e){
+    	var key = e.keyCode;
+    	// allow backspace, tab, delete, home, end, pageup, pagedown, arrows, numbers and keypad numbers ONLY
+	    if (key == 8 || key == 9 || key == 46 || (key >= 35 && key <= 40))
+	     	return;
+    	window.hasChanges = true;
+    });
     
     window.onbeforeunload = function(){
         if(window.hasChanges){
@@ -965,5 +1002,7 @@ $(document).ready(function() {
         }
         return null;
     };
+    
+    $('form').submit(function(){window.hasChanges = false;});
     
 });
