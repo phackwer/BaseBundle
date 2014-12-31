@@ -117,9 +117,7 @@
 									
 									var values = el.attr(attrCB).split('__');
 
-									if( typeof( callback ) == "function" )
-										callback( values );
-									else if (thisElement.attr('targetId')){
+									if (thisElement.attr('targetId')){
 										var targetId = thisElement.attr('targetId');
 										if (targetId.indexOf('#') == -1)
 											targetId = '#' + targetId;
@@ -130,6 +128,13 @@
 									}
 									else{
 										thisElement.val(values);
+									}
+									
+									if( typeof( callback ) == "function" )
+										callback( thisElement, values );
+									else if (thisElement.attr('callback')){
+										var callback = thisElement.attr('callback');
+										eval(callback + '( thisElement, values )');
 									}
 									
 									$('div.' + classAC).remove();
@@ -176,6 +181,13 @@
 				
 				if (thisElement.val() != thisElement.attr('selectedName')){
 					thisElement.val('');
+					
+					if( typeof( callback ) == "function" )
+						callback( thisElement );
+					else if (thisElement.attr('callback')){
+						var callback = thisElement.attr('callback');
+						eval(callback + '( thisElement )');
+					}
 					
 					if (thisElement.attr('targetId')){
 						var targetId = thisElement.attr('targetId');
