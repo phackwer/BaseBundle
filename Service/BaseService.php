@@ -59,30 +59,6 @@ class BaseService extends EntityServiceAbstract
         return $cities;
     }
     
-    public function getMeasureUnitiesByType($id=null) 
-    {
-        $query = $this->entityManager->getRepository('SanSIS\Core\BaseBundle\Entity\MeasureUnity')->createQueryBuilder('g');
-        
-        $query->innerJoin('g.type', 't');
-        
-        $query = $query->getQuery();
-        
-        $query->setDQL($query->getDQL() . ' where t.id = :idType');
-        $query->setParameter(':idType', $id);
-        
-        $full = $query->getArrayResult();
-        
-        $entities = array();
-        if(!empty($id)) {
-            foreach($full as $key => $value) {
-                $entities[$key]['id']   = $value['id'];
-                $entities[$key]['term'] = $value['term'];
-            }
-        }
-        
-        return $entities;
-    }
-    
     public function getOrganizationByName($name=null, $except){
         return $this->getEntityByName($name, 2, $except);
     }
@@ -91,17 +67,13 @@ class BaseService extends EntityServiceAbstract
     {
         $query = $this->entityManager->getRepository('SanSIS\Core\BaseBundle\Entity\LegalBody')
                                      ->createQueryBuilder('g')
-                                     ->select('g.id', 'g.name', 'p.pseudonym')
-                                     ->LeftJoin('g.actor', 'a')
-                                     ->LeftJoin('a.pseudonym', 'p')
+                                     ->select('g.id', 'g.name')
                                      ->getQuery();
         
         $and = ' where ';
         
         if ($name) {
             $query->setDQL($query->getDQL() . $and . '( g.name like :name');
-            $and = ' or ';
-            $query->setDQL($query->getDQL() . $and . 'p.pseudonym like :name )');
             $query->setParameter(':name', '%' . str_replace(' ', '%', $name) . '%');
             $and = ' and ';
         }
@@ -135,22 +107,6 @@ class BaseService extends EntityServiceAbstract
         $query->setDQL($query->getDQL() .' order by g.name');
         
         $full = $query->getArrayResult();
-        
-        $entities = array();
-        if(!empty($name)) {
-            foreach($full as $key => $value) {
-                if ($value['pseudonym']) {
-                    if (isset($entities[$value['id']]['name'])){
-                        $value['name'] = str_replace(')', ', '.$value['pseudonym'].')', $entities[$value['id']]['name']);
-                    } else {
-                        $value['name'] .= ' ('.$value['pseudonym'].')';
-                    }
-                    
-                }
-                $entities[$value['id']]['id']   = $value['id'];
-                $entities[$value['id']]['name'] = $value['name'];
-            }
-        }
         
         return $entities;
     }
@@ -208,22 +164,6 @@ class BaseService extends EntityServiceAbstract
             }
         }
         
-        return true;
-    }
-    
-    /**
-     * Número de Registro deve ser único
-     */
-    public function checkUniqueInventoryNumber($id, $inventoryNumber)
-    {
-        $objs = $this->getEntityManager()->getRepository('\SanSIS\Core\BaseBundle\Entity\Object')->findBy(array('inventoryNumber' => $inventoryNumber));
-        if (count($objs) > 0){
-            foreach ($objs as $obj){
-                if ($obj->getId() != $id) {
-                    return false;
-                }
-            }
-        }
         return true;
     }
 }

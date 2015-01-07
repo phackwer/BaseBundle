@@ -315,7 +315,8 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
     public function createAction()
     {
         if ($this->get('session')->has('SanSISSaveResult') && $this->get('session')->get('SanSISSaveResult') instanceof AbstractBase) {
-            $entityData = $this->get('session')->get('SanSISSaveResult')->toArray();
+            $this->getService()->setRootEntity($this->get('session')->get('SanSISSaveResult'));
+            $entityData = $this->getService()->getRootEntityData();
         } else {
             $entityData = $this->getService()->getNewRootEntityData();
         }
@@ -339,7 +340,8 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
     public function editAction()
     {
         if ($this->get('session')->has('SanSISSaveResult') && $this->get('session')->get('SanSISSaveResult') instanceof AbstractBase) {
-            $entityData = $this->get('session')->get('SanSISSaveResult')->toArray();
+            $this->getService()->setRootEntity($this->get('session')->get('SanSISSaveResult'));
+            $entityData = $this->getService()->getRootEntityData();
         } else {
             $entityData = $this->getService()->getRootEntityData($this->getRequest()->query->get('id'));
         }

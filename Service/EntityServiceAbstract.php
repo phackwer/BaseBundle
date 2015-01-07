@@ -157,7 +157,12 @@ abstract class EntityServiceAbstract extends ServiceAbstract
      */
     public function setRootEntity(Entity $entity)
     {
-        if (get_class != $this->rootEntityName()) {
+        $entType = $this->getRootEntityName();
+        if (strpos($entType, '\\') == 0) {
+            $entType = substr($entType, 1);
+        }
+
+        if (get_class($entity) != $entType) {
             throw new WrongTypeRootEntityException();
         }
         
@@ -332,10 +337,17 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                     $class = '\DateTime';
     
                     if ($value) {
-                        if (strstr($value, ':'))
-                            $value = $class::createFromFormat('d/m/Y h:m:i', $value);
-                        else
-                            $value = $class::createFromFormat('d/m/Y', $value);
+                        if (strstr($value, '/')) {
+                            if (strstr($value, ':'))
+                                $value = $class::createFromFormat('d/m/Y h:m:i', $value);
+                            else
+                                $value = $class::createFromFormat('d/m/Y', $value);
+                        } else {
+                            if (strstr($value, ':'))
+                                $value = $class::createFromFormat('Y-m-d h:m:i', $value);
+                            else
+                                $value = $class::createFromFormat('Y-m-d', $value);
+                        }
                     }
                     else {
                         //corrige casos de strings vazias para datas
@@ -389,7 +401,16 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                     $value = $this->populateEntities($value, $class, $entity);
                 }
                 else if ($class && strstr($method, 'setId')) {
-                    $value = $this->getEntityManager()->getRepository($class)->findOneBy(array('id' => $value));
+                    // if (is_array($value) && count($value) > 1){var_dump($value);die;}
+
+                    if (is_array($value) && array_key_exists('id', $value)){
+                        $value = $this->getEntityManager()->getRepository($class)->findOneBy(array('id' => $value['id']));
+
+                    }else {
+                        $value = $this->getEntityManager()->getRepository($class)->findOneBy(array('id' => $value));
+                    }
+
+                    
                 }
                 else if (strstr($strDoc,'float') && $value) {
                     if (strstr($value, ','))

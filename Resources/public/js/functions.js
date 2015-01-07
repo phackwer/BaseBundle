@@ -12,14 +12,6 @@ var numberPattern = /\d+/g;
  *     EDIÇÃO DE GRIDS      *
  ****************************/
 
-function dumpJson2Form(jsonData, formIdTarget, path)
-{   
-}
-
-function form2json(editDialogId)
-{
-}
-
 function json2form(editForm, index, jsonData, path, rowData)
 {
      for (var i in jsonData){
@@ -65,6 +57,24 @@ function json2form(editForm, index, jsonData, path, rowData)
     }
 }
 
+function createFormFieldsFromJson(targetFormId, jsonData, path)
+{
+    for (var i in jsonData){
+        iPath = path + '[' + i + ']';
+        if  (Array.isArray(jsonData[i]) || typeof jsonData[i] === 'object') {
+            createFormFieldsFromJson(targetFormId, jsonData[i], iPath);
+        } else {
+            var field = $('<input>').attr({
+                type: 'hidden',
+                name: iPath
+            }).val(jsonData[i]).appendTo('#' + targetFormId);
+            console.log(field[0]);
+        }
+    }
+
+    console.log($('#' + targetFormId)[0].innerHTML);
+}
+
 function resetDialogForm(editDialogId)
 {
     $(editDialogId).find('form').trigger("reset");
@@ -84,18 +94,118 @@ function editJsonRow(id, index, editArray, editDialogId, clearDialogFunction)
     json2form(editForm, index, data, '', rowData);
 }
 
-function saveJsonRow(id, index, editArray, editDialog)
+function processPairName(name)
 {
+    var tpath = name.replace(/\[/gi, '.');
+    tpath = tpath.replace(/\]/gi, '');
+    if (tpath.indexOf('.') == 0) {
+        tpath = tpath.substring(1);
+    }
+    
+    tpath = tpath.replace(/\.[0-9]*\./gi, function ($0, $1, $2)
+    {
+        var val = $0.replace(/\./g,'');
+        return "["+val+"].";
+    });
+    // console.log(tpath);
+    return tpath;
 }
 
-function viewJsonRow(id, index, viewArray, viewDialog)
+function processPairNameValue(form, fname, value, row)
 {
-    alert(index);
+
+    var name = processPairName(fname);
+
+    nArr = name.split('.');
+
+    nTmp = '';
+
+    for (var js_i in nArr){
+        if (nArr[js_i].indexOf('[') > -1) {
+            var tName = nArr[js_i].substring(0, nArr[js_i].indexOf('['));
+
+            if (eval('row' + nTmp + '.' + tName) == undefined) {
+                eval('row' + nTmp + '.' + tName + ' = []');
+            }
+        }
+
+        nTmp += '.' + nArr[js_i];
+        if (eval('row' + nTmp) == undefined) {
+            eval('row' + nTmp + ' = {}');
+        }
+    }
+
+    if (value != null && isNaN(value)) {
+        value = '"' + value.replace('"', '\\"') + '"';
+    }
+    if (value == null || value == '') {
+        value = "null";
+    }
+
+    eval('row' + nTmp + ' = ' + value);
+    //corrige para apresentar o term no grid para campos select
+    if (form.find('select[name="' + fname+ '"]')[0]) {
+        eval('row' + nTmp.replace(/\.id$/g, '.term') + ' = "' + form.find('select[name="' + fname+ '"] option:selected').text().replace('"', '\\"') + '"');
+    }
+    
+
+    return row;
 }
 
-function deleteJsonRow(id, index, deleteArray)
+function putOnArrayIndex(row, targetArr, targetSpArr)
 {
-    alert(index);
+    if (row.currIndex != null) {
+        eval (targetArr + '.rows.splice(row.currIndex, 1, row)');
+    } else {
+        eval (targetArr + '.rows[' + targetArr + '.rows.length] = row');
+        eval (targetArr + '.records += 1');
+    }
+}
+
+function processRowActions(row, editAction, deleteAction, viewAction)
+{
+    action = '';
+    if (editAction) {
+        for (var js_i in row){
+            editAction = editAction.replace('/\{' + js_i + '\}/g', eval('row.'+js_i));
+        }
+        action += editAction;
+    }
+    if (deleteAction) {
+        for (var js_i in row){
+            deleteAction = deleteAction.replace('/\{' + js_i + '\}/g', eval('row.'+js_i));
+        }
+        action += deleteAction;
+    }
+    if (viewAction) {
+        for (var js_i in row){
+            viewAction = viewAction.replace('/\{' + js_i + '\}/g', eval('row.'+js_i));
+        }
+        action += viewAction;
+    }
+
+    return action;
+}
+
+function saveModal2Json(targetArray, modalId, targetGridId, editAction, deleteAction, viewAction)
+{
+    var row = {};
+    fArr = $('#' + modalId).find('form').serializeArray();
+    for (i in fArr) {
+        row = processPairNameValue($('#' + modalId).find('form'), fArr[i].name, fArr[i].value, row);
+    }
+
+    row.acao =  processRowActions(row, editAction, deleteAction, viewAction);
+
+    putOnArrayIndex(row, targetArray);
+
+    $("#" + targetGridId).jqGrid('clearGridData');
+
+    $('#' + targetGridId).jqGrid('setGridParam', {
+        data : eval (targetArray + '.rows')
+    }).trigger("reloadGrid");
+
+    $('#' + modalId).modal('hide');
 }
 
 /***************************
