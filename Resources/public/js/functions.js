@@ -638,7 +638,15 @@ function cancelData()
         $("#searchBt").trigger('click');
         $("#confirmButton").hide();
         $("#confirmDialogBody").html("Descartando dados...");
-        window.setTimeout(function(){window.history.back();}, 1000);
+        window.setTimeout(function(){
+            var href = window.location.href;
+            var pos = href.lastIndexOf('/');
+
+            href = href.substr(0,pos);
+
+            window.location.href = href;
+            // window.history.back();
+        }, 1000);
     });
 }
 
