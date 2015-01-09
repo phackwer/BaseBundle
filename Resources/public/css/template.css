@@ -143,7 +143,7 @@ body{
 }
 #topo_geral{
     background: #3D6FBF;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0,0,0,0.4);
     background-repeat: repeat-x;
     margin: auto;
     position: relative;
@@ -393,7 +393,7 @@ body{
 .BoxMenuPrincipal{
     min-height: 40px !important;
     background-color: #0F4098;
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(0,0,0,0.7);
     -webkit-box-shadow: 1px 5px 10px 1px rgba(0,0,0,0.5);
     box-shadow: 1px 5px 10px 1px rgba(0,0,0,0.5);
     display: block;

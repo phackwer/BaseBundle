@@ -136,7 +136,9 @@ function processPairNameValue(form, fname, value, row)
     }
 
     if (value != null && isNaN(value)) {
-        value = '"' + value.replace('"', '\\"') + '"';
+        console.log(value);
+        value = '"' + value.replace('"', '\\"').replace(/\r/g, '').replace(/\n/g,'\\n') + '"';
+        console.log(value);
     }
     if (value == null || value == '') {
         value = "null";
@@ -167,19 +169,20 @@ function processRowActions(row, editAction, deleteAction, viewAction)
     action = '';
     if (editAction) {
         for (var js_i in row){
-            editAction = editAction.replace('/\{' + js_i + '\}/g', eval('row.'+js_i));
+            console.log(js_i);
+            editAction = editAction.replace(eval('/\{' + js_i + '\}/g'), eval('row.'+js_i));
         }
         action += editAction;
     }
     if (deleteAction) {
         for (var js_i in row){
-            deleteAction = deleteAction.replace('/\{' + js_i + '\}/g', eval('row.'+js_i));
+            deleteAction = deleteAction.replace(eval('/\{' + js_i + '\}/g'), eval('row.'+js_i));
         }
         action += deleteAction;
     }
     if (viewAction) {
         for (var js_i in row){
-            viewAction = viewAction.replace('/\{' + js_i + '\}/g', eval('row.'+js_i));
+            viewAction = viewAction.replace(eval('/\{' + js_i + '\}/g'), eval('row.'+js_i));
         }
         action += viewAction;
     }
@@ -583,10 +586,18 @@ function transformToReadForm() {
     $('.removePhoto').each(function(){$(this).remove()});
     $('.dateBR').datepicker("destroy");
     
-    $('#cancel_bt').html('Voltar');
+    $('#cancel_bt').html('Voltar para listagem / pesquisa');
     
     $('#cancel_bt').unbind('click',cancelData);
-    $('#cancel_bt').click(function(){window.history.back()});
+    $('#cancel_bt').click(function(){
+        var href = window.location.href;
+        var pos = href.lastIndexOf('/');
+
+        href = href.substr(0,pos);
+
+        window.location.href = href;
+        // window.history.back();
+    });
     $('#cancel_bt').addClass('btn-primary');
 }
 
