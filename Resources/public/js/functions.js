@@ -39,6 +39,7 @@ function json2form(editForm, index, jsonData, path, rowData)
             if (!field[0]) {
                 field = editForm.find('select[name=\'' + iPath + '\']');
                 if (field[0] && field.attr('populate')){
+                    field.html('');
                     var selData = eval('rowData.'+field.attr('populate'));
                     field.append('<option value="">Selecione abaixo</option>');
                     $.each(selData, function(i, item){
@@ -68,11 +69,8 @@ function createFormFieldsFromJson(targetFormId, jsonData, path)
                 type: 'hidden',
                 name: iPath
             }).val(jsonData[i]).appendTo('#' + targetFormId);
-            console.log(field[0]);
         }
     }
-
-    console.log($('#' + targetFormId)[0].innerHTML);
 }
 
 function resetDialogForm(editDialogId)
@@ -107,7 +105,6 @@ function processPairName(name)
         var val = $0.replace(/\./g,'');
         return "["+val+"].";
     });
-    // console.log(tpath);
     return tpath;
 }
 
@@ -136,9 +133,7 @@ function processPairNameValue(form, fname, value, row)
     }
 
     if (value != null && isNaN(value)) {
-        console.log(value);
         value = '"' + value.replace('"', '\\"').replace(/\r/g, '').replace(/\n/g,'\\n') + '"';
-        console.log(value);
     }
     if (value == null || value == '') {
         value = "null";
@@ -148,6 +143,34 @@ function processPairNameValue(form, fname, value, row)
     //corrige para apresentar o term no grid para campos select
     if (form.find('select[name="' + fname+ '"]')[0]) {
         eval('row' + nTmp.replace(/\.id$/g, '.term') + ' = "' + form.find('select[name="' + fname+ '"] option:selected').text().replace('"', '\\"') + '"');
+        if (form.find('select[name="' + fname+ '"]').attr('populate')) {
+
+            nArr = form.find('select[name="' + fname+ '"]').attr('populate').split('.');
+
+            nTmp = '';
+
+            for (var js_i in nArr){
+                if (nArr[js_i].indexOf('[') > -1) {
+                    var tName = nArr[js_i].substring(0, nArr[js_i].indexOf('['));
+
+                    if (eval('row' + nTmp + '.' + tName) == undefined) {
+                        eval('row' + nTmp + '.' + tName + ' = []');
+                    }
+                }
+
+                nTmp += '.' + nArr[js_i];
+                if (eval('row' + nTmp) == undefined) {
+                    eval('row' + nTmp + ' = {}');
+                }
+            }
+
+            form.find('select[name="' + fname+ '"] option').each(function(i, item)
+            {
+                if ($(item).val()) {
+                    eval('row' + nTmp + '[' + i + '] = {id: ' + $(item).val() + ', term: "' + $(item).text() + '"}')
+                }
+            }); 
+        }
     }
     
 
@@ -157,11 +180,14 @@ function processPairNameValue(form, fname, value, row)
 function putOnArrayIndex(row, targetArr, targetSpArr)
 {
     if (row.currIndex != null) {
-        eval (targetArr + '.rows.splice(row.currIndex, 1, row)');
+        eval(targetArr + '.rows.splice(row.currIndex, 1, row)');
     } else {
-        eval (targetArr + '.rows[' + targetArr + '.rows.length] = row');
-        eval (targetArr + '.records += 1');
+        row.currIndex = eval (targetArr + '.rows.length');
+        eval(targetArr + '.rows[' + targetArr + '.rows.length] = row');
+        eval(targetArr + '.records += 1');
     }
+
+    return row;
 }
 
 function processRowActions(row, editAction, deleteAction, viewAction)
@@ -169,7 +195,6 @@ function processRowActions(row, editAction, deleteAction, viewAction)
     action = '';
     if (editAction) {
         for (var js_i in row){
-            console.log(js_i);
             editAction = editAction.replace(eval('/\{' + js_i + '\}/g'), eval('row.'+js_i));
         }
         action += editAction;
@@ -198,8 +223,9 @@ function saveModal2Json(targetArray, modalId, targetGridId, editAction, deleteAc
         row = processPairNameValue($('#' + modalId).find('form'), fArr[i].name, fArr[i].value, row);
     }
 
+    //Sim, executa duas vezes pois em algum momento ele não vai ter currIndex, mas depois terá, e aí é replace
+    row = putOnArrayIndex(row, targetArray);
     row.acao =  processRowActions(row, editAction, deleteAction, viewAction);
-
     putOnArrayIndex(row, targetArray);
 
     $("#" + targetGridId).jqGrid('clearGridData');

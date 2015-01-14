@@ -312,7 +312,6 @@ abstract class EntityServiceAbstract extends ServiceAbstract
                     } else if ($values->request->has($attr)) {
                         $value = $values->request->get($attr);
                     } else {
-
                         continue;
                     }
                 }
