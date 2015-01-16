@@ -75,7 +75,10 @@ function createFormFieldsFromJson(targetFormId, jsonData, path)
 
 function resetDialogForm(editDialogId)
 {
-    $(editDialogId).find('form').trigger("reset");
+    var dForm = $(editDialogId).find('form');
+    vForm = dForm.validate(validateOptions);
+    vForm.resetForm();
+    dForm.trigger("reset");
 }
 
 function editJsonRow(id, index, editArray, editDialogId, clearDialogFunction)
@@ -218,23 +221,27 @@ function processRowActions(row, editAction, deleteAction, viewAction)
 function saveModal2Json(targetArray, modalId, targetGridId, editAction, deleteAction, viewAction)
 {
     var row = {};
-    fArr = $('#' + modalId).find('form').serializeArray();
-    for (i in fArr) {
-        row = processPairNameValue($('#' + modalId).find('form'), fArr[i].name, fArr[i].value, row);
+    var dForm = $('#' + modalId).find('form');
+    dForm.validate(validateOptions);
+    if (dForm.valid()) {
+        fArr = dForm.serializeArray();
+        for (i in fArr) {
+            row = processPairNameValue($('#' + modalId).find('form'), fArr[i].name, fArr[i].value, row);
+        }
+
+        //Sim, executa duas vezes pois em algum momento ele não vai ter currIndex, mas depois terá, e aí é replace
+        row = putOnArrayIndex(row, targetArray);
+        row.acao =  processRowActions(row, editAction, deleteAction, viewAction);
+        putOnArrayIndex(row, targetArray);
+
+        $("#" + targetGridId).jqGrid('clearGridData');
+
+        $('#' + targetGridId).jqGrid('setGridParam', {
+            data : eval (targetArray + '.rows')
+        }).trigger("reloadGrid");
+
+        $('#' + modalId).modal('hide');
     }
-
-    //Sim, executa duas vezes pois em algum momento ele não vai ter currIndex, mas depois terá, e aí é replace
-    row = putOnArrayIndex(row, targetArray);
-    row.acao =  processRowActions(row, editAction, deleteAction, viewAction);
-    putOnArrayIndex(row, targetArray);
-
-    $("#" + targetGridId).jqGrid('clearGridData');
-
-    $('#' + targetGridId).jqGrid('setGridParam', {
-        data : eval (targetArray + '.rows')
-    }).trigger("reloadGrid");
-
-    $('#' + modalId).modal('hide');
 }
 
 /***************************
