@@ -134,7 +134,7 @@ function mask()
 {
     $('.dateBR').datepicker({
     	showOn: "button",
-        buttonImage: "../../bundles/sansiscorebase/images/ico/ico-calendar.png",
+        buttonImage: "bundles/sansiscorebase/images/ico/ico-calendar.png",
         buttonImageOnly: true,
         buttonText: "Selecionar data",
         changeMonth: true,
