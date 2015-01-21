@@ -1,13 +1,12 @@
 <?php
 namespace SanSIS\Core\BaseBundle\Controller;
 
-use SanSIS\Core\BaseBundle\Service\MessageService;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use SanSIS\Core\BaseBundle\Controller\ControllerAbstract;
 use SanSIS\Core\BaseBundle\Entity\AbstractBase;
+use SanSIS\Core\BaseBundle\Service\MessageService;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use \Doctrine\ORM\Query;
 
 /**
@@ -40,10 +39,10 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      * @var string
      */
     protected $createView;
-    
+
     /**
      * Permite a criação de títulos padronizados para as ações de CRUD
-     * 
+     *
      * @var unknown
      */
     protected $createFormAction = 'Criar novo';
@@ -61,10 +60,10 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      * @var string
      */
     protected $editView;
-    
+
     /**
      * Permite a criação de títulos padronizados para as ações de CRUD
-     * 
+     *
      * @var unknown
      */
     protected $editFormAction = 'Editar';
@@ -82,10 +81,10 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      * @var string
      */
     protected $deleteView;
-    
+
     /**
      * Permite a criação de títulos padronizados para as ações de CRUD
-     * 
+     *
      * @var unknown
      */
     protected $deleteFormAction = 'Excluir';
@@ -103,10 +102,10 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      * @var string
      */
     protected $viewView;
-    
+
     /**
      * Permite a criação de títulos padronizados para as ações de CRUD
-     * 
+     *
      * @var unknown
      */
     protected $viewFormAction = 'Visualizar';
@@ -124,7 +123,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      * @var string
      */
     protected $saveSuccessRoute;
-    
+
     /****************************************************************************************
      * DOCTRINE
      */
@@ -143,84 +142,83 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
         $page = $this->getRequest()->query->get('page', 1);
         //quantidade de linhas a serem retornadas por página
         $rows = $this->getRequest()->query->get('rows');
-        
+
         $query->setFirstResult($page * $rows - $rows)
               ->setMaxResults($rows);
-        
+
         $pagination = new Paginator($query, true);
-        
+
         //Objeto de resposta
         $data = new \StdClass();
-        $data->page     =  $page;
-        $data->total    =  ceil( $pagination->count() / $rows);
-        $data->records  =  $pagination->count();
+        $data->page = $page;
+        $data->total = ceil($pagination->count() / $rows);
+        $data->records = $pagination->count();
         //linhas da resposta - o método abaixo pode (e provavelmente deve)
         //ser implantado de acordo com as necessidades da aplicação
-        $data->rows     = $this->prepareGridRows($pagination);
-        
+        $data->rows = $this->prepareGridRows($pagination);
+
         return $data;
     }
-    
+
     /**
      *  Prepara a resposta para o Grid processando cada uma das linhas retornadas
      *  e acrescentando automaticamente uma coluna de Ação
      *
      * @param Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination  $pagination
      */
-    public function prepareGridRows(\Doctrine\ORM\Tools\Pagination\Paginator  $pagination)
+    public function prepareGridRows(\Doctrine\ORM\Tools\Pagination\Paginator $pagination)
     {
         $i = 0;
         $array = array();
         $id = null;
-        
+
         foreach ($pagination as $item) {
             $j = 0;
-            
-            foreach($item as $key => $val){
+
+            foreach ($item as $key => $val) {
                 if ($j == 0) {
                     $id = $array[$i]['id'] = $val;
                     $subcells = $this->getService()->getSearchSubCells($id);
-                    
-                    if ($subcells){
+
+                    if ($subcells) {
                         foreach ($subcells as $skey => $sval) {
                             if (!isset($array[$i]['cell'])) {
                                 $array[$i]['cell'] = array();
                             }
-                            
+
                             if ($val instanceof \DateTime) {
                                 $sval = $sval->format('d/m/Y');
                             }
-                            
-                            $array[$i]['cell'][$skey] = '<div class="jqGridOverflowColumn">'.$sval.'</div>';
+
+                            $array[$i]['cell'][$skey] = '<div class="jqGridOverflowColumn">' . $sval . '</div>';
                         }
                     }
-                    
-                }
-                else {
+
+                } else {
                     if (!isset($array[$i]['cell'])) {
-                            $array[$i]['cell'] = array();
+                        $array[$i]['cell'] = array();
                     }
 
                     if ($val instanceof \DateTime) {
-                            $val = $val->format('d/m/Y');
+                        $val = $val->format('d/m/Y');
                     }
 
-                    $array[$i]['cell'][$key] = '<div class="jqGridOverflowColumn">'.$val.'</div>';;
+                    $array[$i]['cell'][$key] = '<div class="jqGridOverflowColumn">' . $val . '</div>';
                 }
                 $j++;
-                    
+
                 //Aqui é adicionada a coluna de ações
                 $actions = $this->getGridActions($array[$i]['id'], $item);
-                
+
                 if ($actions) {
                     $array[$i]['cell']['Acao'] = $actions;
                     $array[$i]['cell']['acao'] = $actions;
                 }
             }
-            
+
             $i++;
         }
-        
+
         return $array;
     }
 
@@ -232,10 +230,13 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      */
     public function getEditGridAction($id, $status_tuple = null)
     {
-        if ($this->editRoute && $status_tuple != 2)
-    	   return '<a title="Editar" href="'.$this->generateUrl($this->editRoute).'?id='.$id.'" class="icon-edit" style="margin-right:5px;margin-left:5px"></a>';
-        else
-           return '';
+        if ($this->editRoute && $status_tuple != 2) {
+            // return '<a href="' . $this->generateUrl($this->editRoute) . '?id=' . $id . '"><span class="icon-edit"></span>Editar</li>';
+            return '<a title="Editar" href="' . $this->generateUrl($this->editRoute) . '?id=' . $id . '" onclick="window.hasChanges = false;" class="icon-edit" style="margin-right:5px;margin-left:5px"></a>';
+        } else {
+            return '';
+        }
+
     }
 
     /**
@@ -248,20 +249,25 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
     public function getViewGridAction($id, $viewRoute = null)
     {
         try {
-            if ($this->viewRoute || $viewRoute)
-                return '<a title="Visualizar" href="' . $this->generateUrl($viewRoute ? $viewRoute : $this->viewRoute) . '?id=' . $id . '" class="icon-eye-open" style="margin-right:5px;margin-left:5px"></a>';
-            else
+            if ($this->viewRoute || $viewRoute) {
+                // return '<a href="' . $this->generateUrl($viewRoute ? $viewRoute : $this->viewRoute) . '?id=' . $id . '"><span class="icon-eye-open"></span>Visualizar</li>';
+                return '<a title="Visualizar" href="' . $this->generateUrl($viewRoute ? $viewRoute : $this->viewRoute) . '?id=' . $id . '" onclick="window.hasChanges = false;" class="icon-eye-open" style="margin-right:5px;margin-left:5px"></a>';
+            } else {
                 return '';
+            }
+
         } catch (RouteNotFoundException $e) {
             if (!strstr($viewRoute, 'http://')) {
-                $niveis = count(explode('/',\AppKernel::getInstance()->getAppDir()));
+                $niveis = count(explode('/', \AppKernel::getInstance()->getAppDir()));
                 $path = '';
-                for ($i=0; $i < $niveis; $i++){
+                for ($i = 0; $i < $niveis; $i++) {
                     $path .= '../';
                 }
-                $viewRoute = $path.$viewRoute;
+                $viewRoute = $path . $viewRoute;
             }
-            return '<a title="Visualizar" href="' . $viewRoute . $id . '" class="icon-eye-open" style="margin-right:5px;margin-left:5px"></a>';
+            // return '<li class="divider"><li><a href="' . $viewRoute . $id . '"><span class="icon-eye-open"></span>Visualizar</li>';
+
+            return '<a title="Visualizar" href="' . $viewRoute . $id . '" class="icon-eye-open" onclick="window.hasChanges = false;" style=Visualizar"margin-right:5px;margin-left:5px"></a>';
         }
     }
 
@@ -273,10 +279,16 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      */
     public function getDeleteGridAction($id, $status_tuple = null)
     {
-        if ($this->deleteRoute && $status_tuple != 2)
-    	   return '<a title="Excluir" href="#" onclick="confirmarRemocao(\''.$id.'\')" class="icon-trash" style="margin-right:5px;margin-left:5px"></a>';
-        else
-           return '';
+        //look for the referer url
+        $url = $this->getRefererUrl();
+
+        if ($this->deleteRoute && $status_tuple != 2) {
+            // return '<li class="divider"><li><a ><span class="icon-trash"></span>Excluir</li>';
+            return '<a title="Excluir" href="' . $url . '#" onclick="confirmarRemocao(\'' . $id . '\');window.hasChanges = false;" class="icon-trash" style="margin-right:5px;margin-left:5px"></a>';
+        } else {
+            return '';
+        }
+
     }
 
     /**
@@ -289,13 +301,22 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
     public function getGridActions($id, $item = null)
     {
         $statusTuple = null;
-        if (isset($item['statusTuple'])){
+        if (isset($item['statusTuple'])) {
             $statusTuple = $item['statusTuple'];
         }
         $actions = '';
-        $actions .= $this->getViewGridAction($id);
-        $actions .= $this->getEditGridAction($id, $statusTuple);
-        $actions .= $this->getDeleteGridAction($id, $statusTuple);
+        if ($this->deleteRoute || $this->editRoute || $this->viewRoute) {
+            // $actions = '<div class="btn-group">' .
+            // '<button class="btn dropdown-toggle" data-toggle="dropdown" >' .
+            // 'Ação' .
+            // '<span class="caret"></span>' .
+            // '</button>' .
+            // '<ul class="dropdown-menu">';
+            $actions .= $this->getViewGridAction($id);
+            $actions .= $this->getEditGridAction($id, $statusTuple);
+            $actions .= $this->getDeleteGridAction($id, $statusTuple);
+            // $actions .= '</ul></div>';
+        }
 
         return $actions;
     }
@@ -326,9 +347,9 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
         }
 
         $params = array(
-            'formTitleAction'   => $this->createFormAction,
-            'formData'          => $this->getService()->getFormData($entityData),
-            'entityData'        => $entityData
+            'formTitleAction' => $this->createFormAction,
+            'formData' => $this->getService()->getFormData($entityData),
+            'entityData' => $entityData,
         );
 
         return $this->render($this->createView, $params);
@@ -346,14 +367,14 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
             $entityData = $this->getService()->getRootEntityData($this->getRequest()->query->get('id'));
         }
 
-        if ($this->get('session')->has('SanSISSaveResult')){
+        if ($this->get('session')->has('SanSISSaveResult')) {
             $this->get('session')->remove('SanSISSaveResult');
         }
 
         $params = array(
-            'formTitleAction'   => $this->editFormAction,
-            'formData'          => $this->getService()->getFormData($entityData),
-            'entityData'        => $entityData
+            'formTitleAction' => $this->editFormAction,
+            'formData' => $this->getService()->getFormData($entityData),
+            'entityData' => $entityData,
         );
 
         return $this->render($this->editView, $params);
@@ -367,9 +388,9 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
         $entityData = $this->getService()->getRootEntityData($this->getRequest()->query->get('id'));
 
         $params = array(
-            'formTitleAction'   => $this->viewFormAction,
+            'formTitleAction' => $this->viewFormAction,
             'formData' => $this->getService()->getFormData($entityData),
-            'entityData' => $entityData
+            'entityData' => $entityData,
         );
 
         return $this->render($this->viewView, $params);
@@ -384,23 +405,24 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
             $this->getService()->save($this->getRequest());
             MessageService::addMessage('success', 'MSG_S001');
             $this->get('session')->set('SanSISSaveResult', true);
-            if ($this->saveSuccessRoute == $this->editRoute){
+            if ($this->saveSuccessRoute == $this->editRoute) {
                 $id = $this->getService()->getRootEntity()->getId();
                 return $this->redirectByRouteName($this->saveSuccessRoute, 302, array('id' => $id));
-            }
-            else {
+            } else {
                 return $this->redirectByRouteName($this->saveSuccessRoute);
             }
         } catch (\Exception $e) {
-        	$this->get('session')->set('SanSISSaveResult', $this->getService()->getRootEntity());
+            $this->get('session')->set('SanSISSaveResult', $this->getService()->getRootEntity());
             MessageService::addMessage('error', 'MSG_E000');
-            if (in_array($this->get('kernel')->getEnvironment(), array('dev')))
+            if (in_array($this->get('kernel')->getEnvironment(), array('dev'))) {
                 $this->addMessage(
-                    $e->getMessage()."\n".
-                    $e->getLine()."\n".
-                    $e->getCode()."\n".
-                    $e->getTraceAsString()."\n"
+                    $e->getMessage() . "\n" .
+                    $e->getLine() . "\n" .
+                    $e->getCode() . "\n" .
+                    $e->getTraceAsString() . "\n"
                     , 'error');
+            }
+
             return $this->redirectByReferer(302);
         }
     }
@@ -408,7 +430,8 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
     /**
      * Action que deve ser mapeada para excluir os registros do banco de dados
      */
-    public function deleteAction(){
+    public function deleteAction()
+    {
 
         $data = $this->getService()->removeEntity($this->getRequest());
 

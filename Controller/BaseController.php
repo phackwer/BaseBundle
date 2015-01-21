@@ -62,7 +62,7 @@ class BaseController extends ControllerCrudAbstract
             ->getRoles();
         
         if (in_array('ROLE_ROOT', $roles) && $this->deleteRoute && $status_tuple != 2)
-            return '<a title="Excluir" href="#" onclick="confirmarRemocao(\'' . $id . '\')" class="icon-trash" style="margin-right:5px;margin-left:5px"></a>';
+            return '<a title="Excluir"  onclick="confirmarRemocao(\'' . $id . '\')" class="icon-trash" style="margin-right:5px;margin-left:5px"></a>';
         else
             return '';
     }
