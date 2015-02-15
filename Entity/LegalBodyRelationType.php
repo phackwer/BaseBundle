@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * LegalBodyRelationType
  *
- * @ORM\Table(name="legal_body_relation_type", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"})})
+ * @ORM\Table(name="core.legal_body_relation_type")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */
@@ -41,7 +41,7 @@ class LegalBodyRelationType extends AbstractBase
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -64,7 +64,7 @@ class LegalBodyRelationType extends AbstractBase
     /**
      * Get term
      *
-     * @return string 
+     * @return string
      */
     public function getTerm()
     {
@@ -87,7 +87,7 @@ class LegalBodyRelationType extends AbstractBase
     /**
      * Get statusTuple
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatusTuple()
     {

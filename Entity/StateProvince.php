@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * StateProvince
  *
- * @ORM\Table(name="state_province", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"})}, indexes={@ORM\Index(name="id_country", columns={"id_country"})})
+ * @ORM\Table(name="core.state_province")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */
@@ -58,7 +58,7 @@ class StateProvince extends AbstractBase
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -81,7 +81,7 @@ class StateProvince extends AbstractBase
     /**
      * Get term
      *
-     * @return string 
+     * @return string
      */
     public function getTerm()
     {
@@ -104,7 +104,7 @@ class StateProvince extends AbstractBase
     /**
      * Get acronym
      *
-     * @return string 
+     * @return string
      */
     public function getAcronym()
     {
@@ -127,7 +127,7 @@ class StateProvince extends AbstractBase
     /**
      * Get statusTuple
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatusTuple()
     {
@@ -150,7 +150,7 @@ class StateProvince extends AbstractBase
     /**
      * Get idCountry
      *
-     * @return \SanSIS\Core\BaseBundle\Entity\Country 
+     * @return \SanSIS\Core\BaseBundle\Entity\Country
      */
     public function getIdCountry()
     {

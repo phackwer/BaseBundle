@@ -8,7 +8,7 @@ use SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection;
 /**
  * LegalBodyRelation
  *
- * @ORM\Table(name="legal_body_relation", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"}), @ORM\UniqueConstraint(name="id_job_position", columns={"id_job_position"})}, indexes={@ORM\Index(name="id_legal_body_organization", columns={"id_legal_body_organization"}), @ORM\Index(name="id_legal_body_person", columns={"id_legal_body_person"}), @ORM\Index(name="id_legal_body_relation_type", columns={"id_legal_body_relation_type"})})
+ * @ORM\Table(name="core.legal_body_relation")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */
@@ -38,13 +38,6 @@ class LegalBodyRelation extends AbstractBase
     private $latestDate;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="job_position", type="string", length=512, nullable=false)
-     */
-    private $jobPosition;
-
-    /**
      * @var \LegalBodyRelationType
      *
      * @ORM\ManyToOne(targetEntity="LegalBodyRelationType")
@@ -67,22 +60,22 @@ class LegalBodyRelation extends AbstractBase
     /**
      * @var \LegalBodyPerson
      *
-     * @ORM\ManyToOne(targetEntity="LegalBodyPerson")
+     * @ORM\ManyToOne(targetEntity="LegalBodyPerson", inversedBy="professionalRelation")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_legal_body_person", referencedColumnName="id")
      * })
      */
     private $idLegalBodyPerson;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="Profile")
-     * @ORM\JoinTable(name="jn_legal_body_relation_profile",
+     * @ORM\JoinTable(name="core.jn_legal_body_relation_profile",
      *      joinColumns={@ORM\JoinColumn(name="id_legal_body_relation", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="id_profile", referencedColumnName="id")}
      *      )
      */
     private $profile;
-    
+
 
     public function __construct(){
         $this->profile = new ArrayCollection();
@@ -91,34 +84,11 @@ class LegalBodyRelation extends AbstractBase
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
-    }
-    
-    /**
-     * Set jobPosition
-     *
-     * @param string $jobPosition
-     * @return LegalBodyRelation
-     */
-    public function setJobPosition($jobPosition)
-    {
-        $this->jobPosition = $jobPosition;
-    
-        return $this;
-    }
-    
-    /**
-     * Get jobPosition
-     *
-     * @return string
-     */
-    public function getJobPosition()
-    {
-        return $this->jobPosition;
     }
 
     /**
@@ -137,7 +107,7 @@ class LegalBodyRelation extends AbstractBase
     /**
      * Get earliestDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEarliestDate()
     {
@@ -160,7 +130,7 @@ class LegalBodyRelation extends AbstractBase
     /**
      * Get latestDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getLatestDate()
     {
@@ -183,7 +153,7 @@ class LegalBodyRelation extends AbstractBase
     /**
      * Get idLegalBodyRelationType
      *
-     * @return \SanSIS\Core\BaseBundle\Entity\LegalBodyRelationType 
+     * @return \SanSIS\Core\BaseBundle\Entity\LegalBodyRelationType
      */
     public function getIdLegalBodyRelationType()
     {
@@ -206,7 +176,7 @@ class LegalBodyRelation extends AbstractBase
     /**
      * Get idLegalBodyOrganization
      *
-     * @return \SanSIS\Core\BaseBundle\Entity\LegalBodyOrganization 
+     * @return \SanSIS\Core\BaseBundle\Entity\LegalBodyOrganization
      */
     public function getIdLegalBodyOrganization()
     {
@@ -229,13 +199,13 @@ class LegalBodyRelation extends AbstractBase
     /**
      * Get idLegalBodyPerson
      *
-     * @return \SanSIS\Core\BaseBundle\Entity\LegalBodyPerson 
+     * @return \SanSIS\Core\BaseBundle\Entity\LegalBodyPerson
      */
     public function getIdLegalBodyPerson()
     {
         return $this->idLegalBodyPerson;
     }
-    
+
     /**
      * Set profile
      *
@@ -246,10 +216,10 @@ class LegalBodyRelation extends AbstractBase
     public function setProfile(\SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection $profile = null)
     {
         $this->profile = $profile;
-    
+
         return $this;
     }
-    
+
     /**
      * Get profile
      *
@@ -259,7 +229,7 @@ class LegalBodyRelation extends AbstractBase
     {
         return $this->profile;
     }
-    
+
     /**
      * Add profile
      *
@@ -269,7 +239,12 @@ class LegalBodyRelation extends AbstractBase
     public function addProfile(\SanSIS\Core\BaseBundle\Entity\Profile $profile = null)
     {
         $this->profile->add($profile);
-    
+
         return $this;
+    }
+
+    public function removeProfile(\SanSIS\Core\BaseBundle\Entity\Profile $profile)
+    {
+        $this->profile->removeElement($profile);
     }
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * LegalBodyOrganization
  *
- * @ORM\Table(name="legal_body_organization", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"}), @ORM\UniqueConstraint(name="id_legal_body", columns={"id_legal_body"})})
+ * @ORM\Table(name="core.legal_body_organization")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */
@@ -32,7 +32,7 @@ class LegalBodyOrganization extends AbstractBase
     /**
      * @var \LegalBody
      *
-     * @ORM\ManyToOne(targetEntity="LegalBody")
+     * @ORM\ManyToOne(targetEntity="LegalBody", inversedBy="organization")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_legal_body", referencedColumnName="id")
      * })
@@ -52,7 +52,7 @@ class LegalBodyOrganization extends AbstractBase
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -75,7 +75,7 @@ class LegalBodyOrganization extends AbstractBase
     /**
      * Get cnpj
      *
-     * @return string 
+     * @return string
      */
     public function getCnpj()
     {
@@ -98,7 +98,7 @@ class LegalBodyOrganization extends AbstractBase
     /**
      * Get idLegalBody
      *
-     * @return \SanSIS\Core\BaseBundle\Entity\LegalBody 
+     * @return \SanSIS\Core\BaseBundle\Entity\LegalBody
      */
     public function getIdLegalBody()
     {
@@ -121,7 +121,7 @@ class LegalBodyOrganization extends AbstractBase
     /**
      * Get idLegalBody
      *
-     * @return \SanSIS\Core\BaseBundle\Entity\LegalBodyParent 
+     * @return \SanSIS\Core\BaseBundle\Entity\LegalBodyParent
      */
     public function getIdLegalBodyParent()
     {

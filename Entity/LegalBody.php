@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * LegalBody
  *
- * @ORM\Table(name="legal_body", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"})}, indexes={@ORM\Index(name="id_city", columns={"id_city"}), @ORM\Index(name="id_country", columns={"id_country"}), @ORM\Index(name="id_legal_body_type", columns={"id_legal_body_type"}), @ORM\Index(name="id_state_province", columns={"id_state_province"})})
+ * @ORM\Table(name="core.legal_body")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */
@@ -158,24 +158,24 @@ class LegalBody extends AbstractBase
      * @ORM\OneToOne(targetEntity="LegalBodyPerson", mappedBy="idLegalBody")
      */
     private $person;
-    
+
     /**
      * @var \SanSIS\Core\BaseBundle\Entity\LegalBodyOrganization
-     * @ORM\OneToOne(targetEntity="LegalBodyOrganization", mappedBy="idLegalBody")
+     * @ORM\OneToMany(targetEntity="LegalBodyOrganization", mappedBy="idLegalBody")
      */
     private $organization;
-    
+
     /**
      * @var string
      *
-     * @ORM\Column(name="annotation", type="text", nullable=false)
+     * @ORM\Column(name="annotation", type="text", nullable=true)
      */
     private $annotation;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -198,7 +198,7 @@ class LegalBody extends AbstractBase
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -221,7 +221,7 @@ class LegalBody extends AbstractBase
     /**
      * Get address
      *
-     * @return string 
+     * @return string
      */
     public function getAddress()
     {
@@ -244,7 +244,7 @@ class LegalBody extends AbstractBase
     /**
      * Get phone
      *
-     * @return string 
+     * @return string
      */
     public function getPhone()
     {
@@ -267,7 +267,7 @@ class LegalBody extends AbstractBase
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -290,7 +290,7 @@ class LegalBody extends AbstractBase
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -313,7 +313,7 @@ class LegalBody extends AbstractBase
     /**
      * Get earliestDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEarliestDate()
     {
@@ -336,7 +336,7 @@ class LegalBody extends AbstractBase
     /**
      * Get latestDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getLatestDate()
     {
@@ -359,7 +359,7 @@ class LegalBody extends AbstractBase
     /**
      * Get city
      *
-     * @return string 
+     * @return string
      */
     public function getCity()
     {
@@ -382,7 +382,7 @@ class LegalBody extends AbstractBase
     /**
      * Get stateProvince
      *
-     * @return string 
+     * @return string
      */
     public function getStateProvince()
     {
@@ -405,7 +405,7 @@ class LegalBody extends AbstractBase
     /**
      * Get country
      *
-     * @return string 
+     * @return string
      */
     public function getCountry()
     {
@@ -428,7 +428,7 @@ class LegalBody extends AbstractBase
     /**
      * Get zipcode
      *
-     * @return string 
+     * @return string
      */
     public function getZipcode()
     {
@@ -451,7 +451,7 @@ class LegalBody extends AbstractBase
     /**
      * Get statusTuple
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatusTuple()
     {
@@ -474,13 +474,13 @@ class LegalBody extends AbstractBase
     /**
      * Get placeOfBirth
      *
-     * @return string 
+     * @return string
      */
     public function getPlaceOfBirth()
     {
         return $this->placeOfBirth;
     }
-    
+
     /**
      * Set annotation
      *
@@ -497,7 +497,7 @@ class LegalBody extends AbstractBase
     /**
      * Get annotation
      *
-     * @return string 
+     * @return string
      */
     public function getAnnotation()
     {
@@ -520,7 +520,7 @@ class LegalBody extends AbstractBase
     /**
      * Get idStateProvince
      *
-     * @return \SanSIS\Core\BaseBundle\Entity\StateProvince 
+     * @return \SanSIS\Core\BaseBundle\Entity\StateProvince
      */
     public function getIdStateProvince()
     {
@@ -543,7 +543,7 @@ class LegalBody extends AbstractBase
     /**
      * Get idCity
      *
-     * @return \SanSIS\Core\BaseBundle\Entity\City 
+     * @return \SanSIS\Core\BaseBundle\Entity\City
      */
     public function getIdCity()
     {
@@ -566,7 +566,7 @@ class LegalBody extends AbstractBase
     /**
      * Get idCountry
      *
-     * @return \SanSIS\Core\BaseBundle\Entity\Country 
+     * @return \SanSIS\Core\BaseBundle\Entity\Country
      */
     public function getIdCountry()
     {
@@ -589,13 +589,13 @@ class LegalBody extends AbstractBase
     /**
      * Get idLegalBodyType
      *
-     * @return \SanSIS\Core\BaseBundle\Entity\LegalBodyType 
+     * @return \SanSIS\Core\BaseBundle\Entity\LegalBodyType
      */
     public function getIdLegalBodyType()
     {
         return $this->idLegalBodyType;
     }
-    
+
     /**
      * Set person
      *
@@ -605,10 +605,10 @@ class LegalBody extends AbstractBase
     public function setPerson(\SanSIS\Core\BaseBundle\Entity\LegalBodyPerson $person = null)
     {
         $this->person = $person;
-    
+
         return $this;
     }
-    
+
     /**
      * Get person
      *
@@ -618,7 +618,7 @@ class LegalBody extends AbstractBase
     {
         return $this->person;
     }
-    
+
     /**
      * Set organization
      *
@@ -628,10 +628,10 @@ class LegalBody extends AbstractBase
     public function setOrganization(\SanSIS\Core\BaseBundle\Entity\LegalBodyOrganization $organization = null)
     {
         $this->organization = $organization;
-    
+
         return $this;
     }
-    
+
     /**
      * Get organization
      *

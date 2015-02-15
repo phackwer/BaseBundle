@@ -114,17 +114,9 @@ class UserService extends BaseService
             if ($personDb) {
                 $profrels = $personDb->getProfessionalRelation();
                 foreach($profrels as $profrel) {
-                    $jns = $this->getEntityManager()
-                    ->getRepository('SanSIS\Core\BaseBundle\Entity\JnLegalBodyRelationProfile')
-                    ->findBy(
-                        array(
-                            'idLegalBodyRelation' => $profrel->getId()
-                        ));
-                    foreach ($jns as $jn){
-                        $this->getEntityManager()->remove($jn);
+                    foreach ($profrel->getProfile() as $profile) {
+                        $profrel->removeProfile($profile);
                     }
-
-                    $profrel->setProfile(new ArrayCollection());
                     $this->getEntityManager()->flush();
                     $this->getEntityManager()->refresh($ent);
                 }

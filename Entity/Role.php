@@ -5,13 +5,13 @@ namespace SanSIS\Core\BaseBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Profile
+ * Role
  *
- * @ORM\Table(name="core.profile")
+ * @ORM\Table(name="core.role")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */
-class Profile extends AbstractBase
+class Role extends AbstractBase
 {
     /**
      * @var integer
@@ -25,9 +25,16 @@ class Profile extends AbstractBase
     /**
      * @var string
      *
-     * @ORM\Column(name="term", type="string", length=128, nullable=false)
+     * @ORM\Column(name="term", type="string", length=256, nullable=false)
      */
     private $term;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="human", type="integer", nullable=false)
+     */
+    private $human = '1';
 
     /**
      * @var integer
@@ -37,15 +44,6 @@ class Profile extends AbstractBase
     private $statusTuple = '1';
 
     /**
-     * @ORM\ManyToMany(targetEntity="Functionality", inversedBy="profiles")
-     * @ORM\JoinTable(name="core.jn_profile_functionality",
-     *      joinColumns={@ORM\JoinColumn(name="id_profile", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id_functionality", referencedColumnName="id")}
-     *      )
-     */
-    private $functionalities;
-
-    /**
      * Get id
      *
      * @return integer
@@ -53,6 +51,19 @@ class Profile extends AbstractBase
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set term
+     *
+     * @param string $term
+     * @return Role
+     */
+    public function setTerm($term)
+    {
+        $this->term = $term;
+
+        return $this;
     }
 
     /**
@@ -66,20 +77,33 @@ class Profile extends AbstractBase
     }
 
     /**
-     * Get term
+     * Set human
      *
-     * @return string
+     * @param integer $human
+     * @return Role
      */
-    public function getFunctionalities()
+    public function setHuman($human)
     {
-        return $this->functionalities;
+        $this->human = $human;
+
+        return $this;
+    }
+
+    /**
+     * Get human
+     *
+     * @return integer
+     */
+    public function getHuman()
+    {
+        return $this->human;
     }
 
     /**
      * Set statusTuple
      *
      * @param integer $statusTuple
-     * @return Country
+     * @return Role
      */
     public function setStatusTuple($statusTuple)
     {

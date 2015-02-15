@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Functionality
  *
- * @ORM\Table(name="functionality", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"})})
+ * @ORM\Table(name="core.functionality")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */
@@ -37,18 +37,15 @@ class Functionality extends AbstractBase
     private $roleWord;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Profile")
-     * @ORM\JoinTable(name="jn_profile_functionality",
-     *      joinColumns={@ORM\JoinColumn(name="id_functionality", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id_profile", referencedColumnName="id")}
-     *      )
+     * @ORM\ManyToMany(targetEntity="Profile", mappedBy="functionalities")
+     *
      */
     private $profiles;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -58,7 +55,7 @@ class Functionality extends AbstractBase
     /**
      * Get term
      *
-     * @return string 
+     * @return string
      */
     public function getTerm()
     {
@@ -68,7 +65,7 @@ class Functionality extends AbstractBase
     /**
      * Get roleWord
      *
-     * @return string 
+     * @return string
      */
     public function getRoleWord()
     {

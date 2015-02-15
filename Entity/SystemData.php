@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * SystemData
  *
- * @ORM\Table(name="system_data", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"}), @ORM\UniqueConstraint(name="id_organization", columns={"id_organization"}), @ORM\UniqueConstraint(name="ibram_identification", columns={"ibram_identification"})})
+ * @ORM\Table(name="core.system_data")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */
@@ -21,13 +21,6 @@ class SystemData extends AbstractBase
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ibram_identification", type="string", length=256, nullable=true)
-     */
-    private $ibramIdentification;
 
     /**
      * @var string
@@ -51,34 +44,11 @@ class SystemData extends AbstractBase
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set ibramIdentification
-     *
-     * @param string $ibramIdentification
-     * @return SystemData
-     */
-    public function setMarkMonitorIdentification($ibramIdentification)
-    {
-        $this->ibramIdentification = $ibramIdentification;
-
-        return $this;
-    }
-
-    /**
-     * Get ibramIdentification
-     *
-     * @return string 
-     */
-    public function getMarkMonitorIdentification()
-    {
-        return $this->ibramIdentification;
     }
 
     /**
@@ -97,7 +67,7 @@ class SystemData extends AbstractBase
     /**
      * Get wallpaper
      *
-     * @return string 
+     * @return string
      */
     public function getWallpaper()
     {
@@ -120,7 +90,7 @@ class SystemData extends AbstractBase
     /**
      * Get idOrganization
      *
-     * @return \SanSIS\Core\BaseBundle\Entity\LegalBodyOrganization 
+     * @return \SanSIS\Core\BaseBundle\Entity\LegalBodyOrganization
      */
     public function getIdOrganization()
     {

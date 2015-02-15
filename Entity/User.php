@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * User
  *
- * @ORM\Table(name="user", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"}), @ORM\UniqueConstraint(name="id_legal_body_person", columns={"id_legal_body_person"}), @ORM\UniqueConstraint(name="id_profile", columns={"id_profile"})})
+ * @ORM\Table(name="core.system_user")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */
@@ -47,16 +47,16 @@ class User extends AbstractBase implements UserInterface
     /**
      * @var \LegalBodyPerson
      *
-     * @ORM\OneToOne(targetEntity="LegalBodyPerson")
+     * @ORM\OneToOne(targetEntity="LegalBodyPerson", inversedBy="user")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_legal_body_person", referencedColumnName="id")
      * })
      */
     private $idLegalBodyPerson;
-    
+
     /**
      * I wanna be sedated
-     * 
+     *
      * @var Ramones
      */
     private $salt = "Hey!Ho!Let'sGo!";
@@ -64,7 +64,7 @@ class User extends AbstractBase implements UserInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -87,7 +87,7 @@ class User extends AbstractBase implements UserInterface
     /**
      * Get username
      *
-     * @return string 
+     * @return string
      */
     public function getUsername()
     {
@@ -110,7 +110,7 @@ class User extends AbstractBase implements UserInterface
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -133,7 +133,7 @@ class User extends AbstractBase implements UserInterface
     /**
      * Get isActive
      *
-     * @return integer 
+     * @return integer
      */
     public function getIsActive()
     {
@@ -156,17 +156,17 @@ class User extends AbstractBase implements UserInterface
     /**
      * Get idLegalBodyPerson
      *
-     * @return \SanSIS\Core\BaseBundle\Entity\LegalBodyPerson 
+     * @return \SanSIS\Core\BaseBundle\Entity\LegalBodyPerson
      */
     public function getIdLegalBodyPerson()
     {
         return $this->idLegalBodyPerson;
     }
-    
+
     public function getRoles()
     {
         $roles = array();
-        
+
         $person  = $this->getIdLegalBodyPerson();
         $prorels = $person->getProfessionalRelation();
         if($prorels){
@@ -184,10 +184,10 @@ class User extends AbstractBase implements UserInterface
                 }
             }
         }
-        
+
         return $roles;
     }
-    
+
     /**
      * Returns the salt that was originally used to encode the password.
      *
@@ -198,7 +198,7 @@ class User extends AbstractBase implements UserInterface
     public function getSalt(){
         return '';
     }
-    
+
     /**
      * Removes sensitive data from the user.
      *
@@ -206,6 +206,6 @@ class User extends AbstractBase implements UserInterface
      * the plain-text password is stored on this object.
      */
     public function eraseCredentials(){
-        
+
     }
 }

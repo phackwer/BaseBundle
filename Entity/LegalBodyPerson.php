@@ -8,7 +8,7 @@ use SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection;
 /**
  * LegalBodyPerson
  *
- * @ORM\Table(name="legal_body_person", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"}), @ORM\UniqueConstraint(name="id_legal_body", columns={"id_legal_body"})})
+ * @ORM\Table(name="core.legal_body_person")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */
@@ -33,25 +33,25 @@ class LegalBodyPerson extends AbstractBase
     /**
      * @var \LegalBody
      *
-     * @ORM\OneToOne(targetEntity="LegalBody")
+     * @ORM\OneToOne(targetEntity="LegalBody", inversedBy="person")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_legal_body", referencedColumnName="id")
      * })
      */
     private $idLegalBody;
-    
+
     /**
      * @var \SanSIS\Core\BaseBundle\Entity\User
      * @ORM\OneToOne(targetEntity="User", mappedBy="idLegalBodyPerson")
      */
     private $user;
-    
+
     /**
      * @var \SanSIS\Core\BaseBundle\Entity\LegalBodyRelation
      * @ORM\OneToMany(targetEntity="LegalBodyRelation", mappedBy="idLegalBodyPerson")
      */
     private $professionalRelation;
-    
+
     public function __construct(){
         $this->professionalRelation = new ArrayCollection();
     }
@@ -59,7 +59,7 @@ class LegalBodyPerson extends AbstractBase
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -82,7 +82,7 @@ class LegalBodyPerson extends AbstractBase
     /**
      * Get cpf
      *
-     * @return string 
+     * @return string
      */
     public function getCpf()
     {
@@ -105,13 +105,13 @@ class LegalBodyPerson extends AbstractBase
     /**
      * Get idLegalBody
      *
-     * @return \SanSIS\Core\BaseBundle\Entity\LegalBody 
+     * @return \SanSIS\Core\BaseBundle\Entity\LegalBody
      */
     public function getIdLegalBody()
     {
         return $this->idLegalBody;
     }
-    
+
     /**
      * Set user
      *
@@ -121,10 +121,10 @@ class LegalBodyPerson extends AbstractBase
     public function setUser(\SanSIS\Core\BaseBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
-    
+
     /**
      * Get user
      *
@@ -134,7 +134,7 @@ class LegalBodyPerson extends AbstractBase
     {
         return $this->user;
     }
-    
+
     /**
      * Set professionalRelation
      *
@@ -145,10 +145,10 @@ class LegalBodyPerson extends AbstractBase
     public function setProfessionalRelation(\SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection $professionalRelation = null)
     {
         $this->professionalRelation = $professionalRelation;
-    
+
         return $this;
     }
-    
+
     /**
      * Get professionalRelation
      *
@@ -159,7 +159,7 @@ class LegalBodyPerson extends AbstractBase
     {
         return $this->professionalRelation;
     }
-    
+
     /**
      * Add professionalRelation
      *
@@ -169,7 +169,7 @@ class LegalBodyPerson extends AbstractBase
     public function addProfessionalRelation(\SanSIS\Core\BaseBundle\Entity\LegalBodyRelation $professionalRelation = null)
     {
         $this->professionalRelation->add($professionalRelation);
-    
+
         return $this;
     }
 }

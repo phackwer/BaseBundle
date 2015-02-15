@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * City
  *
- * @ORM\Table(name="city", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"})}, indexes={@ORM\Index(name="id_state_province", columns={"id_state_province"})})
+ * @ORM\Table(name="core.city")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */
@@ -32,9 +32,9 @@ class City extends AbstractBase
     /**
      * @var integer
      *
-     * @ORM\Column(name="status_tuple", type="integer", nullable=false)
+     * @ORM\Column(name="status_tuple", type="integer", nullable=false, options={"default" = 1})
      */
-    private $statusTuple = '1';
+    private $statusTuple = 1;
 
     /**
      * @var \StateProvince
@@ -51,7 +51,7 @@ class City extends AbstractBase
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -74,7 +74,7 @@ class City extends AbstractBase
     /**
      * Get term
      *
-     * @return string 
+     * @return string
      */
     public function getTerm()
     {
@@ -97,7 +97,7 @@ class City extends AbstractBase
     /**
      * Get statusTuple
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatusTuple()
     {
@@ -120,7 +120,7 @@ class City extends AbstractBase
     /**
      * Get idStateProvince
      *
-     * @return \SanSIS\Core\BaseBundle\Entity\StateProvince 
+     * @return \SanSIS\Core\BaseBundle\Entity\StateProvince
      */
     public function getIdStateProvince()
     {
