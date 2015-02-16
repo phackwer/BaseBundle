@@ -32,7 +32,7 @@ class LegalBodyOrganization extends AbstractBase
     /**
      * @var \LegalBody
      *
-     * @ORM\ManyToOne(targetEntity="LegalBody", inversedBy="organization")
+     * @ORM\OneToOne(targetEntity="LegalBody", inversedBy="organization")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_legal_body", referencedColumnName="id")
      * })
