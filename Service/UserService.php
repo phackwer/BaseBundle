@@ -114,19 +114,6 @@ class UserService extends BaseService
             if (($person['user']['password'] == $person['user']['confirmPassword'])) {
                 $encoder                           = $this->secFactory->getEncoder($user);
                 $person['user']['confirmPassword'] = $person['user']['password'] = $encoder->encodePassword($person['user']['password'], $user->getSalt());
-
-//                 if (isset($person['user']['oldPassword'])) {
-                //                     $person['user']['oldPassword'] = $encoder->encodePassword($person['user']['oldPassword'], $user->getSalt());
-                //                     if ($user->getId() && ($user->getPassword() != $person['user']['oldPassword'])){
-                //                         $person['user']['password'] = '';
-                //                         $req->request->set('person', $person);
-                //                         //populate forçado para redirect correto do formulário
-                //                         $this->populateRootEntity($req);
-                //                         throw new \Exception('Senhas informadas inválidas');
-                //                     }
-                //                 }
-
-//                 die('certo');
             } else {
                 unset($person['user']['password']);
                 $req->request->set('person', $person);
