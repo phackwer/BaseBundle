@@ -3,14 +3,15 @@ namespace SanSIS\Core\BaseBundle\Service;
 
 use \Doctrine\ORM\EntityManager;
 use \SanSIS\Core\BaseBundle\Doctrine\ORM\Mapping\OracleQuoteStrategy;
+use JMS\DiExtraBundle\Annotation as DI;
 
 abstract class ServiceAbstract
 {
     /**
-     * @var \Monolog\Logger 
+     * @var \Monolog\Logger
      */
     protected $logger;
-    
+
     /**
      * @var \Doctrine\ORM\EntityManager
      */
@@ -30,14 +31,16 @@ abstract class ServiceAbstract
     /**
      * @var \Symfony\Component\DependencyInjection\Container
      */
-    protected $container = null;    
-    
+    protected $container = null;
+
     protected $secFactory = null;
-    
+
     protected $secContext = null;
 
     /**
-     * @param EntityManager $entityManager
+     * @DI\InjectParams({
+     *     "entityManager" = @DI\Inject("doctrine.orm.entity_manager"),
+     * })
      */
     public function __construct(EntityManager $entityManager = null)
     {
@@ -45,12 +48,12 @@ abstract class ServiceAbstract
         $this->setEntityManager($entityManager);
         $this->startTimer();
     }
-    
+
     public function setSecFactory(\Symfony\Component\Security\Core\Encoder\EncoderFactory $secFactory)
     {
         $this->secFactory = $secFactory;
     }
-    
+
     public function setSecContext(\Symfony\Component\Security\Core\SecurityContext $secContext)
     {
         $this->secContext = $secContext;
@@ -117,7 +120,7 @@ abstract class ServiceAbstract
     {
         return $this->reportViewRoute;
     }
-    
+
     /**
      * Inicia contador de tempo para verificação de performance
      */
@@ -155,7 +158,7 @@ abstract class ServiceAbstract
     public function setEntityManager($entityManager)
     {
         $this->entityManager = $entityManager;
-        
+
         return $this;
     }
 
@@ -166,7 +169,7 @@ abstract class ServiceAbstract
     {
         return $this->entityManager;
     }
-    
+
     /**
      * @param mixed $val
      * @param string $seqName
@@ -184,12 +187,12 @@ abstract class ServiceAbstract
     }
 
     /**
-     * @param \Symfony\Component\Security\Core\SecurityContext $securityContext            
+     * @param \Symfony\Component\Security\Core\SecurityContext $securityContext
      */
     public function setSecurityContext($securityContext)
     {
         $this->securityContext = $securityContext;
-        
+
         return $this;
     }
 
@@ -210,7 +213,7 @@ abstract class ServiceAbstract
             ->getToken()
             ->getUser();
     }
-    
+
     /**
      * @return \AppKernel
      */
@@ -218,7 +221,7 @@ abstract class ServiceAbstract
     {
         return \AppKernel::getInstance();
     }
-    
+
     /**
      * @param \Monolog\Logger $logger
      * @return ServiceAbstract
