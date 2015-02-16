@@ -4,7 +4,7 @@
 		<li>
 			<h5 class="row {{ maxpspan }} legenda">Dados básicos</h5>
 		</li>
-		
+
         <li>
 		    <label class="row span3">Tipo de entidade:  <font color="red"><b>*</b></font></label>
 		    <select class="{{ maxinputspan }}" name="idLegalBodyType" id="idLegalBodyType" required="required" {% if entityData.id is defined and entityData.id is not null %}readonly="readonly" disabled="disabled"{% endif %}>
@@ -14,31 +14,138 @@
                 {% endfor %}
 	        </select>
 		</li>
-		
+
 		<li>
 		  <label class="row span3">Nome:  <font color="red"><b>*</b></font></label>
 		  <input class="{{ maxinputspan }}" name="name" id="name" type="text" value="{{ entityData.name }}" required="required" minlength="3" maxlength="512">
 		</li>
-		
-		<li id="earliestDateLi">
+
+		<li class="span">
+		  {% if entityData.actor.pseudonym is defined and entityData.actor.pseudonym | length > 0 %}
+		      {% for val,item in entityData.actor.pseudonym %}
+    		  <span class="clonable span">
+    		    <input name="actor[pseudonym][{{ val }}][id]" type="hidden" value="{{ item.id }}">
+        		<label class="row span3">{% if val==0 %}Outros nomes:{% else %}&nbsp;&nbsp;&nbsp;{% endif %}</label>
+        		<input class="{{ maxinputspan }}" name="actor[pseudonym][{{ val }}][pseudonym]" type="text" value="{{ item.pseudonym }}" maxlength="512">
+    	        <a class="icon-minus single-line" style="font-size:14px;margin-left:5px" {% if entityData.actor.pseudonym | length == 0 %}style="display:none"{% endif %}></a>
+    	        {% if (entityData.actor.pseudonym | length) == (val+1) %}
+    	        <a class="icon-plus single-line" style="font-size:14px;margin-left:5px" ></a>
+    	        {% endif %}
+    	      </span>
+              {% endfor %}
+	      {% else %}
+  		  <span class="clonable span">
+    		<label class="row span3">Outros nomes:</label>
+    		<input name="actor[pseudonym][0][id]" type="hidden" value="">
+    		<input class="{{ maxinputspan }}" name="actor[pseudonym][0][pseudonym]" type="text" value="" maxlength="256" notempty>
+	        <a class="icon-minus single-line" style="font-size:14px;margin-left:5px"></a>
+	        <a class="icon-plus single-line" style="font-size:14px;margin-left:5px"></a>
+	      </span>
+	      {% endif %}
+		</li>
+
+		<li id="earliestDateLi" class="span">
 		    <label class="row span3" id="earliestDateLabel">Início de existência:</label>
-		      <input class="span2 dateBR notFuture" name="earliestDate" id="earliestDate" dateCompare="#latestDate" type="text" value="{{ entityData.earliestDate ? entityData.earliestDate | date("d/m/Y") : '' }}">
-		      <!--<input type="checkbox" class="aacr2"> <label for="prodaprox">Aproximada</label>-->
+		    <input class="span2 dateBR notFuture" name="earliestDate" id="earliestDate" dateCompare="#latestDate" type="text" value="{{ entityData.earliestDate ? entityData.earliestDate | date("d/m/Y") : '' }}">
 	    </li>
 
-		<li id="latestDateLi">
+		<li id="latestDateLi" class="span">
 		    <label class="row span3" id="latestDateLabel">Fim de existência:</label>
-		    <input class="span2 dateBR notFuture" name="latestDate" id="latestDate" notFuture type="text" value="{{ entityData.latestDate ? entityData.latestDate | date("d/m/Y") : '' }}">
-		    <!--<input type="checkbox" class="aacr2"> <label for="prodaprox">Aproximada</label>-->
+		    <input class="span2 dateBR notFuture" name="latestDate" id="latestDate" dateCompare="#latestDate" type="text" value="{{ entityData.latestDate ? entityData.latestDate | date("d/m/Y") : '' }}">
 	    </li>
-			
+
         <li id="liNaturalidade">
             <label class="row span3" id="natuLabel">Naturalidade:</label>
             <input class="{{ maxinputspan }}" name="placeOfBirth" id="placeOfBirth" type="text" value="{{ entityData.placeOfBirth }}" maxlength="512">
         </li>
-		
+
 	</ul>
-	
+
+</div>
+
+<div class="filder {{ span }}" id="funcoes">
+	<ul>
+		<li>
+			<h5 class="row {{ maxpspan }} legenda">Funções</h5>
+		</li>
+	</ul>
+	<ul id="noRoles">
+		<li>
+		    <label class="span11 error">Selectione um tipo de pessoa entidade</label>
+	    </li>
+    </ul>
+	<ul id="rolesPF" style="display:none">
+		<li>
+		    <label class="row span3 visible-phone">Função: <font color="red"><b>*</b></font></label>
+            {% set counter = 0 %}
+            {% for vall,iitem in formData.rolesPF %}
+            <label class="row span3 hidden-phone">{% if counter == 0 %}Função:  <font color="red"><b>*</b></font>{% else %}&nbsp;{% endif %}</label>
+            <span class="span4 validationSpan">
+                <label  class="{{ maxinputspan }}" for="rolePF_{{ vall }}">
+                    <input type="checkbox" value="{{ vall }}" name="actor[rolePF][][idRole]" id="rolePF_{{ vall }}"
+                    {% if entityData.actor.role is defined and entityData.actor.role | length > 0 %}
+                        {% for pval,ptiem in entityData.actor.role %}
+                            {% if ptiem.id == vall  %}
+                                checked
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    > - {{ iitem }}
+                </label>
+            </span>
+            {% set counter = counter+1 %}
+            {% endfor %}
+		</li>
+		<li class="visible-desktop">&nbsp;</li>
+	</ul>
+	<ul id="rolesPJ" style="display:none">
+		<li>
+		    <label class="row span3 visible-phone">Função: <font color="red"><b>*</b></font></label>
+		    {% set counter = 0 %}
+            {% for vall,iitem in formData.rolesPJ %}
+            <label class="row span3 hidden-phone">{% if counter == 0 %}Função: <font color="red"><b>*</b></font>{% else %}&nbsp;{% endif %}</label>
+            <span class="span4 validationSpan">
+                <label  class="{{ maxinputspan }}" for="rolePJ_{{ vall }}">
+                    <input type="checkbox" value="{{ vall }}" name="actor[rolePJ][][idRole]" id="rolePJ_{{ vall }}"
+                    {% if entityData.actor.role is defined and entityData.actor.role | length > 0 %}
+                        {% for pval,ptiem in entityData.actor.role %}
+                            {% if ptiem.id == vall  %}
+                                checked
+                                {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    > - {{ iitem }}
+                </label>
+            </span>
+            {% set counter=counter+1 %}
+            {% endfor %}
+		</li>
+		<li class="visible-desktop">&nbsp;</li>
+	</ul>
+	<ul id="rolesFM" style="display:none">
+		<li>
+		    <label class="row span3 visible-phone">Função: <font color="red"><b>*</b></font></label>
+		    {% set counter = 0 %}
+            {% for vall,iitem in formData.rolesFM %}
+            <label class="row span3 hidden-phone">{% if counter == 0 %}Função: <font color="red"><b>*</b></font>{% else %}&nbsp;{% endif %}</label>
+            <span class="span4 validationSpan">
+                <label  class="{{ maxinputspan }}" for="roleFM_{{ vall }}">
+                    <input type="checkbox" value="{{ vall }}" name="actor[roleFM][][idRole]" id="roleFM_{{ vall }}"
+                    {% if entityData.actor.role is defined and entityData.actor.role | length > 0 %}
+                        {% for pval,ptiem in entityData.actor.role %}
+                            {% if ptiem.id == vall  %}
+                                checked
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    > - {{ iitem }}
+                </label>
+            </span>
+            {% set counter=counter+1 %}
+            {% endfor %}
+		</li>
+	</ul>
+	&nbsp;
 </div>
 
 <div class="filder {{ span }}" id="adicionais">
@@ -46,19 +153,23 @@
 		<li>
 			<h5 class="row {{ maxpspan }} legenda">Informações adicionais</h5>
 		</li>
-		
+
 		<li id="liCpf" style="display:none">
 		  <label class="row span3">CPF:</label>
 		  <input name="person[id]" type="hidden" value="{% if entityData.person.id is defined %}{{ entityData.person.id }}{% endif %}">
 		  <input class="{{ maxinputspan }} cpf" name="person[cpf]" id="cpf" type="text" value="{% if entityData.person.cpf is defined %}{{ entityData.person.cpf }}{% endif %}">
+
+	        <img id="cpfLoading" src="{{ asset('bundles/sansiscorebase/images/ico/ajax-loader.gif') }}" style="display: none; margin: 6px;">
+	        <img id="cpfError" src="{{ asset('bundles/sansiscorebase/images/ico/error.gif') }}" style="display: none; margin: 6px;">
+	        <img id="cpfOk" src="{{ asset('bundles/sansiscorebase/images/ico/ok.png') }}" style="display: none; margin: 6px;">
 		</li>
-		
+
 		<li id="liCnpj" style="display:none">
 		  <label class="row span3">CNPJ:</label>
 		  <input name="organization[id]" type="hidden" value="{% if entityData.organization.id is defined %}{{ entityData.organization.id }}{% endif %}">
 		  <input class="{{ maxinputspan }} cnpj" name="organization[cnpj]" id="cnpj" type="text" value="{% if entityData.organization.cnpj is defined %}{{ entityData.organization.cnpj }}{% endif %}">
 		</li>
-		
+
 		<li>
     		<label class="row span3">País:</label>
     		<select class="{{ midinputspan }}" name="idCountry" id="idCountry" {% if entityData.country is not empty %}style="display: none"{% endif %}>
@@ -70,7 +181,7 @@
     		<input class="{{ midinputspan }}" name="country" id="country" type="text" value="{{ entityData.country }}" {% if entityData.country is empty %}style="display: none"{% endif %} maxlength="512">
     		<input type="checkbox" id="freeCountry" style="margin-left: 10px;"> <label for="freeCountry">Não listado</label>
 		</li>
-		
+
 		<li>
     		<label class="row span3">Estado / Província:</label>
     		<select class="{{ midinputspan }}" name="idStateProvince" id="idStateProvince" {% if entityData.stateProvince is not empty %}style="display: none"{% endif %}>
@@ -85,7 +196,7 @@
     		<input class="{{ midinputspan }}" name="stateProvince" id="stateProvince" type="text" value="{{ entityData.stateProvince }}" {% if entityData.stateProvince is empty %}style="display: none"{% endif %} maxlength="512">
     		<input type="checkbox" id="freeStateProvince" style="margin-left: 10px;"> <label for="freeStateProvince">Não listado</label>
 		</li>
-		
+
 		<li>
     		<label class="row span3">Cidade:</label>
     		<select class="{{ midinputspan }}" name="idCity" id="idCity" {% if entityData.city is not empty %}style="display: none"{% endif %}>
@@ -100,33 +211,33 @@
     		<input class="{{ midinputspan }}" name="city" id="city" type="text" value="{{ entityData.city }}" {% if entityData.city is empty %}style="display: none"{% endif %} maxlength="512">
     		<input type="checkbox" id="freeCity" style="margin-left: 10px;"> <label for="freeCity">Não listada</label>
 		</li>
-		
+
 		<li>
 		  <label class="row span3">Endereço:</label>
 		  <input class="{{ maxinputspan }}" name="address" id="address" type="text" value="{{ entityData.address }}" maxlength="512">
 		</li>
-		
+
 		<li>
 		  <label class="row span3">CEP    :</label>
 		  <input class="{{ maxinputspan }}" name="zipcode" id="zipcode" type="text" value="{{ entityData.zipcode }}" maxlength="50">
 		</li>
-		
+
 		<li>
 		  <label class="row span3">Telefone:</label>
 		  <input class="{{ maxinputspan }} phone" name="phone" id="phone" type="text" value="{{ entityData.phone }}" maxlength="256">
 		</li>
-		
+
 		<li>
 		  <label class="row span3">E-mail:</label>
 		  <input class="{{ maxinputspan }}" name="email" id="email" type="email" value="{{ entityData.email }}" maxlength="512">
 		</li>
-		
+
 		<li>
 		  <label class="row span3">Site da web:</label>
 		  <input class="{{ maxinputspan }}" name="url" id="url" type="url" url="url" value="{{ entityData.url }}" maxlength="512">
 		</li>
 	</ul>
-	
+
 </div>
 
 <div class="filder {{ span }}" id="mantenedora">
@@ -134,24 +245,28 @@
 		<li>
 			<h5 class="row {{ maxpspan }} legenda">Informações organizacionais</h5>
 		</li>
-		
+
 	</ul>
-	
+
 	<ul>
 		<li>
 		  <label class="row span3">Entidade mantenedora:</label>
 		  <input name="organization[idLegalBodyParent][id]" id="idLegalBodyParent" type="hidden" value="{% if entityData.organization.idLegalBodyParent.id is defined %}{{ entityData.organization.idLegalBodyParent.id }}{% endif %}">
-  		  <input  sourcePath="{{ path('get_organization_by_name') }}" 
+  		  <input  placeholder="Digite para selecionar a entidade coletiva mantenedora"
+  		  		  sourcePath="{{ path('get_organization_by_name') }}"
                   targetId = 'idLegalBodyParent'
                   exceptId = 'id'
-		          class="{{ maxinputspan }} autocomplete" 
-		          name="organization[idLegalBodyParent][name]" 
-		          id="professionalRelation" type="text" 
-		          value="{% if entityData.organization.idLegalBodyParent.name is defined %}{{ entityData.organization.idLegalBodyParent.name }}{% endif %}">
-		          
+		          class="{{ maxinputspan }} autocomplete"
+		          name="organization[idLegalBodyParent][name]"
+		          id="professionalRelation" type="text"
+		          value="{% if entityData.organization.idLegalBodyParent.name is defined %}{{ entityData.organization.idLegalBodyParent.name }}{% endif %}"
+		          selectedName="{% if entityData.organization.idLegalBodyParent.name is defined %}{{ entityData.organization.idLegalBodyParent.name }}{% endif %}"
+		          selectedId="{% if entityData.organization.idLegalBodyParent.id is defined %}{{ entityData.organization.idLegalBodyParent.id }}{% endif %}"
+		          >
+
 		</li>
 	</ul>
-	
+
 </div>
 
 <div class="filder {{ span }}" id="mantenedora">
@@ -183,6 +298,10 @@ function changeLabel()
 		$('#adicionais').show();
 		$('#liNaturalidade').show();
 		$('#natuLabel').html('Naturalidade:');
+		$('#noRoles').hide();
+		$('#rolesPF').show();
+		$('#rolesPJ').hide();
+		$('#rolesFM').hide();
 
 		$('input[name="actor[rolePF][][idRole]"]').prop('required', true);
 		$('input[name="actor[rolePJ][][idRole]"]').prop('required', false);
@@ -199,6 +318,10 @@ function changeLabel()
 		$('#mantenedora').show();
 		$('#adicionais').show();
 		$('#liNaturalidade').hide();
+		$('#noRoles').hide();
+		$('#rolesPF').hide();
+		$('#rolesPJ').show();
+		$('#rolesFM').hide();
 
 		$('input[name="actor[rolePF][][idRole]"]').prop('required', false);
 		$('input[name="actor[rolePJ][][idRole]"]').prop('required', true);
@@ -216,6 +339,10 @@ function changeLabel()
 		$('#adicionais').hide();
 		$('#liNaturalidade').show();
 		$('#natuLabel').html('Local de origem:');
+		$('#noRoles').hide();
+		$('#rolesPF').hide();
+		$('#rolesPJ').hide();
+		$('#rolesFM').show();
 		$('input[name="actor[rolePF][][idRole]"]').prop('required', false);
 		$('input[name="actor[rolePJ][][idRole]"]').prop('required', false);
 		$('input[name="actor[roleFM][][idRole]"]').prop('required', true);
@@ -227,6 +354,10 @@ function changeLabel()
 		$('#mantenedora').hide();
 		$('#adicionais').hide();
 		$('#liNaturalidade').hide();
+		$('#noRoles').show();
+		$('#rolesPF').hide();
+		$('#rolesPJ').hide();
+		$('#rolesFM').hide();
 		$('input[name="actor[rolePF][][idRole]"]').prop('required', false);
 		$('input[name="actor[rolePJ][][idRole]"]').prop('required', false);
 		$('input[name="actor[roleFM][][idRole]"]').prop('required', false);
@@ -237,34 +368,54 @@ function changeLabel()
 
 function checkUniqueCPF ()
 {
-	$("#waitDialog").modal('show');
-	$.ajax({
-        type: "GET",
-        url: "{{ path('check_unique_cpf') }}",
-        data: { 
-            id:  $('#id').val(),
-            cpf: $('#cpf').val(),
-        },
-        dataType: 'json'
-    })
-    .success(function(resp) {
-    	$("#waitDialog").modal('hide');
-    	if (!resp){
-    		if ($('label[for="cpf"]').length == 0)
-    		    errorPlacement($('<label for="cpf" class="error" id="uniqueCpf"><span>&#8593;</span> CPF já cadastrado na base de dados!</label>'), $('#cpf'));
-    		else{
-    			$('label[for="cpf"]').show();
-    			$('label[for="cpf"]').html('<span>&#8593;</span> CPF já cadastrado na base de dados!');
-	    	}
-    	}
-    	else {
-	    	if ($('label[for="cpf"]').length > 0) {
-	    		$('label[id="uniqueCpf"]').remove();
-	    	}
-    	}
-    }).error(function(data){
-        $("#waitDialog").modal('hide');
-    });
+    if ($('#cpf').val()) {
+    	$("#waitDialogBody").html('Aguarde, verificando se "CPF" já está cadastrado.');
+    	$("#waitDialog").modal('show');
+    	$('#cpfLoading').show();
+		$('#cpfError').hide();
+		$('#cpfOk').hide();
+    	window.setTimeout(function () {
+        	$.ajax({
+                type: "GET",
+                url: "{{ path('check_unique_cpf') }}",
+                data: {
+                    id:  $('#id').val(),
+                    cpf: $('#cpf').val(),
+                },
+                dataType: 'json'
+            })
+            .success(function(resp) {
+            	$("#waitDialog").modal('hide');
+            	if (!resp){
+                	$('#cpfLoading').hide();
+            		$('#cpfError').show();
+            		$('#cpfOk').hide();
+            		if ($('label[for="cpf"]').length == 0)
+            		    errorPlacement($('<label for="cpf" class="error" id="uniqueCpf"><span>&#8593;</span> CPF já cadastrado na base de dados!</label>'), $('#cpf'));
+            		else{
+            			$('label[for="cpf"]').show();
+            			$('label[for="cpf"]').html('<span>&#8593;</span> CPF já cadastrado na base de dados!');
+        	    	}
+            	}
+            	else {
+                	$('#cpfLoading').hide();
+            		$('#cpfError').hide();
+            		$('#cpfOk').show();
+        	    	if ($('label[for="cpf"]').length > 0) {
+        	    		$('label[id="uniqueCpf"]').remove();
+        	    	}
+        	    	$('label[for="cpf"]:visible').each(function(){
+            	    	if ($(this).prop('id') != 'cpf') {
+            	    		$('#cpfOk').hide();
+            	    		$('#cpfError').show();
+            	    	}
+        	    	});
+            	}
+            }).error(function(data){
+                $("#waitDialog").modal('hide');
+            });
+    	},500);
+    }
 }
 
 function changeStateprovince()
@@ -318,7 +469,7 @@ function changeCountry()
     	$('#stateProvince').show();
     	$('#city').val();
     	$('#stateProvince').val();
-    	
+
     	$('#idCity').hide();
     	$('#idStateProvince').hide();
     	$('#idCity').val();
@@ -394,16 +545,16 @@ $('#j_cadastroForm').submit(function(){
 	checkUniqueCPF();
 	var errorCpf = $('label[for="cpf"]')
 	if (
-    	(errorCpf.length && errorCpf.css('display') == 'inline') 
+    	(errorCpf.length && errorCpf.css('display') == 'inline')
 	){
   		$("#errorDialogBody").html('Erros encontrados no formulário. Corrija-os para prosseguir.');
   	    $("#errorDialog").modal('show');
-	    
+
 		return false;
     }
 	else{
     	return true;
-    } 
+    }
 });
 
 $(document).ready(function() {
@@ -415,25 +566,28 @@ $(document).ready(function() {
     $('#freeStateProvince').click(clickFreeStateProvince);
     $('#freeCountry').click(clickFreeCountry);
 
+    $('#earliestDateAacr2Chk').click(switchDateFields);
+    $('#latestDateAacr2Chk').click(switchDateFields);
+
     {% if entityData.city is not empty %}$('#freeCity').prop('checked', false).trigger('click');{% endif %}
-    
+
     {% if entityData.stateProvince is not empty %}$('#freeStateProvince').prop('checked', false).trigger('click');{% endif %}
-    
+
     {% if entityData.country is not empty %}$('#freeCountry').prop('checked', false).trigger('click');{% endif %}
 
     changeLabel();
 
-//     $('#cpf').keyup(checkUniqueCPF);
+    $('#cpf').keyup(function(e){if(e.keyCode && e.keyCode != 9 && e.keyCode != 16 && (e.keyCode < 37 || e.keyCode > 40) ){$('#cpfOk').hide();$('#cpfError').hide();}});
     $('#cpf').blur(checkUniqueCPF);
-    
+
     $('#latestDate').keypress(function(){
         $('#earliestDate').trigger('blur');
     });
-    
+
     $('#latestDate').change(function(){
         $('#earliestDate').trigger('blur');
     });
 
-    $('#idLegalBodyType').focus();    
+    $('#idLegalBodyType').focus();
 });
 </script>

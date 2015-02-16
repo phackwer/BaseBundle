@@ -62,10 +62,10 @@ class Actor extends AbstractBase
     /**
      * Set idLegalBody
      *
-     * @param \Ibram\CoreBundle\Entity\LegalBody $idLegalBody
+     * @param \SanSIS\Core\BaseBundle\Entity\LegalBody $idLegalBody
      * @return Actor
      */
-    public function setIdLegalBody(\Ibram\CoreBundle\Entity\LegalBody $idLegalBody = null)
+    public function setIdLegalBody(\SanSIS\Core\BaseBundle\Entity\LegalBody $idLegalBody = null)
     {
         $this->idLegalBody = $idLegalBody;
 
@@ -75,7 +75,7 @@ class Actor extends AbstractBase
     /**
      * Get idLegalBody
      *
-     * @return \Ibram\CoreBundle\Entity\LegalBody
+     * @return \SanSIS\Core\BaseBundle\Entity\LegalBody
      */
     public function getIdLegalBody()
     {
@@ -86,7 +86,7 @@ class Actor extends AbstractBase
      * Set pseudonym
      *
      * @param \SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection $pseudonym
-     * @innerEntity \Ibram\CoreBundle\Entity\ActorPseudonym
+     * @innerEntity \SanSIS\Core\BaseBundle\Entity\ActorPseudonym
      * @return ActorPseudonym
      */
     public function setPseudonym(\SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection $pseudonym = null)
@@ -100,7 +100,7 @@ class Actor extends AbstractBase
      * Set role
      *
      * @param \SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection $role
-     * @innerEntity \Ibram\CoreBundle\Entity\Role
+     * @innerEntity \SanSIS\Core\BaseBundle\Entity\Role
      * @return Role
      */
     public function setRole(\SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection $role = null)
@@ -123,7 +123,7 @@ class Actor extends AbstractBase
     /**
      * Add role
      *
-     * @param \Ibram\CoreBundle\Entity\Role $role
+     * @param \SanSIS\Core\BaseBundle\Entity\Role $role
      * @return Role
      */
     public function addRole(\SanSIS\Core\BaseBundle\Entity\Role $role = null)

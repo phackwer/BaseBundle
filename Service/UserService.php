@@ -1,14 +1,35 @@
 <?php
 namespace SanSIS\Core\BaseBundle\Service;
 
-use \Doctrine\ORM\Query;
-use \Symfony\Component\HttpFoundation\Request;
 use \SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection;
 use \SanSIS\Core\BaseBundle\Entity\User;
+use \Symfony\Component\HttpFoundation\Request;
 
 class UserService extends BaseService
 {
     protected $rootEntityName = '\SanSIS\Core\BaseBundle\Entity\LegalBody';
+
+    protected $secFactory = null;
+
+    protected $secContext = null;
+
+    public function setSecFactory(\Symfony\Component\Security\Core\Encoder\EncoderFactory $secFactory)
+    {
+        $this->secFactory = $secFactory;
+    }
+
+    public function setSecContext(\Symfony\Component\Security\Core\SecurityContext $secContext)
+    {
+        $this->secContext = $secContext;
+    }
+
+    /**
+     * Utiliza o método criado na Base Service para gerenciar os uploads
+     */
+    public function handleUploads(Request $req)
+    {
+        $this->handleActorMainPhotoUpload($req);
+    }
 
     /**
      * Sobrescreve o método para pesquisar por tipo de pessoa
@@ -56,7 +77,7 @@ class UserService extends BaseService
         $arr['isActive'] = '';
         if ($person) {
             $user = $this->getEntityManager()->getRepository('SanSIS\Core\BaseBundle\Entity\User')->findOneBy(array('idLegalBodyPerson' => $person->getId()));
-            $arr['isActive'] .=  $user->getIsActive() ? 'Ativo' : 'Inativo';
+            $arr['isActive'] .= $user->getIsActive() ? '<span style="color:#009900">Ativa</span>' : '<span style="color:#FF0000">Inativa</span>';
         }
 
         return $arr;
@@ -69,8 +90,8 @@ class UserService extends BaseService
      */
     public function preSave(Request $req)
     {
-        echo '<pre>';
-        var_dump($_FILES);die;
+//         echo '<pre>';
+        //         var_dump($_FILES);die;
         //As validações das senhas vieram para a PreSave pois eu preciso
         //comparar o que está no banco com o que foi submetido.
         //O populate já carrega e coloca o no EntityManager
@@ -81,8 +102,7 @@ class UserService extends BaseService
         $person = $req->request->get('person');
         if ($req->request->get('id')) {
             $user = $this->getEntityManager()->getRepository('\SanSIS\Core\BaseBundle\Entity\User')->findOneBy(array('username' => $person['user']['username']));
-        }
-        else{
+        } else {
             $user = new User();
         }
 
@@ -90,12 +110,24 @@ class UserService extends BaseService
             $person['user']['password'] = $user->getPassword();
         }
         //verifica se a senha informada é válida
-        else if (isset($person['user']['password']) && trim($person['user']['password'])){
-            if(($person['user']['password'] == $person['user']['confirmPassword'])) {
-                $encoder = $this->secFactory->getEncoder($user);
+        else if (isset($person['user']['password']) && trim($person['user']['password'])) {
+            if (($person['user']['password'] == $person['user']['confirmPassword'])) {
+                $encoder                           = $this->secFactory->getEncoder($user);
                 $person['user']['confirmPassword'] = $person['user']['password'] = $encoder->encodePassword($person['user']['password'], $user->getSalt());
-            }
-            else {
+
+//                 if (isset($person['user']['oldPassword'])) {
+                //                     $person['user']['oldPassword'] = $encoder->encodePassword($person['user']['oldPassword'], $user->getSalt());
+                //                     if ($user->getId() && ($user->getPassword() != $person['user']['oldPassword'])){
+                //                         $person['user']['password'] = '';
+                //                         $req->request->set('person', $person);
+                //                         //populate forçado para redirect correto do formulário
+                //                         $this->populateRootEntity($req);
+                //                         throw new \Exception('Senhas informadas inválidas');
+                //                     }
+                //                 }
+
+//                 die('certo');
+            } else {
                 unset($person['user']['password']);
                 $req->request->set('person', $person);
                 //populate forçado para redirect correto do formulário
@@ -107,18 +139,24 @@ class UserService extends BaseService
         $req->request->set('person', $person);
 
         //Limpa as permissões anteriores para salvar as novas
-        if ($req->request->get('id')){
+        if ($req->request->get('id')) {
             $ent = $this->getRootEntity($req->request->get('id'));
 
             $personDb = $ent->getPerson();
             if ($personDb) {
                 $profrels = $personDb->getProfessionalRelation();
-                foreach($profrels as $profrel) {
-                    foreach ($profrel->getProfile() as $profile) {
-                        $profrel->removeProfile($profile);
+                foreach ($profrels as $profrel) {
+                    $jns = $this->getEntityManager()
+                                ->getRepository('SanSIS\Core\BaseBundle\Entity\JnLegalBodyRelationProfile')
+                                ->findBy(
+                                    array(
+                                        'idLegalBodyRelation' => $profrel->getId(),
+                                    ));
+                    foreach ($jns as $jn) {
+                        $this->getEntityManager()->remove($jn);
                     }
-                    $this->getEntityManager()->flush();
-                    $this->getEntityManager()->refresh($ent);
+
+                    $profrel->setProfile(new ArrayCollection());
                 }
             }
         }
@@ -148,64 +186,64 @@ class UserService extends BaseService
      */
     public function getFormData($entityData = null)
     {
-        $formData                           = array();
-        $formData['profile']                = array();
-        $formData['legalBodyRelationType']  = array();
-        $formData['language']               = array();
-        $formData['country']                = array();
-        $formData['stateProvince']          = array();
-        $formData['city']                   = array();
-        $formData['idEntity']               = array();
+        $formData                          = array();
+        $formData['profile']               = array();
+        $formData['legalBodyRelationType'] = array();
+        $formData['language']              = array();
+        $formData['country']               = array();
+        $formData['stateProvince']         = array();
+        $formData['city']                  = array();
+        $formData['idEntity']              = array();
 
         $em = $this->getEntitymanager();
 
         //Tipo de vínculo
         $itens = $em->getRepository('SanSIS\Core\BaseBundle\Entity\LegalBodyRelationType')->findAll();
-        foreach ($itens as $item){
+        foreach ($itens as $item) {
             $formData['legalBodyRelationType'][$item->getId()] = $item->getTerm();
         }
 
         //Perfis
         $itens = $em->getRepository('SanSIS\Core\BaseBundle\Entity\Profile')->findAll();
-        foreach ($itens as $item){
+        foreach ($itens as $item) {
             $formData['profile'][$item->getId()] = $item->getTerm();
         }
         ksort($formData['profile']);
 
         //Países
         $itens = $em->getRepository('SanSIS\Core\BaseBundle\Entity\Country')->findBy(
-            array('statusTuple' => array(1,2))
+            array('statusTuple' => array(1, 2))
         );
-        foreach ($itens as $item){
+        foreach ($itens as $item) {
             $formData['country'][$item->getId()] = $item->getTerm();
         }
 
         //Estados e províncias
         $itens = $em->getRepository('SanSIS\Core\BaseBundle\Entity\StateProvince')->findBy(
             array(
-                'statusTuple' => array(1,2),
-                'idCountry' => isset($entityData['idCountry']['id']) ? $entityData['idCountry']['id'] : null
+                'statusTuple' => array(1, 2),
+                'idCountry'   => isset($entityData['idCountry']['id']) ? $entityData['idCountry']['id'] : null,
             )
         );
-        foreach ($itens as $item){
+        foreach ($itens as $item) {
             $formData['stateProvince'][$item->getId()] = $item->getTerm();
         }
 
         //Cidades
         $itens = $em->getRepository('SanSIS\Core\BaseBundle\Entity\City')->findBy(
             array(
-                'statusTuple' => array(1,2),
-                'idStateProvince' => isset($entityData['idStateProvince']['id']) ? $entityData['idStateProvince']['id'] : null
+                'statusTuple'     => array(1, 2),
+                'idStateProvince' => isset($entityData['idStateProvince']['id']) ? $entityData['idStateProvince']['id'] : null,
             )
         );
-        foreach ($itens as $item){
+        foreach ($itens as $item) {
             $formData['city'][$item->getId()] = $item->getTerm();
         }
 
         //Entidade proprietária da aplicação
         $itens = $em->getRepository('SanSIS\Core\BaseBundle\Entity\SystemData')->findAll();
-        foreach ($itens as $item){
-            $formData['idEntity'][0] = array();
+        foreach ($itens as $item) {
+            $formData['idEntity'][0]         = array();
             $formData['idEntity'][0]['id']   = $item->getIdOrganization()->getId();
             $formData['idEntity'][0]['name'] = $item->getIdOrganization()->getIdLegalBody()->getName();
         }

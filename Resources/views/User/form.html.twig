@@ -24,24 +24,33 @@
 
 	<form action="{{ path('user_save') }}" method="post" id="j_cadastroForm" enctype="multipart/form-data" style="position: relative;">
 		<div class="tab-content box_borda">
-		
+
 		<!-- Usuarios OneToOne -->
 		<input type="hidden" id="id" name="id" value="{{ entityData.id }}">
 		<input name="actor[id]" type="hidden" value="{% if entityData.actor.id is defined %}{{ entityData.actor.id }}{% endif %}">
-		
+		<input name="actor[role][0][id]"  type="hidden" value="{% if entityData.actor.role.0.id is defined %}{{ entityData.actor.role.0.id }}{% endif %}">
+		<input name="actor[role][0][idRole]"  type="hidden" value="100">
 		<input type="hidden" name="actor[mainPhoto][id]" value=""/>
 		<input type="hidden" name="actor[mainPhoto][idRelationType]" value="5"/>
-		<input type="file" accept="image/png,image/jpeg,image/tif"  id="mainPhoto" targetId='mainPhotoView' class="imageUpload" name="mainPhoto" style="visibility: hidden; width: 1px; height: 1px" />
-		
+
+		<input type="hidden" name="actor[mainPhoto][id]" value="{% if entityData.actor.mainPhoto.id is defined %}{{ entityData.actor.mainPhoto.id }}{% endif %}"/>
+		<input type="hidden" name="actor[mainPhoto][idRelationType]" value="5"/>
+		<input type="hidden" name="actor[mainPhoto][resource][0][id]" value="{% if entityData.actor.mainPhoto.resource.0 is defined %}{{ entityData.actor.mainPhoto.resource.0.id }}{% endif %}"/>
+		<input type="file" accept="image/png,image/jpeg,image/tif" id="mainPhoto" targetId='mainPhotoView' removeTarget="actor[mainPhoto][resource][0][id]" class="imageUpload" name="mainPhoto" style="visibility: hidden; width: 1px; height: 1px" />
+
 		<div class="tab-pane active {{ span }} paddingAll" id="tab1">
 		     {% if foto is defined and foto != '' %}
 	         <div class="span3 hidden-desktop" style="margin: 0px 20px 30px 20px; position:relative; text-align: center ">
-	            {% if foto_path != '' %}
-                <img id="mainPhoto1" targetId="mainPhoto" class="choosePhoto mainPhotoView" src="{{ asset('bundles/ibramcore/images/uploaded/') }}{{ foto_path }}" style="width: 100%; border:1px solid #999999; box-shadow: 0px 4px 14px #000000;"/>
+                {% if entityData.actor.mainPhoto is defined and entityData.actor.mainPhoto != '' and entityData.actor.mainPhoto.resource.0 is defined %}
+                <img id="mainPhoto1" targetId="mainPhoto" class="choosePhoto mainPhotoView" src="{{ asset('uploads/') }}{{ entityData.actor.mainPhoto.resource.0.fileName }}" style="width: 100%; border:1px solid #999999; box-shadow: 0px 4px 14px #000000;"/>
+                <br><br>
+                <label class="choosePhoto" for="mainPhoto1" style="display: none">Nenhuma imagem selecionada</label>
+                <label class="error removePhoto" for="mainPhoto1" targetId="mainPhoto" style="font-size: 1.2em;">Remover foto</label>
                 {% else %}
                 <img id="mainPhoto1" targetId="mainPhoto" class="choosePhoto mainPhotoView" src="{{ asset('bundles/sansiscorebase/images/camera-icon.jpg') }}" title="Imagem principal - clique para fazer o upload" style="width: 100%; border:1px solid #999999; box-shadow: 0px 4px 14px #000000;"/>
                 <br><br>
-                <label for="mainPhoto1">Nenhuma imagem selecionada</label>
+                <label class="choosePhoto" for="mainPhoto1">Nenhuma imagem selecionada</label>
+                <label class="error removePhoto" for="mainPhoto1" targetId="mainPhoto" style="font-size: 1.2em;display: none">Remover foto</label>
                 {% endif %}
 	         </div>
 	         {% endif %}
@@ -51,52 +60,60 @@
             		<li class="span">
             			<h5 class="row {{ maxpspan }} legenda">Dados básicos</h5>
             		</li>
-            		
+
             		<input type="hidden" id="idLegalBodyType" name="idLegalBodyType" value="1">
-            		
+
             		<li class="span">
             		  <label class="row span3">Nome:  <font color="red"><b>*</b></font></label>
             		  <input class="{{ maxinputspan }}" name="name" id="name" type="text" value="{{ entityData.name }}" required="required" minlength="3" maxlength="512">
             		</li>
-            		
+
             		<li class="span">
             		  <label class="row span3">CPF: <font color="red"><b>*</b></font></label>
             		  <input id="personid" name="person[id]" type="hidden" value="{% if entityData.person.id is defined %}{{ entityData.person.id }}{% endif %}">
             		  <input class="{{ maxinputspan }} cpf" name="person[cpf]" id="cpf" type="text" value="{% if entityData.person.cpf is defined %}{{ entityData.person.cpf }}{% endif %}" required="required">
+
+            	        <img id="cpfLoading" src="{{ asset('bundles/sansiscorebase/images/ico/ajax-loader.gif') }}" style="display: none; margin: 6px;">
+            	        <img id="cpfError" src="{{ asset('bundles/sansiscorebase/images/ico/error.gif') }}" style="display: none; margin: 6px;">
+            	        <img id="cpfOk" src="{{ asset('bundles/sansiscorebase/images/ico/ok.png') }}" style="display: none; margin: 6px;">
             		</li>
-            		
+
             		    <label class="row span3" id="earliestDateLabel">Data de nascimento: <font color="red"><b>*</b></font></label>
             		    <input class="span2 dateBR notFuture" name="earliestDate" id="earliestDate" type="text" value="{{ entityData.earliestDate ? entityData.earliestDate | date("d/m/Y") : '' }}" required="required">
             	    </li>
-            		
+
             		<li class="span">
             		  <label class="row span3">Telefone: <font color="red"><b>*</b></font></label>
             		  <input class="{{ maxinputspan }} phone" name="phone" id="phone" type="text" value="{{ entityData.phone }}" maxlength="256" required="required">
             		</li>
-            		
+
             		<li class="span">
             		  <label class="row span3">E-mail: <font color="red"><b>*</b></font></label>
             		  <input class="{{ maxinputspan }}" name="email" id="email" type="email" value="{{ entityData.email }}" maxlength="512" required="required">
             		</li>
                 </ul>
             </div>
-            
+
             <div class="filder {{ span }}" id="dadosdeacesso">
-            
+
                 <ul>
             		<li class="span">
             			<h5 class="row {{ maxpspan }} legenda">Dados de acesso</h5>
             		</li>
-            		
+
             		<input type="hidden" id="personuserid" name="person[user][id]" value="{% if entityData.person.user.username is defined %}{{ entityData.person.user.id }}{% endif %}">
-            		
+
             		<li class="span">
             		  <label class="row span3">Login:  <font color="red"><b>*</b></font></label>
-            		  <input class="{{ maxinputspan }}" name="person[user][username]" id="username" type="text" value="{% if entityData.person.user.username is defined %}{{ entityData.person.user.username }}{% endif %}" 
+            		  <input class="{{ maxinputspan }}" name="person[user][username]" id="username" type="text" value="{% if entityData.person.user.username is defined %}{{ entityData.person.user.username }}{% endif %}"
             		  required="required" minlength="3" maxlength="256"
             		  {% if entityData.id is defined and entityData.id is not null %} readonly="readonly" {% endif %}>
+
+        	        <img id="usernameLoading" src="{{ asset('bundles/sansiscorebase/images/ico/ajax-loader.gif') }}" style="display: none; margin: 6px;">
+        	        <img id="usernameError" src="{{ asset('bundles/sansiscorebase/images/ico/error.gif') }}" style="display: none; margin: 6px;">
+        	        <img id="usernameOk" src="{{ asset('bundles/sansiscorebase/images/ico/ok.png') }}" style="display: none; margin: 6px;">
             		</li>
-            		
+
                     {% if entityData.id is defined and entityData.id is not null %}
                 		<li class="span">
                 		  <label class="row span3">Nova senha:</label>
@@ -116,7 +133,7 @@
                 		  <input class="{{ maxinputspan }}" name="person[user][confirmPassword]" id="confirmPassword" equalTo="#password" type="password" required="required" value="" maxlength="32">
                 		</li>
             		{% endif %}
-            		
+
             		<li class="span">
             		  <label class="row span3">Conta ativa?  <font color="red"><b>*</b></font></label>
             		  <select class="{{ maxinputspan }}" name="person[user][isActive]" required="required">
@@ -126,7 +143,7 @@
         		    </li>
             	</ul>
             </div>
-            
+
             <div class="filder {{ span }}" id="vinculada">
             	<ul>
             		<li class="span">
@@ -146,11 +163,11 @@
                 		  {% if multi_organization == false %}
         		          notCleanable
         		          {% endif %}>
-                		  <input  sourcePath="{{ path('get_organization_by_name') }}" 
+                		  <input  sourcePath="{{ path('get_organization_by_name') }}"
                                   targetId = 'professionalRelationIdLegalBodyOrganization_{{ val }}'
-                		          class="{{ maxinputspan }} autocomplete" 
-                		          name="person[professionalRelation][{{ val }}][idLegalBodyOrganization][name]" 
-                		          id="professionalRelation_{{ val }}" type="text" 
+                		          class="{{ maxinputspan }} autocomplete"
+                		          name="person[professionalRelation][{{ val }}][idLegalBodyOrganization][name]"
+                		          id="professionalRelation_{{ val }}" type="text"
                 		          value="{% if item.idLegalBodyOrganization.idLegalBody.name is defined%}{{ item.idLegalBodyOrganization.idLegalBody.name }}{% endif %}"
                 		          required="required"
                 		          {% if multi_organization == false %}
@@ -158,14 +175,14 @@
                 		          notCleanable
                 		          {% endif %}>
         		          {% if multi_organization %}
-                            
+
                           {% endif %}
                           <a class="icon-minus multi-line" style="font-size:14px;margin-left:5px"></a>
                           {% if (entityData.person.professionalRelation | length) == (val+1) %}
             	           <a class="icon-plus multi-line" style="font-size:14px;margin-left:5px"></a>
             	          {% endif %}
                 		</li>
-                		
+
                         <li class="span">
                 		  <label class="row span3">Tipo de vínculo: <font color="red"><b>*</b></font></label>
                     		    <select class="{{ maxinputspan }}" name="person[professionalRelation][{{ val }}][idLegalBodyRelationType][id]" id="idLegalBodyRelationType_{{ val }}" required="required">
@@ -175,12 +192,12 @@
                                     {% endfor %}
                     	        </select>
                 		</li>
-                		
+
                 		<li class="span">
                 		  <label class="row span3">Posição / Cargo:  <font color="red"><b>*</b></font></label>
                 		  <input class="{{ maxinputspan }}" name="person[professionalRelation][{{ val }}][jobPosition]" id="professionalRelationJobPosition_{{ val }}" type="text" value="{{ item.jobPosition }}" required="required" maxlength="512">
                 		</li>
-                		
+
             	        <li class="span">
                 		    <label class="row span3 visible-phone">Perfil de Acesso: <font color="red"><b>*</b></font></label>
     		  	            {% for vall,iitem in formData.profile %}
@@ -197,13 +214,13 @@
                             {% endfor %}
                 		</li>
                 		<li class="span visible-desktop">&nbsp;</li>
-                		
+
                 		<li class="span">
                 		    <label class="row span3" id="professionalRelationEarliestDateLabel_{{ val }}">Data de início do vínculo: <font color="red"><b>*</b></font></label>
                 		    <input class="span2 dateBR noFuture" name="person[professionalRelation][{{ val }}][earliestDate]" dateCompare="#professionalRelationLatestDate_{{ val }}" id="professionalRelationEarliestDate_{{ val }}" type="text" value="{{ item.earliestDate ? item.earliestDate | date("d/m/Y") : '' }}" required="required">
                 		    <!--<input type="checkbox" class="aacr2"> <label for="prodaprox">Aproximada</label>-->
                 	    </li>
-                	    
+
                 		<li class="span">
                 		    <label class="row span3" id="professionalRelationLatestDateLabel_{{ val }}">Data de fim do vínculo:</label>
                 		    <input class="span2 dateBR" name="person[professionalRelation][{{ val }}][latestDate]" id="professionalRelationLatestDate_{{ val }}" type="text" value="{{ item.latestDate ? item.latestDate | date("d/m/Y") : '' }}">
@@ -223,11 +240,11 @@
             		  {% if multi_organization == false %}
     		          notCleanable
     		          {% endif %}>
-            		  <input  sourcePath="{{ path('get_organization_by_name') }}" 
+            		  <input  sourcePath="{{ path('get_organization_by_name') }}"
                               targetId = 'professionalRelationIdLegalBodyOrganization_0'
-            		          class="{{ maxinputspan }} autocomplete" 
-            		          name="person[professionalRelation][0][idLegalBodyOrganization][name]" 
-            		          id="professionalRelation_0" type="text" 
+            		          class="{{ maxinputspan }} {% if multi_organization == true %}autocomplete{% endif %}"
+            		          name="person[professionalRelation][0][idLegalBodyOrganization][name]"
+            		          id="professionalRelation_0" type="text"
             		          value="{{ formData.idEntity.0.name }}"
             		          required="required"
             		          {% if multi_organization == false %}
@@ -236,12 +253,12 @@
             		          {% endif %}
             		          >
                       {% if multi_organization %}
-                      
+
                       {% endif %}
                       <a class="icon-minus multi-line" style="font-size:14px;margin-left:5px"></a>
                       <a class="icon-plus multi-line" style="font-size:14px;margin-left:5px"></a>
             		</li>
-            		
+
                     <li>
             		  <label class="row span3">Tipo de vínculo: <font color="red"><b>*</b></font></label>
             		    <select class="{{ maxinputspan }}" name="person[professionalRelation][0][idLegalBodyRelationType][id]" id="idLegalBodyRelationType_0" required="required">
@@ -251,13 +268,13 @@
                             {% endfor %}
             	        </select>
             		</li>
-            		
+
             		<li>
             		  <label class="row span3">Posição / Cargo:  <font color="red"><b>*</b></font></label>
             		  <input class="{{ maxinputspan }}" name="person[professionalRelation][0][jobPosition]" id="professionalRelationJobPosition_0" type="text" value="" required="required" maxlength="512">
             		</li>
-            		
-        		
+
+
             		<li>
             		    <label class="row span3 visible-phone">Perfil de Acesso: <font color="red"><b>*</b></font></label>
 		  	            {% for val,item in formData.profile %}
@@ -268,13 +285,13 @@
                         {% endfor %}
             		</li>
             		<li class="visible-desktop">&nbsp;</li>
-            		
+
             		<li>
             		    <label class="row span3" id="professionalRelationEarliestDateLabel_0">Data de início do vínculo: <font color="red"><b>*</b></font></label>
             		    <input class="span2 dateBR noFuture" name="person[professionalRelation][0][earliestDate]" dateCompare="#professionalRelationLatestDate_0" id="professionalRelationEarliestDate_0" type="text" value="" required="required">
             		    <!--<input type="checkbox" class="aacr2"> <label for="prodaprox">Aproximada</label>-->
             	    </li>
-            
+
             		<li>
             		    <label class="row span3" id="professionalRelationLatestDateLabel_0">Data de fim do vínculo:</label>
             		    <input class="span2 dateBR" name="person[professionalRelation][0][latestDate]" id="professionalRelationLatestDate_0" type="text" value="">
@@ -283,104 +300,30 @@
                 </ul>
                 {% endif %}
             </div>
-            
-            <div class="filder {{ span }}" id="adicionais">
-            	<ul>
-            		<li>
-            			<h5 class="row {{ maxpspan }} legenda">Dados de contato</h5>
-            		</li>
-            		
-            		<li>
-                		<label class="row span3">País:</label>
-                		<select class="{{ midinputspan }}" name="idCountry" id="idCountry" {% if entityData.country is not empty %}style="display: none"{% endif %}>
-                				<option value="">Selecione abaixo</option>
-                    	        {% for val,item in formData.country %}
-                                    <option value="{{ val }}" {% if entityData.idCountry.id is defined and entityData.idCountry.id == val %}selected{% endif %}>{{ item }}</option>
-                                {% endfor %}
-                		</select>
-                		<input class="{{ midinputspan }}" name="country" id="country" type="text" value="{{ entityData.country }}" {% if entityData.country is empty %}style="display: none"{% endif %} maxlength="512">
-                		<input type="checkbox" id="freeCountry" style="margin-left: 10px;"> <label for="freeCountry">Não listado</label>
-            		</li>
-            		
-            		<li>
-                		<label class="row span3">Estado / Província:</label>
-                		<select class="{{ midinputspan }}" name="idStateProvince" id="idStateProvince" {% if entityData.stateProvince is not empty %}style="display: none"{% endif %}>
-                		        {% if formData.stateProvince is defined and formData.stateProvince | length > 0 %}
-                    		        {% for val,item in formData.stateProvince %}
-                                        <option value="{{ val }}" {% if entityData.idStateProvince.id is defined and entityData.idStateProvince.id == val %}selected{% endif %}>{{ item }}</option>
-                                    {% endfor %}
-                		        {% else %}
-                				<option value="">Selecione o país antes</option>
-                				{% endif %}
-                		</select>
-                		<input class="{{ midinputspan }}" name="stateProvince" id="stateProvince" type="text" value="{{ entityData.stateProvince }}" {% if entityData.stateProvince is empty %}style="display: none"{% endif %} maxlength="512">
-                		<input type="checkbox" id="freeStateProvince" style="margin-left: 10px;"> <label for="freeStateProvince">Não listado</label>
-            		</li>
-            		
-            		<li>
-                		<label class="row span3">Cidade:</label>
-                		<select class="{{ midinputspan }}" name="idCity" id="idCity" {% if entityData.city is not empty %}style="display: none"{% endif %}>
-                				{% if formData.city is defined and formData.city | length > 0 %}
-                    		        {% for val,item in formData.city %}
-                                        <option value="{{ val }}" {% if entityData.idCity.id is defined and entityData.idCity.id == val %}selected{% endif %}>{{ item }}</option>
-                                    {% endfor %}
-                		        {% else %}
-                				<option value="">Selecione e estado / província antes</option>
-                				{% endif %}
-                		</select>
-                		<input class="{{ midinputspan }}" name="city" id="city" type="text" value="{{ entityData.city }}" {% if entityData.city is empty %}style="display: none"{% endif %} maxlength="512">
-                		<input type="checkbox" id="freeCity" style="margin-left: 10px;"> <label for="freeCity">Não listada</label>
-            		</li>
-            		
-            		<li>
-            		  <label class="row span3">Endereço:</label>
-            		  <input class="{{ maxinputspan }}" name="address" id="address" type="text" value="{{ entityData.address }}" maxlength="512">
-            		</li>
-            		
-            		<li>
-            		  <label class="row span3">CEP    :</label>
-            		  <input class="{{ maxinputspan }}" name="zipcode" id="zipcode" type="text" value="{{ entityData.zipcode }}" maxlength="50">
-            		</li>
-            		
-            		<li>
-            		  <label class="row span3">Telefone:</label>
-            		  <input class="{{ maxinputspan }} phone" name="phone" id="phone" type="text" value="{{ entityData.phone }}" maxlength="256">
-            		</li>
-            		
-            		<li>
-            		  <label class="row span3">E-mail:</label>
-            		  <input class="{{ maxinputspan }}" name="email" id="email" type="email" value="{{ entityData.email }}" maxlength="512">
-            		</li>
-            		
-            		<li>
-            		  <label class="row span3">Site da web:</label>
-            		  <input class="{{ maxinputspan }}" name="url" id="url" type="url" url="url" value="{{ entityData.url }}" maxlength="512">
-            		</li>
-            	</ul>
-            	
-            </div>
 		</div>
-		
-		
 		{% if foto is defined and foto != '' %}
         <div class="span3 visible-desktop" style="margin: 25px 10px 30px 40px; position:relative; text-align: center ">
-            {% if foto_path != '' %}
-            <img id="mainPhoto2" targetId="mainPhoto" class="choosePhoto mainPhotoView" src="{{ asset('bundles/ibramcore/images/uploaded/') }}{{ foto_path }}" style="width: 100%; border:1px solid #999999; box-shadow: 0px 4px 14px #000000;"/>
+            {% if entityData.actor.mainPhoto is defined and entityData.actor.mainPhoto != '' and entityData.actor.mainPhoto.resource.0 is defined %}
+            <img id="mainPhoto2" targetId="mainPhoto" class="choosePhoto mainPhotoView" src="{{ asset('uploads/') }}{{ entityData.actor.mainPhoto.resource.0.fileName }}" style="width: 100%; border:1px solid #999999; box-shadow: 0px 4px 14px #000000;"/>
+            <br><br>
+            <label class="choosePhoto" for="mainPhoto2" style="display: none" >Nenhuma imagem selecionada</label>
+            <label class="error removePhoto" for="mainPhoto2" targetId="mainPhoto" style="font-size: 1.2em;">Remover foto</label>
             {% else %}
             <img id="mainPhoto2" targetId="mainPhoto" class="choosePhoto mainPhotoView" src="{{ asset('bundles/sansiscorebase/images/camera-icon.jpg') }}" title="Imagem principal - clique para fazer o upload" style="width: 100%; border:1px solid #999999; box-shadow: 0px 4px 14px #000000;"/>
             <br><br>
-            <label for="mainPhoto2">Nenhuma imagem selecionada</label>
+            <label class="choosePhoto" for="mainPhoto2" targetId="mainPhoto" >Nenhuma imagem selecionada</label>
+            <label class="error removePhoto" for="mainPhoto2" targetId="mainPhoto" style="font-size: 1.2em;display: none">Remover foto</label>
             {% endif %}
         </div>
         {% endif %}
-		
+
 	   <div class="row-fluid pull-left navigation">
 		    <a id="cancel_bt" style="margin: 0px 20px;" class="btn pull-left">Cancelar</a>
 		    <button type="submit" id="save_bt" class="btn btn-primary pull-right" style="margin: 0px 20px;">Salvar</button>
 		</div>
-        
+
 	</form>
-	
+
 </div>
 
 <script>
@@ -400,7 +343,7 @@
     }
 
     $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', fixGrids);
-    
+
     $(window).bind('resize', fixGrids);
 
     function changeLabel()
@@ -474,7 +417,7 @@
         	$('#stateProvince').show();
         	$('#city').val();
         	$('#stateProvince').val();
-        	
+
         	$('#idCity').hide();
         	$('#idStateProvince').hide();
         	$('#idCity').val();
@@ -572,66 +515,106 @@
 
     function checkUniqueCPF ()
     {
-    	$("#waitDialog").modal('show');
-    	$.ajax({
-            type: "GET",
-            url: "{{ path('check_unique_cpf') }}",
-            data: { 
-                id:  $('#id').val(),
-                cpf: $('#cpf').val(),
-            },
-            dataType: 'json'
-        })
-        .success(function(resp) {
-        	$("#waitDialog").modal('hide');
-        	if (!resp){
-        		if ($('label[for="cpf"]').length == 0)
-        		    errorPlacement($('<label for="cpf" class="error" id="uniqueCpf"><span>&#8593;</span> CPF já cadastrado na base de dados!</label>'), $('#cpf'));
-        		else{
-        			$('label[for="cpf"]').show();
-        			$('label[for="cpf"]').html('<span>&#8593;</span> CPF já cadastrado na base de dados!');
-    	    	}
-        	}
-        	else {
-    	    	if ($('label[for="cpf"]').length > 0) {
-    	    		$('label[id="uniqueCpf"]').remove();
-    	    	}
-        	}
-        }).error(function(data){
-            $("#waitDialog").modal('hide');
-        });
+        if ($('#cpf').val()) {
+        	$("#waitDialogBody").html('Aguarde, verificando se "CPF" já está cadastrado.');
+        	$("#waitDialog").modal('show');
+        	$('#cpfLoading').show();
+    		$('#cpfError').hide();
+    		$('#cpfOk').hide();
+        	window.setTimeout(function () {
+            	$.ajax({
+                    type: "GET",
+                    url: "{{ path('check_unique_cpf') }}",
+                    data: {
+                        id:  $('#id').val(),
+                        cpf: $('#cpf').val(),
+                    },
+                    dataType: 'json'
+                })
+                .success(function(resp) {
+                	$("#waitDialog").modal('hide');
+                	if (!resp){
+                    	$('#cpfLoading').hide();
+                		$('#cpfError').show();
+                		$('#cpfOk').hide();
+                		if ($('label[for="cpf"]').length == 0)
+                		    errorPlacement($('<label for="cpf" class="error" id="uniqueCpf"><span>&#8593;</span> CPF já cadastrado na base de dados!</label>'), $('#cpf'));
+                		else{
+                			$('label[for="cpf"]').show();
+                			$('label[for="cpf"]').html('<span>&#8593;</span> CPF já cadastrado na base de dados!');
+            	    	}
+                	}
+                	else {
+                    	$('#cpfLoading').hide();
+                		$('#cpfError').hide();
+                		$('#cpfOk').show();
+            	    	if ($('label[for="cpf"]').length > 0) {
+            	    		$('label[id="uniqueCpf"]').remove();
+            	    	}
+            	    	$('label[for="cpf"]:visible').each(function(){
+                	    	if ($(this).prop('id') != 'cpf') {
+                	    		$('#cpfOk').hide();
+                	    		$('#cpfError').show();
+                	    	}
+            	    	});
+                	}
+                }).error(function(data){
+                    $("#waitDialog").modal('hide');
+                });
+        	},500);
+        }
     }
 
     function checkUniqueUser()
 	{
-    	$("#waitDialog").modal('show');
-    	$.ajax({
-            type: "GET",
-            url: "{{ path('check_unique_username') }}", 
-            data: { 
-                id:       $('#id').val(),
-                username: $('#username').val(),
-            },
-            dataType: 'json'
-        })
-        .success(function(resp) {
-        	$("#waitDialog").modal('hide');
-        	if (!resp){
-    			if ($('label[for="username"]').length == 0)
-        			  errorPlacement($('<label for="username" class="error" id="uniqueUser"><span>&#8593;</span> Login já cadastrado na base de dados!</label>'), $('#username'));
-    			else {
-	    			$('label[for="username"]').show();
-	    			$('label[for="username"]').html('<span>&#8593;</span> Login já cadastrado na base de dados!');
-    			}
-	    	}
-	    	else {
-    	    	if ($('label[for="username"]').length > 0) {
-    	    	    $('label[id="uniqueUser"]').remove();
-    	    	}
-	    	}
-        }).error(function(data){
-            $("#waitDialog").modal('hide');
-        });
+    	if ($('#username').val()) {
+        	$("#waitDialogBody").html('Aguarde, verificando se "Login" já está cadastrado.');
+        	$("#waitDialog").modal('show');
+        	$('#usernameLoading').show();
+    		$('#usernameError').hide();
+    		$('#usernameOk').hide();
+        	window.setTimeout(function () {
+            	$.ajax({
+                    type: "GET",
+                    url: "{{ path('check_unique_username') }}",
+                    data: {
+                        id:       $('#id').val(),
+                        username: $('#username').val(),
+                    },
+                    dataType: 'json'
+                })
+                .success(function(resp) {
+                	$("#waitDialog").modal('hide');
+                	if (!resp){
+                    	$('#usernameLoading').hide();
+                		$('#usernameError').show();
+                		$('#usernameOk').hide();
+            			if ($('label[for="username"]').length == 0)
+                			  errorPlacement($('<label for="username" class="error" id="uniqueUser"><span>&#8593;</span> Login já cadastrado na base de dados!</label>'), $('#username'));
+            			else {
+        	    			$('label[for="username"]').show();
+        	    			$('label[for="username"]').html('<span>&#8593;</span> Login já cadastrado na base de dados!');
+            			}
+        	    	}
+        	    	else {
+        	        	$('#usernameLoading').hide();
+        	    		$('#usernameError').hide();
+        	    		$('#usernameOk').show();
+            	    	if ($('label[for="username"]').length > 0) {
+            	    	    $('label[id="uniqueUser"]').remove();
+            	    	}
+            	    	$('label[for="username"]:visible').each(function(){
+                	    	if ($(this).prop('id') != 'uniqueUser') {
+                	    		$('#usernameOk').hide();
+                	    		$('#usernameError').show();
+                	    	}
+            	    	});
+        	    	}
+                }).error(function(data){
+                    $("#waitDialog").modal('hide');
+                });
+        	},500);
+    	}
     }
 
     $('#j_cadastroForm').submit(function(){
@@ -640,25 +623,25 @@
     	var errorCpf = $('label[for="cpf"]')
     	var errorUsr = $('label[for="username"]')
     	if (
-	    	(errorCpf.length && errorCpf.css('display') == 'inline') 
+	    	(errorCpf.length && errorCpf.css('display') == 'inline')
     	   	||
 	    	(errorUsr.length && errorUsr.css('display') == 'inline')
     	){
       		$("#errorDialogBody").html('Erros encontrados no formulário. Corrija-os para prosseguir.');
       	    $("#errorDialog").modal('show');
-  	    
+
     		return false;
         }
     	else{
         	return true;
-        } 
+        }
     });
 
     $(document).ready(function() {
     	if ($('.mainPhotoView').attr('src') != "{{ asset('bundles/sansiscorebase/images/camera-icon.jpg') }}") {
             $('.noImage').hide();
         }
-        
+
         $('#idCountry').change(changeCountry);
         $('#idStateProvince').change(changeStateprovince);
 
@@ -667,15 +650,14 @@
         $('#freeCountry').click(clickFreeCountry);
 
         {% if entityData.city is not empty %}$('#freeCity').prop('checked', false).trigger('click');{% endif %}
-        
+
         {% if entityData.stateProvince is not empty %}$('#freeStateProvince').prop('checked', false).trigger('click');{% endif %}
-        
+
         {% if entityData.country is not empty %}$('#freeCountry').prop('checked', false).trigger('click');{% endif %}
 
-//         $('#cpf').keyup(checkUniqueCPF);
+        $('#cpf').keyup(function(e){if(e.keyCode && e.keyCode != 9 && e.keyCode != 16 && (e.keyCode < 37 || e.keyCode > 40) ){$('#cpfOk').hide();$('#cpfError').hide();}});
         $('#cpf').blur(checkUniqueCPF);
-	    
-//         $('#username').keyup(checkUniqueUser);
+        $('#username').keyup(function(e){if(e.keyCode && e.keyCode != 9 && e.keyCode != 16 && (e.keyCode < 37 || e.keyCode > 40) ){$('#usernameOk').hide();$('#usernameError').hide();}});
         $('#username').blur(checkUniqueUser);
 
         $('#vinculada').find('input[value="1"]:checkbox').each(function (){markIfSuper($(this)[0])});

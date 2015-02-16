@@ -161,9 +161,16 @@ class LegalBody extends AbstractBase
 
     /**
      * @var \SanSIS\Core\BaseBundle\Entity\LegalBodyOrganization
-     * @ORM\OneToMany(targetEntity="LegalBodyOrganization", mappedBy="idLegalBody")
+     * @ORM\OneToOne(targetEntity="LegalBodyOrganization", mappedBy="idLegalBody")
      */
     private $organization;
+
+    /**
+     * @var \SanSIS\Core\BaseBundle\Entity\Actor
+     *
+     * @ORM\OneToOne(targetEntity="Actor", mappedBy="idLegalBody")
+     */
+    private $actor;
 
     /**
      * @var string
@@ -594,6 +601,29 @@ class LegalBody extends AbstractBase
     public function getIdLegalBodyType()
     {
         return $this->idLegalBodyType;
+    }
+
+    /**
+     * Set actor
+     *
+     * @param \SanSIS\Core\BaseBundle\Entity\Actor $actor
+     * @return LegalBody
+     */
+    public function setActor(\SanSIS\Core\BaseBundle\Entity\Actor $actor = null)
+    {
+        $this->actor = $actor;
+
+        return $this;
+    }
+
+    /**
+     * Get actor
+     *
+     * @return \SanSIS\Core\BaseBundle\Entity\Actor
+     */
+    public function getActor()
+    {
+        return $this->actor;
     }
 
     /**
