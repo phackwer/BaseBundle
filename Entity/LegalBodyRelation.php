@@ -75,7 +75,7 @@ class LegalBodyRelation extends AbstractBase
     private $jobPosition;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Profile")
+     * @ORM\ManyToMany(targetEntity="Profile", inversedBy="legalbodyrelations")
      * @ORM\JoinTable(name="core_jn_legal_body_relation_profile",
      *      joinColumns={@ORM\JoinColumn(name="id_legal_body_relation", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="id_profile", referencedColumnName="id")}

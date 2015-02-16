@@ -34,7 +34,7 @@ class Actor extends AbstractBase
     private $idLegalBody;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Role")
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="actor")
      * @ORM\JoinTable(name="core_jn_actor_role",
      *      joinColumns={@ORM\JoinColumn(name="id_actor", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="id_role", referencedColumnName="id")}
