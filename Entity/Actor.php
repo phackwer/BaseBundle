@@ -45,7 +45,8 @@ class Actor extends AbstractBase
     /**
      * Define as collections
      */
-    public function __construct(){
+    public function __construct()
+    {
         $this->role = new ArrayCollection();
     }
 
@@ -128,11 +129,21 @@ class Actor extends AbstractBase
      */
     public function addRole(\SanSIS\Core\BaseBundle\Entity\Role $role = null)
     {
-        if (!$this->role)
+        if (!$this->role) {
             $this->role = new ArrayCollection();
+        }
 
         $this->role->add($role);
 
         return $this;
+    }
+
+    public function removeRole(\SanSIS\Core\BaseBundle\Entity\Role $role)
+    {
+        if (!$this->role->contains($role)) {
+            return;
+        }
+        $this->role->removeElement($role);
+        $role->removeActor($this);
     }
 }

@@ -1,7 +1,6 @@
 <?php
 namespace SanSIS\Core\BaseBundle\Service;
 
-use \SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection;
 use \SanSIS\Core\BaseBundle\Entity\User;
 use \Symfony\Component\HttpFoundation\Request;
 
@@ -127,23 +126,21 @@ class UserService extends BaseService
 
         //Limpa as permissões anteriores para salvar as novas
         if ($req->request->get('id')) {
-            $ent = $this->getRootEntity($req->request->get('id'));
-
+            $ent      = $this->getRootEntity($req->request->get('id'));
             $personDb = $ent->getPerson();
             if ($personDb) {
                 $profrels = $personDb->getProfessionalRelation();
                 foreach ($profrels as $profrel) {
-                    $jns = $this->getEntityManager()
-                                ->getRepository('SanSIS\Core\BaseBundle\Entity\JnLegalBodyRelationProfile')
-                                ->findBy(
-                                    array(
-                                        'idLegalBodyRelation' => $profrel->getId(),
-                                    ));
-                    foreach ($jns as $jn) {
-                        $this->getEntityManager()->remove($jn);
+                    foreach ($profrel->getProfile() as $profile) {
+                        $profrel->removeProfile($profile);
                     }
+                }
+            }
 
-                    $profrel->setProfile(new ArrayCollection());
+            $actor = $ent->getActor();
+            if ($actor) {
+                foreach ($actor->getRole() as $role) {
+                    $role->removeActor($actor);
                 }
             }
         }

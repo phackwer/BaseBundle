@@ -3,6 +3,7 @@
 namespace SanSIS\Core\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Profile
@@ -46,6 +47,55 @@ class Profile extends AbstractBase
     private $functionalities;
 
     /**
+     * @ORM\ManyToMany(targetEntity="LegalBodyRelation", mappedBy="profile")
+     *
+     */
+    private $legalbodyrelations;
+
+    /**
+     * Define as collections
+     */
+    public function __construct()
+    {
+        $this->functionalities = new ArrayCollection();
+    }
+
+    /**
+     * @return \SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getFunctionalities()
+    {
+        return $this->functionalities;
+    }
+
+    /**
+     * @param \SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection $functionalities
+     * @innerEntity \SanSIS\Core\BaseBundle\Entity\Functionality
+     * @return LegalBodyPerson
+     */
+    public function setFunctionalities(\SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection $functionalities = null)
+    {
+        $this->functionalities = $functionalities;
+
+        return $this;
+    }
+
+    /**
+     * @param \SanSIS\Core\BaseBundle\Entity\Functionality $professionalRelation
+     * @return Profile
+     */
+    public function addFunctionalities(\SanSIS\Core\BaseBundle\Entity\Functionality $functionalities = null)
+    {
+        if (!$this->functionalities) {
+            $this->functionalities = new ArrayCollection();
+        }
+
+        $this->functionalities->add($functionalities);
+
+        return $this;
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -70,9 +120,10 @@ class Profile extends AbstractBase
      *
      * @return string
      */
-    public function getFunctionalities()
+    public function setTerm($term)
     {
-        return $this->functionalities;
+        $this->term = $term;
+        return $this;
     }
 
     /**
@@ -96,5 +147,23 @@ class Profile extends AbstractBase
     public function getStatusTuple()
     {
         return $this->statusTuple;
+    }
+
+    public function removeLegalBodyRelation(\SanSIS\Core\BaseBundle\Entity\LegalBodyRelation $legalbodyrelation)
+    {
+        if (!$this->legalbodyrelations->contains($legalbodyrelation)) {
+            return;
+        }
+        $this->legalbodyrelations->removeElement($legalbodyrelation);
+        $legalbodyrelation->removeProfile($this);
+    }
+
+    public function removeFunctionality(\SanSIS\Core\BaseBundle\Entity\Functionality $functionality)
+    {
+        if (!$this->functionalities->contains($functionality)) {
+            return;
+        }
+        $this->functionalities->removeElement($functionality);
+        $functionality->removeProfile($this);
     }
 }

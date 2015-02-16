@@ -71,4 +71,13 @@ class Functionality extends AbstractBase
     {
         return $this->roleWord;
     }
+
+    public function removeProfile(\SanSIS\Core\BaseBundle\Entity\Profile $profile)
+    {
+        if (!$this->profiles->contains($profile)) {
+            return;
+        }
+        $this->profiles->removeElement($profile);
+        $profile->removeFunctionality($this);
+    }
 }
