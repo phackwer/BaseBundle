@@ -84,9 +84,41 @@ class EntityService extends BaseService
             $ent  = $this->getRootEntity($req->request->get('id'));
             $type = $ent->getIdLegalBodyType()->getId();
             $req->request->set('idLegalBodyType', $type);
+
+            //Limpa as permissões anteriores para salvar as novas
+            if ($req->request->get('id')) {
+                $ent   = $this->getRootEntity($req->request->get('id'));
+                $actor = $ent->getActor();
+                if ($actor) {
+                    foreach ($actor->getRole() as $role) {
+                        $role->removeActor($actor);
+                    }
+                }
+            }
+
         } else {
             $type = $req->request->get('idLegalBodyType');
         }
+
+        $actor = $req->request->get('actor');
+
+        //remove itens de acordo com o tipo da pessoa para não popular o banco desnecessariamente
+        if ($type == 1) {
+            $req->request->set('organization', null);
+            if (isset($actor['rolePF'])) {
+                $actor['role'] = $actor['rolePF'];
+                unset($actor['rolePF']);
+            }
+        } else if ($type == 2) {
+            $req->request->set('person', null);
+            if (isset($actor['rolePJ'])) {
+                $actor['role'] = $actor['rolePJ'];
+                unset($actor['rolePJ']);
+            }
+        }
+
+        $req->request->set('actor', $actor);
+
         return $req;
     }
 
