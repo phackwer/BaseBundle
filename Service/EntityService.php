@@ -84,97 +84,9 @@ class EntityService extends BaseService
             $ent  = $this->getRootEntity($req->request->get('id'));
             $type = $ent->getIdLegalBodyType()->getId();
             $req->request->set('idLegalBodyType', $type);
-
-            $actor = $ent->getActor();
-            if ($actor) {
-                $roles = $actor->getRole();
-                foreach ($roles as $role) {
-                    if ($role->getId() != 100) {
-                        $jns = $this->getEntityManager()
-                                    ->getRepository('SanSIS\Core\BaseBundle\Entity\JnActorRole')
-                                    ->findBy(
-                                        array(
-                                            'idRole'  => $role->getId(),
-                                            'idActor' => $actor->getId(),
-                                        ));
-
-                        foreach ($jns as $jn) {
-                            $this->getEntityManager()->remove($jn);
-                        }
-                    }
-                }
-
-                $this->getEntityManager()->flush();
-                $this->getEntityManager()->refresh($ent);
-            }
         } else {
             $type = $req->request->get('idLegalBodyType');
         }
-
-        $actor = $req->request->get('actor');
-
-        foreach ($actor['pseudonym'] as $key => $value) {
-            if (isset($value['pseudonym']) && !trim($value['pseudonym'])) {
-                if (!isset($value['idDel']) && !($value['id'])) {
-                    unset($actor['pseudonym'][$key]);
-                } else if ($value['id']) {
-                    $actor['pseudonym'][$key]['idDel'] = $value['id'];
-                    unset($actor['pseudonym'][$key]['id']);
-                } else {
-                    unset($actor['pseudonym'][$key]);
-                }
-            }
-        }
-
-        foreach ($actor['biography'] as $key => $value) {
-            if (isset($value['biography']) && !trim($value['biography'])) {
-                if (!isset($value['idDel']) && !($value['id'])) {
-                    unset($actor['biography'][$key]);
-                } else if ($value['id']) {
-                    $actor['biography'][$key]['idDel'] = $value['id'];
-                    unset($actor['biography'][$key]['id']);
-                } else {
-                    unset($actor['biography'][$key]);
-                }
-            }
-        }
-
-        foreach ($actor['bibliography'] as $key => $value) {
-            if (isset($value['data']) && !trim($value['data'])) {
-                if (!isset($value['idDel']) && !($value['id'])) {
-                    unset($actor['bibliography'][$key]);
-                } else if ($value['id']) {
-                    $actor['bibliography'][$key]['idDel'] = $value['id'];
-                    unset($actor['bibliography'][$key]['id']);
-                } else {
-                    unset($actor['bibliography'][$key]);
-                }
-            }
-        }
-
-        //remove itens de acordo com o tipo da pessoa para não popular o banco desnecessariamente
-        if ($type == 1) {
-            $req->request->set('organization', null);
-            if (isset($actor['rolePF'])) {
-                $actor['role'] = $actor['rolePF'];
-                unset($actor['rolePF']);
-            }
-        } else if ($type == 2) {
-            $req->request->set('person', null);
-            if (isset($actor['rolePJ'])) {
-                $actor['role'] = $actor['rolePJ'];
-                unset($actor['rolePJ']);
-            }
-        } else if ($type == 3) {
-            $req->request->set('person', null);
-            if (isset($actor['roleFM'])) {
-                $actor['role'] = $actor['roleFM'];
-                unset($actor['roleFM']);
-            }
-        }
-
-        $req->request->set('actor', $actor);
-
         return $req;
     }
 

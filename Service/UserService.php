@@ -28,7 +28,7 @@ class UserService extends BaseService
      */
     public function handleUploads(Request $req)
     {
-        $this->handleActorMainPhotoUpload($req);
+        // $this->handleActorMainPhotoUpload($req);
     }
 
     /**

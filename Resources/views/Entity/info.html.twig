@@ -20,30 +20,6 @@
 		  <input class="{{ maxinputspan }}" name="name" id="name" type="text" value="{{ entityData.name }}" required="required" minlength="3" maxlength="512">
 		</li>
 
-		<li class="span">
-		  {% if entityData.actor.pseudonym is defined and entityData.actor.pseudonym | length > 0 %}
-		      {% for val,item in entityData.actor.pseudonym %}
-    		  <span class="clonable span">
-    		    <input name="actor[pseudonym][{{ val }}][id]" type="hidden" value="{{ item.id }}">
-        		<label class="row span3">{% if val==0 %}Outros nomes:{% else %}&nbsp;&nbsp;&nbsp;{% endif %}</label>
-        		<input class="{{ maxinputspan }}" name="actor[pseudonym][{{ val }}][pseudonym]" type="text" value="{{ item.pseudonym }}" maxlength="512">
-    	        <a class="icon-minus single-line" style="font-size:14px;margin-left:5px" {% if entityData.actor.pseudonym | length == 0 %}style="display:none"{% endif %}></a>
-    	        {% if (entityData.actor.pseudonym | length) == (val+1) %}
-    	        <a class="icon-plus single-line" style="font-size:14px;margin-left:5px" ></a>
-    	        {% endif %}
-    	      </span>
-              {% endfor %}
-	      {% else %}
-  		  <span class="clonable span">
-    		<label class="row span3">Outros nomes:</label>
-    		<input name="actor[pseudonym][0][id]" type="hidden" value="">
-    		<input class="{{ maxinputspan }}" name="actor[pseudonym][0][pseudonym]" type="text" value="" maxlength="256" notempty>
-	        <a class="icon-minus single-line" style="font-size:14px;margin-left:5px"></a>
-	        <a class="icon-plus single-line" style="font-size:14px;margin-left:5px"></a>
-	      </span>
-	      {% endif %}
-		</li>
-
 		<li id="earliestDateLi" class="span">
 		    <label class="row span3" id="earliestDateLabel">Início de existência:</label>
 		    <input class="span2 dateBR notFuture" name="earliestDate" id="earliestDate" dateCompare="#latestDate" type="text" value="{{ entityData.earliestDate ? entityData.earliestDate | date("d/m/Y") : '' }}">
