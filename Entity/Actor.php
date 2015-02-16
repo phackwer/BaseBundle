@@ -26,7 +26,7 @@ class Actor extends AbstractBase
     /**
      * @var \LegalBody
      *
-     * @ORM\ManyToOne(targetEntity="LegalBody")
+     * @ORM\OneToOne(targetEntity="LegalBody", inversedBy="actor")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_legal_body", referencedColumnName="id")
      * })
