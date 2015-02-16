@@ -8,7 +8,7 @@ use SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection;
 /**
  * Profile
  *
- * @ORM\Table(name="core.profile")
+ * @ORM\Table(name="core_profile")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */
@@ -39,7 +39,7 @@ class Profile extends AbstractBase
 
     /**
      * @ORM\ManyToMany(targetEntity="Functionality", inversedBy="profiles")
-     * @ORM\JoinTable(name="core.jn_profile_functionality",
+     * @ORM\JoinTable(name="core_jn_profile_functionality",
      *      joinColumns={@ORM\JoinColumn(name="id_profile", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="id_functionality", referencedColumnName="id")}
      *      )

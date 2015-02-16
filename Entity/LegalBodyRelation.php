@@ -8,7 +8,7 @@ use SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection;
 /**
  * LegalBodyRelation
  *
- * @ORM\Table(name="core.legal_body_relation")
+ * @ORM\Table(name="core_legal_body_relation")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */
@@ -76,7 +76,7 @@ class LegalBodyRelation extends AbstractBase
 
     /**
      * @ORM\ManyToMany(targetEntity="Profile")
-     * @ORM\JoinTable(name="core.jn_legal_body_relation_profile",
+     * @ORM\JoinTable(name="core_jn_legal_body_relation_profile",
      *      joinColumns={@ORM\JoinColumn(name="id_legal_body_relation", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="id_profile", referencedColumnName="id")}
      *      )

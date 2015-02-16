@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * LegalBodyRelationType
  *
- * @ORM\Table(name="core.legal_body_relation_type")
+ * @ORM\Table(name="core_legal_body_relation_type")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */

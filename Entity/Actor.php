@@ -8,7 +8,7 @@ use SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection;
 /**
  * Actor
  *
- * @ORM\Table(name="core.actor")
+ * @ORM\Table(name="core_actor")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */
@@ -35,7 +35,7 @@ class Actor extends AbstractBase
 
     /**
      * @ORM\ManyToMany(targetEntity="Role")
-     * @ORM\JoinTable(name="core.jn_actor_role",
+     * @ORM\JoinTable(name="core_jn_actor_role",
      *      joinColumns={@ORM\JoinColumn(name="id_actor", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="id_role", referencedColumnName="id")}
      *      )

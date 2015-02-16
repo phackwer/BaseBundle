@@ -8,7 +8,7 @@ use SanSIS\Core\BaseBundle\Doctrine\Common\Collections\ArrayCollection;
 /**
  * LegalBodyPerson
  *
- * @ORM\Table(name="core.legal_body_person")
+ * @ORM\Table(name="core_legal_body_person")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="\SanSIS\Core\BaseBundle\EntityRepository\AbstractBase")
  */
