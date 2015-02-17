@@ -324,6 +324,7 @@ class EntityServiceAbstract extends ServiceAbstract
 
                 $params = $ref->getMethod($method)->getParameters();
                 $strDoc = $ref->getMethod($method)->getDocComment();
+                $strAttr = $ref->getProperty($attr)->getDocComment();
                 $class  = '';
 
                 if ($params[0]->getClass()) {
@@ -366,8 +367,7 @@ class EntityServiceAbstract extends ServiceAbstract
                             /**
                              * Tratamento para ManyToMany
                              */
-                            $strDoc = $ref->getProperty($attr)->getDocComment();
-                            if (strstr($strDoc, 'ManyToMany')) {
+                            if (strstr($strAttr, 'ManyToMany')) {
 
                                 $begin    = substr($strDoc, strpos($strDoc, 'inverseJoinColumns={@ORM\JoinColumn(name="') + strlen('inverseJoinColumns={@ORM\JoinColumn(name="'));
                                 $almost   = explode('_', substr($begin, 0, strpos($begin, "\",")));
@@ -397,7 +397,7 @@ class EntityServiceAbstract extends ServiceAbstract
                     }
                 } else if ($class && !(strstr($strDoc, 'ArrayCollection') || $class == 'ArrayCollection') && 'set' === substr($method, 0, 3) && is_array($value) && !strstr($method, 'setId')) {
                     $value = $this->populateEntities($value, $class, $entity);
-                } else if ($class && strstr($method, 'setId')) {
+                } else if ($class && (strstr($method, 'setId') || strstr($strAttr, 'ManyToOne')) ) {
                     // if (is_array($value) && count($value) > 1){var_dump($value);die;}
 
                     if (is_array($value) && array_key_exists('id', $value)) {
