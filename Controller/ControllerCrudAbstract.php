@@ -191,7 +191,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
                             }
 
                             $array[$i]['cell'][$skey] = '<div class="jqGridOverflowColumn">' . $sval . '</div>';
-                            $item[$skey] = $val;
+                            $item[$skey] = $sval;
                         }
                     }
 
