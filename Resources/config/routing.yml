@@ -108,6 +108,10 @@ get_organization_by_name:
     pattern: /data/get_entity_by_name
     defaults: { _controller: SanSISCoreBaseBundle:Base:getOrganizationByName }
 
+get_user_by_name:
+    pattern: /data/get_user_by_name
+    defaults: { _controller: SanSISCoreBaseBundle:Base:getUserByName }
+
 get_entity_by_name:
     pattern: /data/get_entity_by_name
     defaults: { _controller: SanSISCoreBaseBundle:Base:getEntityByName }
