@@ -72,7 +72,7 @@ class BaseService extends EntityServiceAbstract
         $and = ' where ';
 
         if ($name) {
-            $query->setDQL($query->getDQL() . $and . '( g.name like :name');
+            $query->setDQL($query->getDQL() . $and . 'g.name like :name');
             $query->setParameter(':name', '%' . str_replace(' ', '%', $name) . '%');
             $and = ' and ';
         }
@@ -103,9 +103,7 @@ class BaseService extends EntityServiceAbstract
 
         $query->setDQL($query->getDQL() . ' order by g.name');
 
-        $full = $query->getArrayResult();
-
-        return $entities;
+        return $query->getArrayResult();
     }
 
     /**
