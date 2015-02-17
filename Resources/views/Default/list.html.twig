@@ -1,0 +1,9 @@
+{% if formData | length > 0 %}
+<ul>
+{% for val,item in formData %}
+    <li rel="{{ item.id }}__{{ item.name }}">{{ item.name }}</li>
+{% endfor %}
+</ul>
+{% else %}
+Não há itens para exibição com esse critério
+{% endif %}
