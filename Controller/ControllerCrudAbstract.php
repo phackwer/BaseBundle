@@ -191,6 +191,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
                             }
 
                             $array[$i]['cell'][$skey] = '<div class="jqGridOverflowColumn">' . $sval . '</div>';
+                            $item[$skey] = $val;
                         }
                     }
 
@@ -206,14 +207,14 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
                     $array[$i]['cell'][$key] = '<div class="jqGridOverflowColumn">' . $val . '</div>';
                 }
                 $j++;
+            }
 
-                //Aqui é adicionada a coluna de ações
-                $actions = $this->getGridActions($array[$i]['id'], $item);
+            //Aqui é adicionada a coluna de ações
+            $actions = $this->getGridActions($array[$i]['id'], $item);
 
-                if ($actions) {
-                    $array[$i]['cell']['Acao'] = $actions;
-                    $array[$i]['cell']['acao'] = $actions;
-                }
+            if ($actions) {
+                $array[$i]['cell']['Acao'] = $actions;
+                $array[$i]['cell']['acao'] = $actions;
             }
 
             $i++;
