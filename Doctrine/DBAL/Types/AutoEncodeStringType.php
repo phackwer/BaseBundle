@@ -17,8 +17,6 @@ class AutoEncodeStringType extends StringType
             $dbchar = 'CP1252';
         }
 
-        echo 1324;die;
-
         return mb_convert_encoding($value, $dbchar, mb_detect_encoding($value));
     }
 
