@@ -106,6 +106,52 @@ class BaseService extends EntityServiceAbstract
         return $query->getArrayResult();
     }
 
+    public function getUserByName($name = null, $type = null, $except = null)
+    {
+        $query = $this->entityManager->getRepository('SanSIS\Core\BaseBundle\Entity\LegalBody')
+                      ->createQueryBuilder('g')
+                      ->innerJoin('g.person', 'p')
+                      ->innerJoin('p.user', 'u')
+                      ->select('g.id', 'g.name')
+                      ->getQuery();
+
+        $and = ' where ';
+
+        if ($name) {
+            $query->setDQL($query->getDQL() . $and . 'g.name like :name');
+            $query->setParameter(':name', '%' . str_replace(' ', '%', $name) . '%');
+            $and = ' and ';
+        }
+
+        if ($except) {
+            $query->setDQL($query->getDQL() . $and . 'g.id' . ' <> :id ');
+            $query->setParameter(':id', $except);
+            $and = ' and ';
+        }
+
+        if ($type) {
+            if (is_array($type)) {
+                $query->setDQL($query->getDQL() . $and . ' ( ');
+                $or = '';
+                foreach ($type as $k => $value) {
+                    $query->setDQL($query->getDQL() . $or . 'g.idLegalBodyType = :type' . $k);
+                    $query->setParameter(':type' . $k, $value);
+                    $or = ' or ';
+                }
+                $query->setDQL($query->getDQL() . ' ) ');
+            } else {
+                $query->setDQL($query->getDQL() . $and . 'g.idLegalBodyType = :type');
+                $query->setParameter(':type', $type);
+                $and = ' and ';
+            }
+        }
+        $query->setDQL($query->getDQL() . $and . ' g.statusTuple' . ' <> 0 ');
+
+        $query->setDQL($query->getDQL() . ' order by g.name');
+
+        return $query->getArrayResult();
+    }
+
     /**
      * CPF deve ser único
      */

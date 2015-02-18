@@ -235,4 +235,23 @@ class UserService extends BaseService
         return $formData;
     }
 
+    public function accountSave()
+    {
+        //Checar se está tentando salvar para senha de outro
+    }
+
+    public function getUserData()
+    {
+        $user = $this->secContext
+                     ->getToken()
+                     ->getUser();
+
+        return $user->toArray();
+    }
+
+    public function getAccountFormData()
+    {
+        return array();
+    }
+
 }

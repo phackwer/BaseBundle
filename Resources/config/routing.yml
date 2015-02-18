@@ -8,6 +8,14 @@ login_check:
 logout:
     pattern:  /system/logout
 
+account:
+    pattern:  /account
+    defaults: { _controller: SanSISCoreBaseBundle:Default:account }
+
+account_save:
+    pattern:  /account_save
+    defaults: { _controller: SanSISCoreBaseBundle:Default:account_save }
+
 overview:
     pattern:  /overview
     defaults: { _controller: SanSISCoreBaseBundle:Default:overview }
@@ -108,13 +116,13 @@ get_organization_by_name:
     pattern: /data/get_entity_by_name
     defaults: { _controller: SanSISCoreBaseBundle:Base:getOrganizationByName }
 
+get_user_by_name:
+    pattern: /data/get_user_by_name
+    defaults: { _controller: SanSISCoreBaseBundle:Base:getUserByName }
+
 get_entity_by_name:
     pattern: /data/get_entity_by_name
     defaults: { _controller: SanSISCoreBaseBundle:Base:getEntityByName }
-
-get_measure_unities_by_type:
-    pattern: /data/get_measure_unities_by_type
-    defaults: { _controller: SanSISCoreBaseBundle:Base:getMeasureUnitiesByType }
 
 check_unique_cpf:
     pattern: /data/check_unique_cpf

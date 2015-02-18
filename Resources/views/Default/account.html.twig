@@ -1,0 +1,47 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+<strong class="title span12">Minha Conta</strong>
+
+<div class="aba">
+
+    <form action="{{ path('account_save') }}" method="post" id="j_cadastroForm" enctype="multipart/form-data" style="position: relative;">
+        <div class="tab-content box_borda">
+            <div class="tab-pane active span paddingAll" id="tab1">
+
+                <div class="filder">
+                    <ul>
+                        <li>
+                            <h5 class="row span legenda">Senha</h5>
+                        </li>
+                        <li class="span12">
+                            <label class="span3">Senha atual</label>
+                            <input class="span4" type="password">
+                        </li>
+                        <li class="span12">
+                            <label class="row span3">Nova senha:</label>
+                            <input class="span4" name="user[password]" id="password" type="password" value="" maxlength="32">
+                        </li>
+                        <li class="span12">
+                            <label class="row span3">Confirme a nova senha:</label>
+                            <input class="span4" name="user[confirmPassword]" id="confirmPassword" equalTo="#password" type="password" value="" maxlength="32">
+                        </li>
+                    </ul>
+                </div>
+
+                {% block extras %}
+                {% endblock %}
+
+            </div>
+
+            <div class="row-fluid pull-left navigation">
+                <a id="cancel_bt" style="margin: 0px 20px;" class="btn pull-left">Cancelar</a>
+                <button type="submit" id="save_bt" class="btn btn-primary pull-right" style="margin: 0px 20px;">Salvar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
