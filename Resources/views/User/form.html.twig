@@ -28,8 +28,7 @@
 		<!-- Usuarios OneToOne -->
 		<input type="hidden" id="id" name="id" value="{{ entityData.id }}">
 		<input name="actor[id]" type="hidden" value="{% if entityData.actor.id is defined %}{{ entityData.actor.id }}{% endif %}">
-		<input name="actor[role][0][id]"  type="hidden" value="{% if entityData.actor.role.0.id is defined %}{{ entityData.actor.role.0.id }}{% endif %}">
-		<input name="actor[role][0][idRole]"  type="hidden" value="100">
+		<input name="actor[role][0][id]"  type="hidden" value="100">
 		<input type="hidden" name="actor[mainPhoto][id]" value=""/>
 		<input type="hidden" name="actor[mainPhoto][idRelationType]" value="5"/>
 
@@ -203,7 +202,7 @@
     		  	            {% for vall,iitem in formData.profile %}
     		  	            <label class="row span3 hidden-phone">{% if vall == 1 %}Perfil de Acesso: <font color="red"><b>*</b></font>{% else %}&nbsp;{% endif %}</label>
                             <label  class="{{ maxinputspan }}" for="role_{{ val }}_{{ vall }}">
-                                <input {% if vall == 1 %}onclick="markAllSuper(this)"{% endif %} type="checkbox" value="{{ vall }}" name="person[professionalRelation][{{ val }}][profile][][idProfile]" id="role_{{ val }}_{{ vall }}" required="required"
+                                <input {% if vall == 1 %}onclick="markAllSuper(this)"{% endif %} type="checkbox" value="{{ vall }}" name="person[professionalRelation][{{ val }}][profile][][id]" id="role_{{ val }}_{{ vall }}" required="required"
                                 {% for pval,ptiem in item.profile %}
                                     {% if ptiem.id == vall  %}
                                     checked
@@ -280,7 +279,7 @@
 		  	            {% for val,item in formData.profile %}
 		  	            <label class="row span3 hidden-phone">{% if val == 1 %}Perfil de Acesso: <font color="red"><b>*</b></font>{% else %}&nbsp;{% endif %}</label>
                         <label class="{{ maxinputspan }}" for="role_0_{{ val }}">
-                            <input {% if val == 1 %}onclick="markAllSuper(this)"{% endif %} type="checkbox" value="{{ val }}" name="person[professionalRelation][0][profile][][idProfile]" id="role_0_{{ val }}" required="required"> - {{ item }}
+                            <input {% if val == 1 %}onclick="markAllSuper(this)"{% endif %} type="checkbox" value="{{ val }}" name="person[professionalRelation][0][profile][][id]" id="role_0_{{ val }}" required="required"> - {{ item }}
                         </label>
                         {% endfor %}
             		</li>

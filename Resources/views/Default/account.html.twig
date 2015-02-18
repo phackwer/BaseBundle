@@ -16,16 +16,23 @@
                             <h5 class="row span legenda">Senha</h5>
                         </li>
                         <li class="span12">
-                            <label class="span3">Senha atual</label>
-                            <input class="span4" type="password">
+                            <label class="span3">Senha atual <font color="red"><b>*</b></font></label>
+                            <input class="span4" type="password" name="currentPassword" id="currentPassword" required>
+                        </li>
+                    </ul>
+                </div>
+                <div class="filder">
+                    <ul>
+                        <li>
+                            <h5 class="row span legenda">Alteração de Senha</h5>
                         </li>
                         <li class="span12">
                             <label class="row span3">Nova senha:</label>
-                            <input class="span4" name="user[password]" id="password" type="password" value="" maxlength="32">
+                            <input class="span4" name="newPassword" id="newPassword" type="password" value="" maxlength="32">
                         </li>
                         <li class="span12">
                             <label class="row span3">Confirme a nova senha:</label>
-                            <input class="span4" name="user[confirmPassword]" id="confirmPassword" equalTo="#password" type="password" value="" maxlength="32">
+                            <input class="span4" name="confirmPassword" id="confirmPassword"  type="password" value="" maxlength="32">
                         </li>
                     </ul>
                 </div>

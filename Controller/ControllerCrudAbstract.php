@@ -136,7 +136,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
     {
         //Busca a query que será utilizada na pesquisa para a grid
         $method = $this->searchQuery;
-        $query = $this->getService()->$method($this->getRequest());
+        $query  = $this->getService()->$method($this->getRequest());
 
         //pagina a ser retornada
         $page = $this->getRequest()->query->get('page', 1);
@@ -149,9 +149,9 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
         $pagination = new Paginator($query, true);
 
         //Objeto de resposta
-        $data = new \StdClass();
-        $data->page = $page;
-        $data->total = ceil($pagination->count() / $rows);
+        $data          = new \StdClass();
+        $data->page    = $page;
+        $data->total   = ceil($pagination->count() / $rows);
         $data->records = $pagination->count();
         //linhas da resposta - o método abaixo pode (e provavelmente deve)
         //ser implantado de acordo com as necessidades da aplicação
@@ -168,16 +168,16 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
      */
     public function prepareGridRows(\Doctrine\ORM\Tools\Pagination\Paginator $pagination)
     {
-        $i = 0;
+        $i     = 0;
         $array = array();
-        $id = null;
+        $id    = null;
 
         foreach ($pagination as $item) {
             $j = 0;
 
             foreach ($item as $key => $val) {
                 if ($j == 0) {
-                    $id = $array[$i]['id'] = $val;
+                    $id       = $array[$i]['id']       = $val;
                     $subcells = $this->getService()->getSearchSubCells($id);
 
                     if ($subcells) {
@@ -191,7 +191,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
                             }
 
                             $array[$i]['cell'][$skey] = '<div class="jqGridOverflowColumn">' . $sval . '</div>';
-                            $item[$skey] = $sval;
+                            $item[$skey]              = $sval;
                         }
                     }
 
@@ -262,7 +262,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
         } catch (RouteNotFoundException $e) {
             if (!strstr($viewRoute, 'http://')) {
                 $niveis = count(explode('/', \AppKernel::getInstance()->getAppDir()));
-                $path = '';
+                $path   = '';
                 for ($i = 0; $i < $niveis; $i++) {
                     $path .= '../';
                 }
@@ -351,8 +351,8 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
 
         $params = array(
             'formTitleAction' => $this->createFormAction,
-            'formData' => $this->getService()->getFormData($entityData),
-            'entityData' => $entityData,
+            'formData'        => $this->getService()->getFormData($entityData),
+            'entityData'      => $entityData,
         );
 
         return $this->render($this->createView, $params);
@@ -376,8 +376,8 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
 
         $params = array(
             'formTitleAction' => $this->editFormAction,
-            'formData' => $this->getService()->getFormData($entityData),
-            'entityData' => $entityData,
+            'formData'        => $this->getService()->getFormData($entityData),
+            'entityData'      => $entityData,
         );
 
         return $this->render($this->editView, $params);
@@ -392,8 +392,8 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
 
         $params = array(
             'formTitleAction' => $this->viewFormAction,
-            'formData' => $this->getService()->getFormData($entityData),
-            'entityData' => $entityData,
+            'formData'        => $this->getService()->getFormData($entityData),
+            'entityData'      => $entityData,
         );
 
         return $this->render($this->viewView, $params);
@@ -403,8 +403,7 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
     {
         if ($this->saveSuccessRoute == $this->editRoute) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -413,7 +412,6 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
     {
         return $this->getService()->getRootEntity()->getId();
     }
-
 
     /**
      * Action que deve ser mapeada para salvar os registros no banco de dados

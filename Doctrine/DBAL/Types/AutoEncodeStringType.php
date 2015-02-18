@@ -17,6 +17,8 @@ class AutoEncodeStringType extends StringType
             $dbchar = 'CP1252';
         }
 
+        return $value;
+
         return mb_convert_encoding($value, $dbchar, mb_detect_encoding($value));
     }
 
@@ -30,14 +32,9 @@ class AutoEncodeStringType extends StringType
             $dbchar = 'CP1252';
         }
 
-        // echo mb_convert_encoding($value, 'UTF-8', $dbchar);
+        return $value;
 
-        // die;
-        // echo mb_detect_encoding($value);
-
-        return mb_convert_encoding($value, 'UTF-8', mb_detect_encoding($value));
-
-        // return mb_convert_encoding($value, 'UTF-8', $dbchar;
+        return mb_convert_encoding($value, 'UTF-8', $dbchar);
 
     }
 }

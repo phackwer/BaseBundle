@@ -210,7 +210,16 @@ class EntityServiceAbstract extends ServiceAbstract
     }
 
     /**
-     * Preenche os dados de entidades mapeadas de acordo com os dados submetidos
+     * Infected - Bad Religion
+     *
+     * Now here I go
+     * hope I don't break down
+     * I won't take anything
+     * I don't need anything
+     * Don't wanna exist
+     * I can't persist
+     * Please stop before I do it again
+     *
      * @param mixed $values Valores a serem salvos
      * @param mixed $newClass objeto ou nome da classe
      * @param SanSIS\Core\BaseBundle\Entity\AbstractBase $parent Entidade pai da classe criada
@@ -260,10 +269,28 @@ class EntityServiceAbstract extends ServiceAbstract
             $class = $class[count($class) - 1];
 
             $setParentMethod = 'setId' . $class;
-            if (method_exists($entity, $setParentMethod)) {
-                $entity->$setParentMethod($parent);
-            } else {
+            try {
+                $ref = new \ReflectionClass($entity);
+            } catch (\Exception $e) {
+                echo '<pre>';
+                echo ">>>>>Este erro jamais deve acontecer. Revise o mapeamento<<<<\n";
+                echo '>>>>>Entidade não existente!!!!' . $entity . "<<<<\n";
+                echo '>>>>>' . $newClass . "<<<<\n";
+                print_r($values);
+                print_r($_POST);
+                //             if ($this->debug)
+                //                 print_r($this->rootEntity);
+                die('Este erro jamais deve acontecer. Revise o mapeamento');
+                throw new \Exception($entity . ">>>>" . $e->getMessage());
+            }
+            if (!method_exists($entity, $setParentMethod)) {
                 $setParentMethod = 'set' . $class;
+            }
+            $strDoc = '';
+            if (method_exists($entity, $setParentMethod)) {
+                $strDoc = $ref->getMethod($setParentMethod)->getDocComment();
+            }
+            if (!strstr($strDoc, 'ArrayCollection')) {
                 if (method_exists($entity, $setParentMethod)) {
                     $entity->$setParentMethod($parent);
                 }
@@ -322,10 +349,10 @@ class EntityServiceAbstract extends ServiceAbstract
                     $value = trim($value);
                 }
 
-                $params = $ref->getMethod($method)->getParameters();
-                $strDoc = $ref->getMethod($method)->getDocComment();
+                $params  = $ref->getMethod($method)->getParameters();
+                $strDoc  = $ref->getMethod($method)->getDocComment();
                 $strAttr = $ref->getProperty($attr)->getDocComment();
-                $class  = '';
+                $class   = '';
 
                 if ($params[0]->getClass()) {
                     $class = $params[0]->getClass()->name;
@@ -397,7 +424,7 @@ class EntityServiceAbstract extends ServiceAbstract
                     }
                 } else if ($class && !(strstr($strDoc, 'ArrayCollection') || $class == 'ArrayCollection') && 'set' === substr($method, 0, 3) && is_array($value) && !strstr($method, 'setId')) {
                     $value = $this->populateEntities($value, $class, $entity);
-                } else if ($class && (strstr($method, 'setId') || strstr($strAttr, 'ManyToOne')) ) {
+                } else if ($class && (strstr($method, 'setId') || strstr($strAttr, 'ManyToOne'))) {
                     // if (is_array($value) && count($value) > 1){var_dump($value);die;}
 
                     if (is_array($value) && array_key_exists('id', $value)) {
