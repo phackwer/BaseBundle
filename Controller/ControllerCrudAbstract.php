@@ -397,6 +397,22 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
         return $this->render($this->viewView, $params);
     }
 
+    public function saveSuccessConditional()
+    {
+        if ($this->saveSuccessRoute == $this->editRoute) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function getSaveSuccessId()
+    {
+        return $this->getService()->getRootEntity()->getId();
+    }
+
+
     /**
      * Action que deve ser mapeada para salvar os registros no banco de dados
      */
@@ -406,8 +422,8 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
             $this->getService()->save($this->getRequest());
             MessageService::addMessage('success', 'MSG_S001');
             $this->get('session')->set('SanSISSaveResult', true);
-            if ($this->saveSuccessRoute == $this->editRoute) {
-                $id = $this->getService()->getRootEntity()->getId();
+            if ($this->saveSuccessConditional()) {
+                $id = $this->getSaveSuccessId();
                 return $this->redirectByRouteName($this->saveSuccessRoute, 302, array('id' => $id));
             } else {
                 return $this->redirectByRouteName($this->saveSuccessRoute);
