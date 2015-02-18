@@ -204,7 +204,9 @@ abstract class ControllerCrudAbstract extends ControllerAbstract
                         $val = $val->format('d/m/Y');
                     }
 
-                    $array[$i]['cell'][$key] = '<div class="jqGridOverflowColumn">' . $val . '</div>';
+                    if (!isset($array[$i]['cell'][$key])) {
+                        $array[$i]['cell'][$key] = '<div class="jqGridOverflowColumn">' . $val . '</div>';
+                    }
                 }
                 $j++;
             }

@@ -133,6 +133,16 @@ class BaseController extends ControllerCrudAbstract
         ));
     }
 
+    public function getUserByNameAction()
+    {
+        $except = $this->getRequest()->query->has('identifier') ? $this->getRequest()->query->get('identifier') : null;
+
+        return $this->render('SanSISCoreBaseBundle:Default:list.html.twig', array(
+            'formData' => $this->getService()
+                               ->getUserByName($this->getRequest()->query->get('query'), $except),
+        ));
+    }
+
     public function checkUniqueCpfAction()
     {
         return $this->renderJson($this->getService()
