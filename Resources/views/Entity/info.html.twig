@@ -19,7 +19,6 @@
 		  <label class="row span3">Nome:  <font color="red"><b>*</b></font></label>
 		  <input class="{{ maxinputspan }}" name="name" id="name" type="text" value="{{ entityData.name }}" required="required" minlength="3" maxlength="512">
 		</li>
-
 		<li id="earliestDateLi" class="span">
 		    <label class="row span3" id="earliestDateLabel">Início de existência:</label>
 		    <input class="span2 dateBR notFuture" name="earliestDate" id="earliestDate" dateCompare="#latestDate" type="text" value="{{ entityData.earliestDate ? entityData.earliestDate | date("d/m/Y") : '' }}">
@@ -58,7 +57,7 @@
             <label class="row span3 hidden-phone">{% if counter == 0 %}Função:  <font color="red"><b>*</b></font>{% else %}&nbsp;{% endif %}</label>
             <span class="span4 validationSpan">
                 <label  class="{{ maxinputspan }}" for="rolePF_{{ vall }}">
-                    <input type="checkbox" value="{{ vall }}" name="actor[rolePF][][idRole]" id="rolePF_{{ vall }}"
+                    <input type="checkbox" value="{{ vall }}" name="actor[rolePF][][id]" id="rolePF_{{ vall }}"
                     {% if entityData.actor.role is defined and entityData.actor.role | length > 0 %}
                         {% for pval,ptiem in entityData.actor.role %}
                             {% if ptiem.id == vall  %}
@@ -82,7 +81,7 @@
             <label class="row span3 hidden-phone">{% if counter == 0 %}Função: <font color="red"><b>*</b></font>{% else %}&nbsp;{% endif %}</label>
             <span class="span4 validationSpan">
                 <label  class="{{ maxinputspan }}" for="rolePJ_{{ vall }}">
-                    <input type="checkbox" value="{{ vall }}" name="actor[rolePJ][][idRole]" id="rolePJ_{{ vall }}"
+                    <input type="checkbox" value="{{ vall }}" name="actor[rolePJ][][id]" id="rolePJ_{{ vall }}"
                     {% if entityData.actor.role is defined and entityData.actor.role | length > 0 %}
                         {% for pval,ptiem in entityData.actor.role %}
                             {% if ptiem.id == vall  %}
@@ -106,7 +105,7 @@
             <label class="row span3 hidden-phone">{% if counter == 0 %}Função: <font color="red"><b>*</b></font>{% else %}&nbsp;{% endif %}</label>
             <span class="span4 validationSpan">
                 <label  class="{{ maxinputspan }}" for="roleFM_{{ vall }}">
-                    <input type="checkbox" value="{{ vall }}" name="actor[roleFM][][idRole]" id="roleFM_{{ vall }}"
+                    <input type="checkbox" value="{{ vall }}" name="actor[roleFM][][id]" id="roleFM_{{ vall }}"
                     {% if entityData.actor.role is defined and entityData.actor.role | length > 0 %}
                         {% for pval,ptiem in entityData.actor.role %}
                             {% if ptiem.id == vall  %}
@@ -279,9 +278,9 @@ function changeLabel()
 		$('#rolesPJ').hide();
 		$('#rolesFM').hide();
 
-		$('input[name="actor[rolePF][][idRole]"]').prop('required', true);
-		$('input[name="actor[rolePJ][][idRole]"]').prop('required', false);
-		$('input[name="actor[roleFM][][idRole]"]').prop('required', false);
+		$('input[name="actor[rolePF][][id]"]').prop('required', true);
+		$('input[name="actor[rolePJ][][id]"]').prop('required', false);
+		$('input[name="actor[roleFM][][id]"]').prop('required', false);
 	}
 	else if ( val == 2) {
 		$('#earliestDateLi').show();
@@ -299,9 +298,9 @@ function changeLabel()
 		$('#rolesPJ').show();
 		$('#rolesFM').hide();
 
-		$('input[name="actor[rolePF][][idRole]"]').prop('required', false);
-		$('input[name="actor[rolePJ][][idRole]"]').prop('required', true);
-		$('input[name="actor[roleFM][][idRole]"]').prop('required', false);
+		$('input[name="actor[rolePF][][id]"]').prop('required', false);
+		$('input[name="actor[rolePJ][][id]"]').prop('required', true);
+		$('input[name="actor[roleFM][][id]"]').prop('required', false);
 	} else if ( val == 3){
 		$('#earliestDateLi').hide();
 		$('#latestDateLi').hide();
@@ -319,9 +318,9 @@ function changeLabel()
 		$('#rolesPF').hide();
 		$('#rolesPJ').hide();
 		$('#rolesFM').show();
-		$('input[name="actor[rolePF][][idRole]"]').prop('required', false);
-		$('input[name="actor[rolePJ][][idRole]"]').prop('required', false);
-		$('input[name="actor[roleFM][][idRole]"]').prop('required', true);
+		$('input[name="actor[rolePF][][id]"]').prop('required', false);
+		$('input[name="actor[rolePJ][][id]"]').prop('required', false);
+		$('input[name="actor[roleFM][][id]"]').prop('required', true);
 	} else {
 		$('#earliestDateLi').hide();
 		$('#latestDateLi').hide();
@@ -334,9 +333,9 @@ function changeLabel()
 		$('#rolesPF').hide();
 		$('#rolesPJ').hide();
 		$('#rolesFM').hide();
-		$('input[name="actor[rolePF][][idRole]"]').prop('required', false);
-		$('input[name="actor[rolePJ][][idRole]"]').prop('required', false);
-		$('input[name="actor[roleFM][][idRole]"]').prop('required', false);
+		$('input[name="actor[rolePF][][id]"]').prop('required', false);
+		$('input[name="actor[rolePJ][][id]"]').prop('required', false);
+		$('input[name="actor[roleFM][][id]"]').prop('required', false);
 	}
 
 	$('form').validate(validateOptions);

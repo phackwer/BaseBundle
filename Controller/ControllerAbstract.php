@@ -93,11 +93,16 @@ abstract class ControllerAbstract extends Controller
      */
     public function renderJson($data)
     {
+
         $resp = json_encode($data);
 
         $header = array(
             'Content-Type' => 'application/json',
         );
+
+        // var_dump($resp);
+        // var_dump($data);
+        // die;
 
         $response = new Response($resp, 200, $header);
 
