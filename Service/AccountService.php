@@ -60,12 +60,15 @@ class AccountService extends UserService
         //verifica se a senha informada é válida
         if ($cdbPwd === $chkPwd) {
             if ($newPwd !== $cnfPwd) {
-                throw new \Exception('Nova senha e confirmação diferem. Não é possível atualizar a senha.');
+                MessageService::addMessage('error', 'Nova senha e confirmação diferem. Não é possível atualizar a senha.');
+                throw new \Exception('');
             } else if ($newPwd && $cnfPwd && ($newPwd != trim($newPwd))) {
-                throw new \Exception('Senhas não podem conter espaço em branco no começo ou final');
+                MessageService::addMessage('error', 'Senhas não podem conter espaço em branco no começo ou final');
+                throw new \Exception('');
             }
         } else {
-            throw new \Exception('Senha atual inválida. Verifique se o Caps Lock está pressionado ou tente novamente.');
+            MessageService::addMessage('error', 'Senha atual inválida. Verifique se o Caps Lock está pressionado ou tente novamente.');
+            throw new \Exception('');
         }
     }
 

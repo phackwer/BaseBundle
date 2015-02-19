@@ -6,8 +6,8 @@
         <title>{% block title %}SanSIS Core Base{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <base href="{{ asset('') }}"> 
-        
+        <base href="{{ asset('') }}">
+
         <link type="text/css" rel="stylesheet" href="{{ asset('bundles/sansiscorebase/css/bootstrap.min.css') }}" />
         <link type="text/css" rel="stylesheet" href="{{ asset('bundles/sansiscorebase/css/bootstrap-responsive.min.css') }}" />
         <link type="text/css" rel="stylesheet" href="{{ asset('bundles/sansiscorebase/css/datepicker.css') }}" />
@@ -17,10 +17,10 @@
         <link type="text/css" rel="stylesheet" href="{{ asset('bundles/sansiscorebase/css/ui-lightness/jquery-ui-1.10.3.custom.min.css') }}" />
         <link type="text/css" rel="stylesheet" href="{{ asset('bundles/sansiscorebase/css/ui.jqgrid.css') }}" />
         <link type="text/css" rel="stylesheet" href="{{ asset('bundles/sansiscorebase/css/jquery.simpleautocomplete.css') }}" />
-        
+
         {% block css %}
         {% endblock %}
-        
+
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
             <script src="{{ asset('bundles/sansiscorebase/js/html5shiv.js') }}"></script>
@@ -48,17 +48,24 @@
             <script type="text/javascript" src="{{ asset('bundles/sansiscorebase/js/inputMasks.js') }}"></script>
             <script type="text/javascript" src="{{ asset('bundles/sansiscorebase/js/jquery.monthpicker.js') }}"></script>
             <script type="text/javascript" src="{{ asset('bundles/sansiscorebase/js/jquery.simpleautocomplete.js') }}"></script>
-        
+
         {% block javascript_libs %}
         {% endblock %}
-        
+
     </head>
     <body>
         <div class="header">
             <div id="barra-topo">
-                {% block top %}
-                        &nbsp;
-                {% endblock %}
+                <div id="barra-topo-wrapper">
+                    <div id="barra-topo-user-content">
+                        {% block top %}
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <a href="{{ path('account') }}"><i class="icon-user icon-white"></i> &nbsp; Minha conta </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i class="icon-comment icon-white"></i> &nbsp; Mensagens
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                </div>
             </div>
             <div id="topo_geral">
                 <div class="container">
@@ -109,7 +116,7 @@
                     <div class="">
                         <div class="box">
                                 {% for label, flashes in app.session.flashbag.all %}
-                                        <div id="flashes-{{ label }}"> 
+                                        <div id="flashes-{{ label }}">
                                         {% for flash in flashes %}
                                                 <div class="alert alert-{{ label }}">
                                                     {{ flash | replace({"\n":'<br />'}) | raw }}
@@ -118,7 +125,7 @@
                                         </div>
                                 {% endfor %}
                             {% block body %}
-                            
+
                             <strong class="title">{% block box_title %}Título do Box{% endblock %}</strong>
                             <div class="box_borda">
                                  <div class="paddingAll">
@@ -141,11 +148,11 @@
                                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             </p>
                                             {% block box_javascripts %}{% endblock %}
-                                            
+
                                         </div>
                                     </div>
                             </div>
-                                                
+
                             {% endblock %}
                             <div class="span10" style="min-width: 220px"> &nbsp;</div>
                      </div>
@@ -159,7 +166,7 @@
                     <div class="row">
                         <div class="span6 visible-desktop">
                                 <div id="BoxRodape_endereco">
-                                        
+
                                         <p>
                                                 {% block copyright_footer %}
                                             &copy; SanSIS<br />
@@ -186,14 +193,14 @@
                                 </div>
                         </div>
                         {% endif %}
-                        {% endblock %} 
+                        {% endblock %}
                     </div>
                 </div>
             </div>
         </footer>
-        
+
     <!-- DIÁLOGOS PADRÃO DO SISTEMA -->
-    
+
         <!-- Modal Construction -->
         <div id="emConstrucaoDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
@@ -207,7 +214,7 @@
             <div class="modal-footer">
                 <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Fechar</button>
             </div>
-        </div>    
+        </div>
 
         <!-- Modal About -->
         <div id="aboutDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -226,8 +233,8 @@
             <div class="modal-footer">
                 <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fechar</button>
             </div>
-        </div>    
-        
+        </div>
+
         <!-- Modal Session -->
         <div id="sessionDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
@@ -235,14 +242,14 @@
                 <h3 id="myModalLabel">Mensagem do sistema</h3>
             </div>
             <div class="modal-body" id="sessionDialogBody">
-                
+
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
                 <button class="btn btn-primary" id="renewSession">Renovar</button>
             </div>
         </div>
-        
+
         <!-- Modal Waits -->
         <div id="waitDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
@@ -254,13 +261,13 @@
             <div class="modal-footer">
             </div>
         </div>
-        
+
         <script type="text/javascript">$("#waitDialog").modal({
                         show     : true,
                         keyboard : false,
                         backdrop : 'static'
                 });</script>
-        
+
         <!-- Modal Errors -->
         <div id="errorDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
@@ -268,13 +275,13 @@
                 <h3 id="myModalLabel">Mensagem do sistema</h3>
             </div>
             <div class="modal-body" id="errorDialogBody">
-                
+
             </div>
             <div class="modal-footer">
                 <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Fechar</button>
             </div>
         </div>
-        
+
         <!-- Modal Confirm -->
         <div id="confirmDialog" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
@@ -282,7 +289,7 @@
                 <h3 id="myModalLabel">Confirmação</h3>
             </div>
             <div class="modal-body" id="confirmDialogBody">
-                
+
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" id="cancelConfirmButton" aria-hidden="true">Cancelar</button>
@@ -293,12 +300,12 @@
         {% endblock %}
                 <script>
                         window.jQuery || document.write('<script src="{{ asset('bundles/sansiscorebase/js/jquery.js') }}"><\/script>')
-                        
+
                         {% block session_counter_js %}
                             {% if app.environment != 'dev' %}
                             var sessionTimeFull = -1;
                             var sessionTime = -1;
-    
+
                             $('#renewSession').click(function () {
                                     $.ajax({
                                             type:'GET',
@@ -309,7 +316,7 @@
                                     }).done(function(data) {
                                                     eval("dados = "+data);
                                                     sessionTime = dados.time;
-    
+
                                                     window.setTimeout(function (){$.ajax({
                                                             type:'GET',
                                                             url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
@@ -319,35 +326,35 @@
                                                                     keepAliveLoop();
                                                             });
                                                     },1000);
-    
+
                                                     $("#sessionDialogBody").html("Sessão renovada!");
                                                     renewSession
                                                     $("#renewSession").hide();
                                                     window.setTimeout(function(){$("#renewSession").show();$("#sessionDialog").modal('hide');}, 1000);
                                             });
                             });
-                            
+
                             function keepAliveLoop() {
                                     if(sessionTime > -1) {
                                             date = (new Date(0,0,0,0,0,sessionTime,0));
-                            
+
                                             mins = parseInt(date.getMinutes());
                                             secs = ("0" + date.getSeconds()).slice(-2);
-                            
+
                                             dateString = mins+"min "+secs;
                                             $(".keepAlive").html(dateString);
-                                                 
+
                                             switch(sessionTime) {
                                                     case 0:
                                                         $("#renewSession").hide();
                                                             $("#sessionDialogBody").html("Sua sessão expirou! Efetuando logout...");
                                                             $("#sessionDialog").modal('show');
-                            
+
                                                             window.setTimeout(function(){window.location.href= '{{ path('logout') }}'},2000);
-                            
+
                                                             break;
                                                     case    1: case    2: case    3: case    4: case    5: case    6: case    7: case    8: case    9: case 10:
-                                                    case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: case 19: case 20: 
+                                                    case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: case 19: case 20:
                                                     case 21: case 22: case 23: case 24: case 25: case 26: case 27: case 28: case 29:
                                                     case 30:
                                                             $("#sessionDialogBody").html("Sua sessão expira em " + sessionTime + " segundos, clique em renovar para evitar a perda do seu trabalho.");
@@ -358,7 +365,7 @@
                                                             $("#sessionDialog").modal('show');
                                                             break;
                                             }
-                            
+
                                             window.setTimeout(function (){$.ajax({
                                                     type:'GET',
                                                     url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
@@ -378,9 +385,9 @@
                                             },1000)
                                     }
                             }
-                            
+
                             $(document).ready(function(){
-                            
+
                                     $.ajax({
                                             type:'GET',
                                             data: {reset:true},
@@ -389,10 +396,10 @@
                                                     eval("dados = "+data);
                                                     sessionTime = dados.time;
                                                     sessionTimeFull = sessionTime;
-                            
+
                                                     keepAliveLoop();
                                             });
-                            
+
                                     $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
                                             sessionTime = sessionTimeFull;
                                     })
@@ -401,7 +408,7 @@
                         {% endblock %}
 
                         var waitDots = '';
-                        
+
                         function setWaitMessage(){
                             $('#waitDialogBody').html('Por favor, aguarde' + waitDots);
                             waitDots = waitDots + '.';
@@ -416,7 +423,7 @@
                             var sectionHeight = $(window).innerHeight() - ($('.header').outerHeight() + $('#BoxRodapePrincipal').outerHeight());
 
                                 $('.section').css({'min-height':sectionHeight});
-                                
+
                                 $.rvFontsize({
                                         targetSection: 'body',
                                         store: true, // store.min.js required!
