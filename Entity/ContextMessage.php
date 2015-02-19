@@ -1,6 +1,6 @@
 <?php
 
-namespace \SanSIS\Core\BaseBundle\Entity;
+namespace SanSIS\Core\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use SanSIS\Core\BaseBundle\Entity\AbstractBase;

@@ -1,6 +1,6 @@
 <?php
 
-namespace \SanSIS\Core\BaseBundle\Entity;
+namespace SanSIS\Core\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use SanSIS\Core\BaseBundle\Entity\AbstractBase;
@@ -83,9 +83,9 @@ class ReadControl extends AbstractBase
 
     /**
      *
-     * @param $contextMessage
+     * @param \SanSIS\Core\BaseBundle\Entity\ContextMessage $contextMessage
      */
-    public function setContextMessage(\SanSIS\Core\BaseBundle\Entity\ContextMessage $contextMessage)
+    public function setContextMessage(ContextMessage $contextMessage)
     {
         $this->contextMessage = $contextMessage;
         return $this;
@@ -102,7 +102,7 @@ class ReadControl extends AbstractBase
 
     /**
      *
-     * @param $user
+     * @param \SanSIS\Core\BaseBundle\Entity\User $user
      */
     public function setUser(\SanSIS\Core\BaseBundle\Entity\User $user)
     {
