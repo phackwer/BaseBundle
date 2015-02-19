@@ -555,12 +555,11 @@ class EntityServiceAbstract extends ServiceAbstract
         $this->getRootEntity($id);
 
         if (!$this->checkStatusTuple($this->getRootEntity())) {
-            if (!$this->rootEntity->getStatusTuple() != 2) {
-                $this->getEntityManager()->remove($this->rootEntity);
-            } else {
+            $this->getEntityManager()->remove($this->rootEntity);
+        } else {
+            if ($this->rootEntity->getStatusTuple() == 2) {
                 throw new \Exception('Este registro não é removível!');
             }
-        } else {
             $this->rootEntity->setStatusTuple(0);
         }
 
