@@ -424,7 +424,7 @@ class EntityServiceAbstract extends ServiceAbstract
                     }
                 } else if ($class && !(strstr($strDoc, 'ArrayCollection') || $class == 'ArrayCollection') && 'set' === substr($method, 0, 3) && is_array($value) && !strstr($method, 'setId')) {
                     $value = $this->populateEntities($value, $class, $entity);
-                } else if ($class && (strstr($method, 'setId') || strstr($strAttr, 'ManyToOne'))) {
+                } else if ($class && (strstr($method, 'setId') || strstr($strAttr, 'ToOne'))) {
                     // if (is_array($value) && count($value) > 1){var_dump($value);die;}
 
                     if (is_array($value) && array_key_exists('id', $value)) {
@@ -449,6 +449,7 @@ class EntityServiceAbstract extends ServiceAbstract
                     }
                 }
 
+//                 if ($method == 'nomedometodoparadepurar') die(var_dump($value));
                 $entity->$method($value);
 
                 if (
