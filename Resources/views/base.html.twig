@@ -61,7 +61,9 @@
                         {% block top %}
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                                 <a href="{{ path('account') }}"><i class="icon-user icon-white"></i> &nbsp; Minha conta </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <i class="icon-comment icon-white"></i> &nbsp; Mensagens
+                                {% if registeredBundles.SanSISCoreMessagingBundle is defined %}
+                                    <a href="{{ path('sansis_core_messaging_index') }}"><i class="icon-comment icon-white"></i> &nbsp; Mensagens</a>
+                                {% endif %}
                             {% endif %}
                         {% endblock %}
                     </div>

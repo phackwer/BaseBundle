@@ -110,6 +110,21 @@ abstract class ControllerAbstract extends Controller
     }
 
     /**
+     * Renders a view.
+     *
+     * @param string   $view       The view name
+     * @param array    $parameters An array of parameters to pass to the view
+     * @param Response $response   A response instance
+     *
+     * @return Response A Response instance
+     */
+    public function render($view, array $parameters = array(), Response $response = null)
+    {
+        $parameters['registeredBundles'] = \AppKernel::getInstance()->getRegisteredBundleList();
+        return $this->container->get('templating')->renderResponse($view, $parameters, $response);
+    }
+
+    /**
      * Retorna a Service respectiva da Controller
      *
      * @return object
