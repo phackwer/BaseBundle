@@ -87,6 +87,40 @@ abstract class ControllerAbstract extends Controller
     }
 
     /**
+     * Renderiza um array em formato do excel.
+     * @param  [type] $arr [description]
+     * @return [type]      [description]
+     */
+    public function renderExcel($arr)
+    {
+        $thbis->exportArrayToExcel($arr);
+    }
+
+    public function exportArrayToExcel($arr)
+    {
+        $cab = array();
+        foreach ($arr[0] as $k=>$v) {
+            $cab[$k] = $k;
+        }
+        //Cria o excel e adiciona o conteúdo a ele
+        $excel = new \PHPExcel();
+        $sheet = $excel->setActiveSheetIndex(0);
+        // //cabeçalho
+        $sheet->fromArray($cab, NULL, 'A1');
+        // //corpo
+        $sheet->fromArray($arr, NULL, 'A2');
+
+        // Redirect output to a client’s web browser (Excel5)
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="export.xls"');
+        header('Cache-Control: max-age=0');
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($excel, 'Excel5');
+        $objWriter->save('php://output');
+        exit; //mudar isso para padrão Symfony, pelamordedeus
+    }
+
+    /**
      * Pega um conjunto de dados e retorna no formato JSON
      * @param mixed $data
      * @return \Symfony\Component\HttpFoundation\Response
