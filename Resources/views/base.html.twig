@@ -78,7 +78,11 @@
                                 <span class="img_separador visible-desktop"></span>
                                 <h1>{% block descricao_sistema %}SanSIS Core Base{% endblock %}</h1>
                                 <h3 class="hidden-phone">{% block entity_sistema %}Core Base de Desenvolvimento de Sistemas PHP - SanSIS{% endblock %}</h3>
-                                <h3>{% block info_sessao %}{% endblock %}</h3>
+                                <h3>
+                                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    {% block info_sessao %}{{ app.security.getToken().getUser().getIdLegalBodyPerson().getIdLegalBody().getName() }}{% endblock %}
+                                    {% endif %}
+                                </h3>
                             </div>
                         </div>
                         <div class="span2">
@@ -104,7 +108,9 @@
                                     <span class="icon-bar"></span>
                                 </a>
                                 <div class="nav-collapse navbar-responsive-collapse collapse">
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                                 {% block page_menu %}{{ knp_menu_render('SanSISCoreBaseBundle:Builder:menu', {'nav_type': 'navbar', 'template':'SanSISCoreBaseBundle:menu:sansis_menu.html.twig'}) }}{% endblock %}
+                                {% endif %}
                                 </div>
                             </div>
                         </div>
