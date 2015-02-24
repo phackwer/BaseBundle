@@ -93,7 +93,7 @@ abstract class ControllerAbstract extends Controller
      */
     public function renderExcel($arr)
     {
-        $thbis->exportArrayToExcel($arr);
+        $this->exportArrayToExcel($arr);
     }
 
     public function exportArrayToExcel($arr)
