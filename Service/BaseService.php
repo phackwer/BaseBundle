@@ -6,6 +6,20 @@ use SanSIS\Core\BaseBundle\Service\EntityServiceAbstract;
 class BaseService extends EntityServiceAbstract
 {
 
+    protected $secFactory = null;
+
+    protected $secContext = null;
+
+    public function setSecFactory(\Symfony\Component\Security\Core\Encoder\EncoderFactory $secFactory)
+    {
+        $this->secFactory = $secFactory;
+    }
+
+    public function setSecContext(\Symfony\Component\Security\Core\SecurityContext $secContext)
+    {
+        $this->secContext = $secContext;
+    }
+
     public function getEntityData()
     {
         $formData           = array();

@@ -60,10 +60,10 @@
                     <div id="barra-topo-user-content">
                         {% block top %}
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                <a href="{{ path('account') }}"><i class="icon-user icon-white"></i> &nbsp; Minha conta </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 {% if registeredBundles.SanSISCoreMessagingBundle is defined %}
-                                    <a href="{{ path('sansis_core_messaging_index') }}"><i class="icon-comment icon-white"></i> &nbsp; Mensagens</a>
+                                    <i class="icon-comment icon-white"></i> &nbsp; <a href="{{ path('sansis_core_messaging_index') }}" id="sansis_mesasage_checker">Mensagens</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 {% endif %}
+                                <a href="{{ path('account') }}"><i class="icon-user icon-white"></i> &nbsp; Minha conta </a>
                             {% endif %}
                         {% endblock %}
                     </div>
@@ -352,8 +352,8 @@
                                             dateString = mins+"min "+secs;
                                             $(".keepAlive").html(dateString);
 
-                                            switch(sessionTime) {
-                                                    case 0:
+                                            switch(true) {
+                                                    case (sessionTime <= 0):
                                                         $("#renewSession").hide();
                                                             $("#sessionDialogBody").html("Sua sessão expirou! Efetuando logout...");
                                                             $("#sessionDialog").modal('show');
@@ -361,14 +361,11 @@
                                                             window.setTimeout(function(){window.location.href= '{{ path('logout') }}'},2000);
 
                                                             break;
-                                                    case    1: case    2: case    3: case    4: case    5: case    6: case    7: case    8: case    9: case 10:
-                                                    case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: case 19: case 20:
-                                                    case 21: case 22: case 23: case 24: case 25: case 26: case 27: case 28: case 29:
-                                                    case 30:
+                                                    case    (sessionTime <= 30):
                                                             $("#sessionDialogBody").html("Sua sessão expira em " + sessionTime + " segundos, clique em renovar para evitar a perda do seu trabalho.");
                                                             $("#sessionDialog").modal('show');
                                                             break;
-                                                    case 180:
+                                                    case (sessionTime <= 100):
                                                             $("#sessionDialogBody").html("Sua sessão está prestes a expirar, deseja renová-la agora?");
                                                             $("#sessionDialog").modal('show');
                                                             break;
@@ -444,6 +441,9 @@
                         });
 
                 </script>
+                {% if registeredBundles.SanSISCoreMessagingBundle is defined %}
+                    {%  include('SanSISCoreMessagingBundle:Messaging:checker.js.twig') %}
+                {% endif %}
                 {% block javascripts %}{% endblock %}
     </body>
 </html>

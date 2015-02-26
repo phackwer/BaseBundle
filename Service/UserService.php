@@ -8,20 +8,6 @@ class UserService extends BaseService
 {
     protected $rootEntityName = '\SanSIS\Core\BaseBundle\Entity\LegalBody';
 
-    protected $secFactory = null;
-
-    protected $secContext = null;
-
-    public function setSecFactory(\Symfony\Component\Security\Core\Encoder\EncoderFactory $secFactory)
-    {
-        $this->secFactory = $secFactory;
-    }
-
-    public function setSecContext(\Symfony\Component\Security\Core\SecurityContext $secContext)
-    {
-        $this->secContext = $secContext;
-    }
-
     /**
      * Utiliza o método criado na Base Service para gerenciar os uploads
      */

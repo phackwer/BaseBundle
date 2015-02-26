@@ -1,5 +1,11 @@
 # README
 
+This Bundle for Symfony solves some of the most basic issues on web development at SanSIS. Currently, there are over 15 projects using it directly on the brazilian government.
+
+A responsive interface, an easy to use way to create cruds (automation on the way), user administration, and the mini data-mining bundle plus the messaging bundle provides eveything small enterprises look for when trying to reduce costs on their development.
+
+Serving as base for the development, it forces the programmer to adopt a lot of good practices and to follow standards for their codind.
+
 ## Requires
 
 ```json
@@ -10,7 +16,7 @@
         "knplabs/knp-paginator-bundle" : "~2.4",
         "psliwa/pdf-bundle" : "dev-master"
 ```
-        
+
 ## Use it in another project
 
 composer.json:
@@ -41,7 +47,7 @@ san_sis_core_base:
     resource: "@SanSISCoreBaseBundle/Resources/config/routing.yml"
     prefix:   /
 ```
-    
+
 ## Extend your twigs
 
 Use {% extends "SanSISCoreBaseBundle::base.html.twig" %} on your twig templates to work ok
