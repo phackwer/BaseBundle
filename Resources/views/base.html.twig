@@ -441,7 +441,7 @@
                         });
 
                 </script>
-                {% if registeredBundles.SanSISCoreMessagingBundle is defined %}
+                {% if registeredBundles.SanSISCoreMessagingBundle is defined and is_granted('IS_AUTHENTICATED_FULLY') %}
                     {%  include('SanSISCoreMessagingBundle:Messaging:checker.js.twig') %}
                 {% endif %}
                 {% block javascripts %}{% endblock %}

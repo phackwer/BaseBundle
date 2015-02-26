@@ -227,4 +227,25 @@ class BaseService extends EntityServiceAbstract
 
         return true;
     }
+
+    /**
+     * Converte o resultado de um find ou outra resposta de uma repository em array
+     * Alias para resultToArray
+     */
+    public function toArray($result)
+    {
+        return resultToArray($result);
+    }
+
+    /**
+     * Converte o resultado de um find ou outra resposta de uma repository em array
+     */
+    public function resultToArray($result)
+    {
+        $arr = array();
+        foreach ($result as $key => $obj) {
+            $arr[] = $obj->toArray();
+        }
+        return $arr;
+    }
 }
