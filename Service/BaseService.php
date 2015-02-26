@@ -20,9 +20,16 @@ class BaseService extends EntityServiceAbstract
         $this->secContext = $secContext;
     }
 
+    public function getCurrUser()
+    {
+        return $this->secContext
+                    ->getToken()
+                    ->getUser();
+    }
+
     public function getEntityData()
     {
-        $formData           = array();
+        $formData = array();
         $formData['entity'] = array();
 
         $itens = $this->entityManager->getRepository('SanSIS\Core\BaseBundle\Entity\SystemData')->findAll();
@@ -37,14 +44,14 @@ class BaseService extends EntityServiceAbstract
     {
         $spEntity = $this->entityManager->getRepository('SanSIS\Core\BaseBundle\Entity\StateProvince')->findBy(
             array(
-                'idCountry'   => $id,
+                'idCountry' => $id,
                 'statusTuple' => array(1, 2),
             ), array('term' => 'ASC'));
 
         $sps = array();
         if (!empty($id)) {
             foreach ($spEntity as $key => $value) {
-                $sps[$key]['id']   = $value->getId();
+                $sps[$key]['id'] = $value->getId();
                 $sps[$key]['term'] = $value->getTerm();
             }
         }
@@ -57,13 +64,13 @@ class BaseService extends EntityServiceAbstract
         $citiesEntity = $this->entityManager->getRepository('SanSIS\Core\BaseBundle\Entity\City')->findBy(
             array(
                 'idStateProvince' => $id,
-                'statusTuple'     => array(1, 2),
+                'statusTuple' => array(1, 2),
             ), array('term' => 'ASC'));
 
         $cities = array();
         if (!empty($id)) {
             foreach ($citiesEntity as $key => $value) {
-                $cities[$key]['id']   = $value->getId();
+                $cities[$key]['id'] = $value->getId();
                 $cities[$key]['term'] = $value->getTerm();
             }
         }
