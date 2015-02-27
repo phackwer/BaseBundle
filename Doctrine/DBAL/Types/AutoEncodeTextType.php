@@ -22,7 +22,7 @@ class AutoEncodeTextType extends TextType
             $dbchar = 'CP1252';
         }
 
-        return $value;
+        // return $value;
 
         return mb_convert_encoding($value, $dbchar, mb_detect_encoding($value));
     }
@@ -39,7 +39,7 @@ class AutoEncodeTextType extends TextType
             $dbchar = 'CP1252';
         }
 
-        return $value;
+        // return $value;
 
         return mb_convert_encoding($value, 'UTF-8', $dbchar);
     }
