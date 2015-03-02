@@ -1,3 +1,7 @@
+sansis_keep_alive:
+    pattern: /keepalive
+    defaults: { _controller: SanSISCoreBaseBundle:Default:keepAlive  }
+
 login:
     pattern:  /
     defaults: { _controller: SanSISCoreBaseBundle:Default:login }

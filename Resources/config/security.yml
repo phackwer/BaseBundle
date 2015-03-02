@@ -5,8 +5,9 @@ security:
             algorithm: sha512
 
     role_hierarchy:
-        ROLE_ADMIN:         ROLE_USER
-        ROLE_ROOT:          ROLE_USER
+        ROLE_ADMIN:             ROLE_USER
+        ROLE_ROOT:              ROLE_USER
+        
 
     providers:
         main:

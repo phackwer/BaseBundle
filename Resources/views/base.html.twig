@@ -320,16 +320,15 @@
                                             data: {
                                                     reset : true
                                             },
-                                            url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-                                    }).done(function(data) {
-                                                    eval("dados = "+data);
+                                            url: '{{ path('sansis_keep_alive') }}'
+                                    }).done(function(dados) {
                                                     sessionTime = dados.time;
 
                                                     window.setTimeout(function (){$.ajax({
                                                             type:'GET',
-                                                            url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-                                                    }).done(function(data){
-                                                                    eval("dados = "+data);
+                                                            url: '{{ path('sansis_keep_alive') }}'
+                                                    }).done(function(dados){
+
                                                                     sessionTime = dados.time;
                                                                     keepAliveLoop();
                                                             });
@@ -373,16 +372,14 @@
 
                                             window.setTimeout(function (){$.ajax({
                                                     type:'GET',
-                                                    url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-                                            }).success(function(data){
-                                                            if (data) {
-                                                                    eval("dados = "+data);
+                                                    url: '{{ path('sansis_keep_alive') }}'
+                                            }).success(function(dados){
+                                                            if (dados) {
                                                                     sessionTime = dados.time;
                                                                     keepAliveLoop();
                                                             }
-                                                    }).error(function(data){
-                                                            if (data) {
-                                                                    eval("dados = "+data);
+                                                    }).error(function(dados){
+                                                            if (dados) {
                                                                     sessionTime = dados.time;
                                                                     keepAliveLoop();
                                                             }
@@ -396,9 +393,8 @@
                                     $.ajax({
                                             type:'GET',
                                             data: {reset:true},
-                                            url: '{{ asset('bundles/sansiscorebase/keepAlive.php') }}'
-                                    }).done(function(data){
-                                                    eval("dados = "+data);
+                                            url: '{{ path('sansis_keep_alive') }}'
+                                    }).done(function(dados){
                                                     sessionTime = dados.time;
                                                     sessionTimeFull = sessionTime;
 
@@ -442,7 +438,7 @@
 
                 </script>
                 {% if registeredBundles.SanSISCoreMessagingBundle is defined and is_granted('IS_AUTHENTICATED_FULLY') %}
-                    {%  include('SanSISCoreMessagingBundle:Messaging:checker.js.twig') %}
+                    {# {%  include('SanSISCoreMessagingBundle:Messaging:checker.js.twig') %} #}
                 {% endif %}
                 {% block javascripts %}{% endblock %}
     </body>
