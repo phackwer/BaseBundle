@@ -44,7 +44,7 @@ class DefaultController extends BaseController
     {
         // Sessão de 60 minutos
         if (!$this->get('session')->has("keepAlive") || $this->getRequest()->query->has('reset') || $this->getRequest()->request->has('reset')) {
-            $this->get('session')->set("keepAlive", time() + (5));
+            $this->get('session')->set("keepAlive", time() + (3600));
         }
 
         //Tic tac - o tempo passando
@@ -52,13 +52,14 @@ class DefaultController extends BaseController
 
         //Usuário definido como on-line a cada minuto.
         //Qualquer usuário com mais de dois minutos de lag será considerado offline
+        //@TODO
         if (($tempo % 60) == 0) {
 
         }
 
         if ($tempo <= 0) {
             //Define usuário como offline
-            //
+            //@TODO
             //
             //Destrói a sessão do usuário
             $this->get('session')->clear();
