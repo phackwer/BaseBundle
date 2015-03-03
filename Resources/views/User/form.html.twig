@@ -77,6 +77,11 @@
             	        <img id="cpfOk" src="{{ asset('bundles/sansiscorebase/images/ico/ok.png') }}" style="display: none; margin: 6px;">
             		</li>
 
+                    <li class="span">
+                        <label class="row span3">Nº Matrícula: <font color="red"><b>*</b></font></label>
+                        <input type="text" name="person[nrMatricula]" value="{% if entityData.person.nrMatricula is defined %}{{ entityData.person.nrMatricula }}{% endif %}" class="{{ maxinputspan }}" required>
+                    </li>
+                    <li>
             		    <label class="row span3" id="earliestDateLabel">Data de nascimento: <font color="red"><b>*</b></font></label>
             		    <input class="span2 dateBR notFuture" name="earliestDate" id="earliestDate" type="text" value="{{ entityData.earliestDate ? entityData.earliestDate | date("d/m/Y") : '' }}" required="required">
             	    </li>
@@ -208,7 +213,14 @@
                                     checked
                                     {% endif %}
                                 {% endfor %}
-                                > - {{ iitem }}
+                                > - {{ iitem.term }}
+                            <script>
+                                $('#role_{{ val }}_{{ vall }}').popover({
+                                    title: 'Funcionalidades:',
+                                    content: '{% for func in iitem.functionalities %}{{ func.term }}<br>{% endfor %}',
+                                    placement: 'left'
+                                });
+                            </script>
                             </label>
                             {% endfor %}
                 		</li>
@@ -278,8 +290,16 @@
             		    <label class="row span3 visible-phone">Perfil de Acesso: <font color="red"><b>*</b></font></label>
 		  	            {% for val,item in formData.profile %}
 		  	            <label class="row span3 hidden-phone">{% if val == 1 %}Perfil de Acesso: <font color="red"><b>*</b></font>{% else %}&nbsp;{% endif %}</label>
-                        <label class="{{ maxinputspan }}" for="role_0_{{ val }}">
-                            <input {% if val == 1 %}onclick="markAllSuper(this)"{% endif %} type="checkbox" value="{{ val }}" name="person[professionalRelation][0][profile][][id]" id="role_0_{{ val }}" required="required"> - {{ item }}
+                        <label class="{{ maxinputspan }}" for="role_0_{{ val }}" id="role_0_{{ val }}_label">
+                            <input {% if val == 1 %}onclick="markAllSuper(this)"{% endif %} type="checkbox" value="{{ val }}" name="person[professionalRelation][0][profile][][id]" id="role_0_{{ val }}" required="required">
+                            - {{ item.term }}
+                            <script>
+                                $('#role_0_{{ val }}').popover({
+                                    title: 'Funcionalidades:',
+                                    content: '{% for func in item.functionalities %}{{ func.term }}<br>{% endfor %}',
+                                    placement: 'left'
+                                });
+                            </script>
                         </label>
                         {% endfor %}
             		</li>

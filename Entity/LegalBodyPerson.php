@@ -29,6 +29,14 @@ class LegalBodyPerson extends AbstractBase
      * @ORM\Column(name="cpf", type="string", length=15, nullable=true)
      */
     private $cpf;
+    
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nr_matricula", type="string", length=50, nullable=true)
+     */
+    private $nrMatricula;
 
     /**
      * @var \LegalBody
@@ -87,6 +95,29 @@ class LegalBodyPerson extends AbstractBase
     public function getCpf()
     {
         return $this->cpf;
+    }
+    
+    /**
+     * Set nrMatricula
+     *
+     * @param string $nrMatricula
+     * @return LegalBodyPerson
+     */
+    public function setNrMatricula($nrMatricula)
+    {
+        $this->nrMatricula = $nrMatricula;
+
+        return $this;
+    }
+
+    /**
+     * Get nrMatricula
+     *
+     * @return string
+     */
+    public function getNrMatricula()
+    {
+        return $this->nrMatricula;
     }
 
     /**

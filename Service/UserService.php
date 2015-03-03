@@ -97,7 +97,7 @@ class UserService extends BaseService
         //verifica se a senha informada é válida
         else if (isset($person['user']['password']) && trim($person['user']['password'])) {
             if (($person['user']['password'] == $person['user']['confirmPassword'])) {
-                $encoder                           = $this->secFactory->getEncoder($user);
+                $encoder = $this->secFactory->getEncoder($user);
                 $person['user']['confirmPassword'] = $person['user']['password'] = $encoder->encodePassword($person['user']['password'], $user->getSalt());
             } else {
                 unset($person['user']['password']);
@@ -112,7 +112,7 @@ class UserService extends BaseService
 
         //Limpa as permissões anteriores para salvar as novas
         if ($req->request->get('id')) {
-            $ent      = $this->getRootEntity($req->request->get('id'));
+            $ent = $this->getRootEntity($req->request->get('id'));
             $personDb = $ent->getPerson();
             if ($personDb) {
                 $profrels = $personDb->getProfessionalRelation();
@@ -156,14 +156,14 @@ class UserService extends BaseService
      */
     public function getFormData($entityData = null)
     {
-        $formData                          = array();
-        $formData['profile']               = array();
+        $formData = array();
+        $formData['profile'] = array();
         $formData['legalBodyRelationType'] = array();
-        $formData['language']              = array();
-        $formData['country']               = array();
-        $formData['stateProvince']         = array();
-        $formData['city']                  = array();
-        $formData['idEntity']              = array();
+        $formData['language'] = array();
+        $formData['country'] = array();
+        $formData['stateProvince'] = array();
+        $formData['city'] = array();
+        $formData['idEntity'] = array();
 
         $em = $this->getEntitymanager();
 
@@ -176,7 +176,8 @@ class UserService extends BaseService
         //Perfis
         $itens = $em->getRepository('SanSIS\Core\BaseBundle\Entity\Profile')->findAll();
         foreach ($itens as $item) {
-            $formData['profile'][$item->getId()] = $item->getTerm();
+            $formData['profile'][$item->getId()]['term'] = $item->getTerm();
+            $formData['profile'][$item->getId()]['functionalities'] = $item->getFunctionalities()->toArray();
         }
         ksort($formData['profile']);
 
@@ -192,7 +193,7 @@ class UserService extends BaseService
         $itens = $em->getRepository('SanSIS\Core\BaseBundle\Entity\StateProvince')->findBy(
             array(
                 'statusTuple' => array(1, 2),
-                'idCountry'   => isset($entityData['idCountry']['id']) ? $entityData['idCountry']['id'] : null,
+                'idCountry' => isset($entityData['idCountry']['id']) ? $entityData['idCountry']['id'] : null,
             )
         );
         foreach ($itens as $item) {
@@ -202,7 +203,7 @@ class UserService extends BaseService
         //Cidades
         $itens = $em->getRepository('SanSIS\Core\BaseBundle\Entity\City')->findBy(
             array(
-                'statusTuple'     => array(1, 2),
+                'statusTuple' => array(1, 2),
                 'idStateProvince' => isset($entityData['idStateProvince']['id']) ? $entityData['idStateProvince']['id'] : null,
             )
         );
@@ -213,8 +214,8 @@ class UserService extends BaseService
         //Entidade proprietária da aplicação
         $itens = $em->getRepository('SanSIS\Core\BaseBundle\Entity\SystemData')->findAll();
         foreach ($itens as $item) {
-            $formData['idEntity'][0]         = array();
-            $formData['idEntity'][0]['id']   = $item->getIdOrganization()->getId();
+            $formData['idEntity'][0] = array();
+            $formData['idEntity'][0]['id'] = $item->getIdOrganization()->getId();
             $formData['idEntity'][0]['name'] = $item->getIdOrganization()->getIdLegalBody()->getName();
         }
 
