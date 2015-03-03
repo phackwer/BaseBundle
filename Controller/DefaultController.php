@@ -44,7 +44,7 @@ class DefaultController extends BaseController
     {
         // Sessão de 60 minutos
         if (!$this->get('session')->has("keepAlive") || $this->getRequest()->query->has('reset') || $this->getRequest()->request->has('reset')) {
-            $this->get('session')->set("keepAlive", time() + (3600));
+            $this->get('session')->set("keepAlive", time() + (5));
         }
 
         //Tic tac - o tempo passando
@@ -61,8 +61,8 @@ class DefaultController extends BaseController
             //
             //
             //Destrói a sessão do usuário
-            $this->get('session')->destroy();
-            return $this->renderJson(array('hasSession' => false));
+            $this->get('session')->clear();
+            return $this->renderJson(array("keepAlive" => 0, "time" => $tempo, 'hasSession' => false));
         }
 
         return $this->renderJson(array("keepAlive" => 1, "time" => $tempo));
