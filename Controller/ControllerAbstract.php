@@ -99,16 +99,16 @@ abstract class ControllerAbstract extends Controller
     public function exportArrayToExcel($arr)
     {
         $cab = array();
-        foreach ($arr[0] as $k=>$v) {
+        foreach ($arr[0] as $k => $v) {
             $cab[$k] = $k;
         }
         //Cria o excel e adiciona o conteúdo a ele
         $excel = new \PHPExcel();
         $sheet = $excel->setActiveSheetIndex(0);
         // //cabeçalho
-        $sheet->fromArray($cab, NULL, 'A1');
+        $sheet->fromArray($cab, null, 'A1');
         // //corpo
-        $sheet->fromArray($arr, NULL, 'A2');
+        $sheet->fromArray($arr, null, 'A2');
 
         // Redirect output to a client’s web browser (Excel5)
         header('Content-Type: application/vnd.ms-excel');
@@ -133,10 +133,6 @@ abstract class ControllerAbstract extends Controller
         $header = array(
             'Content-Type' => 'application/json',
         );
-
-        // var_dump($resp);
-        // var_dump($data);
-        // die;
 
         $response = new Response($resp, 200, $header);
 
