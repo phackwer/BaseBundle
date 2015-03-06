@@ -29,7 +29,7 @@
 		    <input class="span2 dateBR notFuture" name="latestDate" id="latestDate" dateCompare="#latestDate" type="text" value="{{ entityData.latestDate ? entityData.latestDate | date("d/m/Y") : '' }}">
 	    </li>
 
-        <li id="liNaturalidade">
+        <li id="liNaturalidade" class="span">
             <label class="row span3" id="natuLabel">Naturalidade:</label>
             <input class="{{ maxinputspan }}" name="placeOfBirth" id="placeOfBirth" type="text" value="{{ entityData.placeOfBirth }}" maxlength="512">
         </li>
@@ -55,19 +55,17 @@
             {% set counter = 0 %}
             {% for vall,iitem in formData.rolesPF %}
             <label class="row span3 hidden-phone">{% if counter == 0 %}Função:  <font color="red"><b>*</b></font>{% else %}&nbsp;{% endif %}</label>
-            <span class="span4 validationSpan">
-                <label  class="{{ maxinputspan }}" for="rolePF_{{ vall }}">
-                    <input type="checkbox" value="{{ vall }}" name="actor[rolePF][][id]" id="rolePF_{{ vall }}"
-                    {% if entityData.actor.role is defined and entityData.actor.role | length > 0 %}
-                        {% for pval,ptiem in entityData.actor.role %}
-                            {% if ptiem.id == vall  %}
-                                checked
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                    > - {{ iitem }}
-                </label>
-            </span>
+            <label  class="{{ maxinputspan }}" for="rolePF_{{ vall }}">
+                <input type="checkbox" value="{{ vall }}" name="actor[rolePF][][id]" id="rolePF_{{ vall }}"
+                {% if entityData.actor.role is defined and entityData.actor.role | length > 0 %}
+                    {% for pval,ptiem in entityData.actor.role %}
+                        {% if ptiem.id == vall  %}
+                            checked
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                > - {{ iitem }}
+            </label>
             {% set counter = counter+1 %}
             {% endfor %}
 		</li>
