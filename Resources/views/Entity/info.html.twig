@@ -77,19 +77,17 @@
 		    {% set counter = 0 %}
             {% for vall,iitem in formData.rolesPJ %}
             <label class="row span3 hidden-phone">{% if counter == 0 %}Função: <font color="red"><b>*</b></font>{% else %}&nbsp;{% endif %}</label>
-            <span class="span4 validationSpan">
-                <label  class="{{ maxinputspan }}" for="rolePJ_{{ vall }}">
-                    <input type="checkbox" value="{{ vall }}" name="actor[rolePJ][][id]" id="rolePJ_{{ vall }}"
-                    {% if entityData.actor.role is defined and entityData.actor.role | length > 0 %}
-                        {% for pval,ptiem in entityData.actor.role %}
-                            {% if ptiem.id == vall  %}
-                                checked
-                                {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                    > - {{ iitem }}
-                </label>
-            </span>
+            <label  class="{{ maxinputspan }}" for="rolePJ_{{ vall }}">
+                <input type="checkbox" value="{{ vall }}" name="actor[rolePJ][][id]" id="rolePJ_{{ vall }}"
+                {% if entityData.actor.role is defined and entityData.actor.role | length > 0 %}
+                    {% for pval,ptiem in entityData.actor.role %}
+                        {% if ptiem.id == vall  %}
+                            checked
+                            {% endif %}
+                    {% endfor %}
+                {% endif %}
+                > - {{ iitem }}
+            </label>
             {% set counter=counter+1 %}
             {% endfor %}
 		</li>
@@ -101,19 +99,17 @@
 		    {% set counter = 0 %}
             {% for vall,iitem in formData.rolesFM %}
             <label class="row span3 hidden-phone">{% if counter == 0 %}Função: <font color="red"><b>*</b></font>{% else %}&nbsp;{% endif %}</label>
-            <span class="span4 validationSpan">
-                <label  class="{{ maxinputspan }}" for="roleFM_{{ vall }}">
-                    <input type="checkbox" value="{{ vall }}" name="actor[roleFM][][id]" id="roleFM_{{ vall }}"
-                    {% if entityData.actor.role is defined and entityData.actor.role | length > 0 %}
-                        {% for pval,ptiem in entityData.actor.role %}
-                            {% if ptiem.id == vall  %}
-                                checked
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                    > - {{ iitem }}
-                </label>
-            </span>
+            <label  class="{{ maxinputspan }}" for="roleFM_{{ vall }}">
+                <input type="checkbox" value="{{ vall }}" name="actor[roleFM][][id]" id="roleFM_{{ vall }}"
+                {% if entityData.actor.role is defined and entityData.actor.role | length > 0 %}
+                    {% for pval,ptiem in entityData.actor.role %}
+                        {% if ptiem.id == vall  %}
+                            checked
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                > - {{ iitem }}
+            </label>
             {% set counter=counter+1 %}
             {% endfor %}
 		</li>
