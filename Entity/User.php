@@ -208,4 +208,24 @@ class User extends AbstractBase implements UserInterface
     public function eraseCredentials(){
 
     }
+    
+    /**
+     * Verifica se tem a role
+     * 
+     * @param string $role
+     */
+    public function isGranted($role)
+    {
+        return in_array($role, $this->getRoles());
+    }
+    
+    /**
+     * Verifica se tem a role
+     *
+     * @param string $role
+     */
+    public function hasRole($role)
+    {
+        return $this->isGranted($role);        
+    }
 }
