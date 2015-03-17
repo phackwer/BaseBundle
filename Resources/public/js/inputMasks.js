@@ -156,6 +156,7 @@ function mask()
     $('.time').blur(timeBlur);
 
     $('.money').maskMoney({ allowNegative: true, thousands:'.', decimal:','});
+    $('.moneyZero').maskMoney({ allowNegative: true, allowZero: true, thousands:'.', decimal:','});
     $('.float').maskMoney({ allowNegative: true, thousands:'', decimal:'.'});
     $('.float-br').maskMoney({ allowNegative: true, thousands:'', decimal:','});
     $('.money, .float, .float-br').attr('maxlength', 18);
