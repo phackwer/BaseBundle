@@ -4,6 +4,8 @@ parameters:
   user.class:                          SanSIS\Core\BaseBundle\Service\UserService
   entity.class:                        SanSIS\Core\BaseBundle\Service\EntityService
 
+  account.class:           SanSIS\Core\BaseBundle\Service\AccountService
+
 services:
 
   base.service:
@@ -24,3 +26,10 @@ services:
   entity.service:
     class: %entity.class%
     arguments: ["@doctrine.orm.entity_manager", "default"]
+
+  account.service:
+    class: %account.class%
+    arguments: ["@doctrine.orm.entity_manager", "default"]
+    calls:
+        - [setSecContext, ['@security.context']]
+        - [setSecFactory, ['@security.encoder_factory']]

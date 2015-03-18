@@ -5,7 +5,7 @@ namespace SanSIS\Core\BaseBundle\Controller;
 class DefaultController extends BaseController
 {
 
-    protected $service = 'memora_core.account.service';
+    protected $service = 'account.service';
 
     protected $saveSuccessRoute = 'overview';
 
