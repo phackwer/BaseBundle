@@ -24,7 +24,11 @@ class AutoEncodeTextType extends TextType
 
         // return $value;
 
-        return mb_convert_encoding($value, $dbchar, mb_detect_encoding($value));
+        if (!in_array($dbchar, array('UTF-8','UTF8','utf-8', 'utf8'))) {
+            return mb_convert_encoding($value, $dbchar, mb_detect_encoding($value));
+        } else {
+            return $value;
+        }
     }
 
     /**
@@ -40,7 +44,10 @@ class AutoEncodeTextType extends TextType
         }
 
         // return $value;
-
-        return mb_convert_encoding($value, 'UTF-8', $dbchar);
+        if (!in_array($dbchar, array('UTF-8','UTF8','utf-8', 'utf8'))) {
+            return mb_convert_encoding($value, 'UTF-8', $dbchar);
+        } else {
+            return $value;
+        }
     }
 }

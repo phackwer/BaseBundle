@@ -65,8 +65,7 @@ class Builder extends ContainerAware
             $about->setLinkAttribute('data-toggle', 'modal');
 
             $sistema->addChild('Minha conta', array(
-                'route' => 'overview',
-//                 'route' => 'account',
+                'route' => 'account',
                 'routeAbsolute' => true
             ));
 

@@ -28,25 +28,27 @@ class AccountService extends UserService
                      ->getToken()
                      ->getUser();
 
-        $this->setRootEntity($user);
+        $this->getRootEntity($user->getId());
 
-        $encoder = $this->secFactory->getEncoder($user);
-
-        $newPwd = $encoder->encodePassword($req->request->get('newPassword'), $user->getSalt());
-        $cnfPwd = $req->request->get('confirmPassword');
-
-        if ($req->request->get('newPassword')) {
-            $req->request->set('password', $newPwd);
-        }
         return $req;
     }
 
     public function verifyRootEntity(Request $req)
     {
+//        $sql = 'select * from sandbox.core_system_user';
+//        $stmt = $this->getEntityManager()
+//            ->getConnection()
+//            ->prepare($sql);
+//        $stmt->execute();
+//        $users = $stmt->fetchAll();
+//        var_dump($users);die;
+
         //Pega usuário atualmente logado
         $user = $this->secContext
                      ->getToken()
                      ->getUser();
+
+//        echo $user->getPassword();die;
 
         $encoder = $this->secFactory->getEncoder($user);
 
@@ -66,8 +68,10 @@ class AccountService extends UserService
                 MessageService::addMessage('error', 'Senhas não podem conter espaço em branco no começo ou final');
                 throw new \Exception('');
             }
+            //Ok, atualiza a senha do usuário com o hash pois está tudo ok - Obs
+            $this->getRootEntity()->setPassword($encoder->encodePassword($req->request->get('newPassword'), $user->getSalt()));
         } else {
-            MessageService::addMessage('error', 'Senha atual inválida. Verifique se o Caps Lock está pressionado ou tente novamente.');
+            MessageService::addMessage('error', $cdbPwd."\n".$chkPwd.'Senha atual inválida. Verifique se o Caps Lock está pressionado ou tente novamente.');
             throw new \Exception('');
         }
     }
