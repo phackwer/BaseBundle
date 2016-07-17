@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 security:
     encoders:
 #        Symfony\Component\Security\Core\User\User: plaintext
@@ -41,3 +42,49 @@ security:
         - { path: ^/login,                    roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/overview,                 roles: ROLE_USER }
         - { path: ^/account,                  roles: ROLE_USER }
+=======
+security:
+    encoders:
+#        Symfony\Component\Security\Core\User\User: plaintext
+        SanSIS\Core\BaseBundle\Entity\User:
+            algorithm: sha512
+
+    role_hierarchy:
+        ROLE_ADMIN:             ROLE_USER
+        ROLE_ROOT:              ROLE_USER
+        
+
+    providers:
+        main:
+            entity:
+                class: SanSIS\Core\BaseBundle\Entity\User
+                property: username
+                
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        login:
+            pattern:  ^/login
+            security: false
+
+        secured_area:
+            pattern:    ^/
+            anonymous: ~
+            form_login:
+                login_path:                     login
+                check_path:                     login_check
+                always_use_default_target_path: true
+                default_target_path:            overview
+                username_parameter:             login
+                password_parameter:             password
+            logout:
+                path:   logout
+                target: login
+
+    access_control:
+        - { path: ^/login,                    roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/overview,                 roles: ROLE_USER }
+        - { path: ^/account,                  roles: ROLE_USER }
+>>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4

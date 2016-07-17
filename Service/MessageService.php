@@ -7,7 +7,11 @@ use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;
 abstract class MessageService
 {
     private static $messages = null;
+<<<<<<< HEAD
     private static $session = null; 
+=======
+    private static $session = null;
+>>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
 
     static private function loadMessages()
     {
@@ -30,7 +34,16 @@ abstract class MessageService
 
     static public function getMessage($type, $code)
     {
+<<<<<<< HEAD
     	return self::$messages[$type][$code];
+=======
+        if (isset(self::$messages[$type][$code]) && self::$messages[$type][$code] != '') {
+    	   return self::$messages[$type][$code];
+        }
+        else {
+            return $code;
+        }
+>>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
     }
 
     static public function addMessage($type, $code)

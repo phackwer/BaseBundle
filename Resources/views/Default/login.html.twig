@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "::base.html.twig" %}
 
 {# Retirar Menu#}
@@ -54,4 +55,62 @@
 
 </form>
 
+=======
+{% extends "::base.html.twig" %}
+
+{# Retirar Menu#}
+{% block page_menu %}{% endblock %}
+
+{# Retirar contador de tempo da sessão#}
+{% block session_counter %}{% endblock %}
+{% block session_counter_js %}{% endblock %}
+{% block info_sessao %}{% endblock %}
+
+{% block body %}
+
+{% if error %}
+    <div class="alert alert-error">
+      {{ error.message | replace({"\n":'<br />'}) | raw }}
+    </div>
+{% endif %}
+
+<strong class="title span12">Login</strong>
+
+<form action="{{ path('login_check') }}" method="post">
+
+<div class="span5">
+    <div class="box_borda" >
+        <div class="paddingAll">
+            <p style="height:1px;">
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </p>
+            <ul>
+                <li class="span4">
+                    <label class="span2">Usuário:</label>
+                    <input class="span2" type="text" name="login" required="required" value="{{ last_username }}">
+                </li>
+                <li class="span4">
+                    <label class="span2">Senha:</label>
+                    <input class="span2" type="password" name="password" required="required">
+                </li>
+            </ul>
+            
+            <div class="pull-right" style="margin-right: 20px">
+                <button type="submit" class="btn btn-primary">Entrar</button>
+                <button type="reset" class="btn">Limpar</button>
+            </div>
+            </p>
+        </div>
+    </div>
+</div>
+
+</form>
+
+>>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
 {% endblock %}

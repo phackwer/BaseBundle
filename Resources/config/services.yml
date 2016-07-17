@@ -4,23 +4,50 @@ parameters:
   user.class:                          SanSIS\Core\BaseBundle\Service\UserService
   entity.class:                        SanSIS\Core\BaseBundle\Service\EntityService
 
+<<<<<<< HEAD
+=======
+  account.class:           SanSIS\Core\BaseBundle\Service\AccountService
+
+>>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
 services:
 
   base.service:
     class: %base.class%
     arguments: ["@doctrine.orm.entity_manager", "default"]
+<<<<<<< HEAD
     
   profile.service:
     class: %profile.class%
     arguments: ["@doctrine.orm.entity_manager", "default"]
     
+=======
+
+  profile.service:
+    class: %profile.class%
+    arguments: ["@doctrine.orm.entity_manager", "default"]
+
+>>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
   user.service:
     class: %user.class%
     arguments: ["@doctrine.orm.entity_manager", "default"]
     calls:
         - [setSecContext, ['@security.context']]
         - [setSecFactory, ['@security.encoder_factory']]
+<<<<<<< HEAD
         
   entity.service:
     class: %entity.class%
     arguments: ["@doctrine.orm.entity_manager", "default"]
+=======
+
+  entity.service:
+    class: %entity.class%
+    arguments: ["@doctrine.orm.entity_manager", "default"]
+
+  account.service:
+    class: %account.class%
+    arguments: ["@doctrine.orm.entity_manager", "default"]
+    calls:
+        - [setSecContext, ['@security.context']]
+        - [setSecFactory, ['@security.encoder_factory']]
+>>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4

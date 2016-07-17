@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "::base.html.twig" %}
 
 {% set foto = 'true' %}
@@ -683,4 +684,692 @@
     });
     </script>
 
+=======
+{% extends "::base.html.twig" %}
+
+{% set foto = '' %}
+{% set foto_path = '' %}
+{% if foto is defined and foto != '' %}
+	{% set span = 'span8' %}
+	{% set maxinputspan = 'span4' %}
+	{% set midinputspan = 'span2' %}
+	{% set maxpspan = 'span7' %}
+	{% set span5= 'span3' %}
+	{% else %}
+	{% set span = 'span11' %}
+	{% set maxinputspan = 'span6' %}
+	{% set midinputspan = 'span3' %}
+	{% set maxpspan = 'span10' %}
+	{% set span5= 'span5' %}
+{% endif %}
+
+{% block body %}
+
+<strong class="title span12">{% block box_title %}{{ formTitleAction }} registro de Usuários{% endblock %}</strong>
+
+<div class="aba">
+
+	<form action="{{ path('user_save') }}" method="post" id="j_cadastroForm" enctype="multipart/form-data" style="position: relative;">
+		<div class="tab-content box_borda">
+
+		<!-- Usuarios OneToOne -->
+		<input type="hidden" id="id" name="id" value="{{ entityData.id }}">
+		<input name="actor[id]" type="hidden" value="{% if entityData.actor.id is defined %}{{ entityData.actor.id }}{% endif %}">
+		<input name="actor[role][0][id]"  type="hidden" value="100">
+		<input type="hidden" name="actor[mainPhoto][id]" value=""/>
+		<input type="hidden" name="actor[mainPhoto][idRelationType]" value="5"/>
+
+		<input type="hidden" name="actor[mainPhoto][id]" value="{% if entityData.actor.mainPhoto.id is defined %}{{ entityData.actor.mainPhoto.id }}{% endif %}"/>
+		<input type="hidden" name="actor[mainPhoto][idRelationType]" value="5"/>
+		<input type="hidden" name="actor[mainPhoto][resource][0][id]" value="{% if entityData.actor.mainPhoto.resource.0 is defined %}{{ entityData.actor.mainPhoto.resource.0.id }}{% endif %}"/>
+		<input type="file" accept="image/png,image/jpeg,image/tif" id="mainPhoto" targetId='mainPhotoView' removeTarget="actor[mainPhoto][resource][0][id]" class="imageUpload" name="mainPhoto" style="visibility: hidden; width: 1px; height: 1px" />
+
+		<div class="tab-pane active {{ span }} paddingAll" id="tab1">
+		     {% if foto is defined and foto != '' %}
+	         <div class="span3 hidden-desktop" style="margin: 0px 20px 30px 20px; position:relative; text-align: center ">
+                {% if entityData.actor.mainPhoto is defined and entityData.actor.mainPhoto != '' and entityData.actor.mainPhoto.resource.0 is defined %}
+                <img id="mainPhoto1" targetId="mainPhoto" class="choosePhoto mainPhotoView" src="{{ asset('uploads/') }}{{ entityData.actor.mainPhoto.resource.0.fileName }}" style="width: 100%; border:1px solid #999999; box-shadow: 0px 4px 14px #000000;"/>
+                <br><br>
+                <label class="choosePhoto" for="mainPhoto1" style="display: none">Nenhuma imagem selecionada</label>
+                <label class="error removePhoto" for="mainPhoto1" targetId="mainPhoto" style="font-size: 1.2em;">Remover foto</label>
+                {% else %}
+                <img id="mainPhoto1" targetId="mainPhoto" class="choosePhoto mainPhotoView" src="{{ asset('bundles/sansiscorebase/images/camera-icon.jpg') }}" title="Imagem principal - clique para fazer o upload" style="width: 100%; border:1px solid #999999; box-shadow: 0px 4px 14px #000000;"/>
+                <br><br>
+                <label class="choosePhoto" for="mainPhoto1">Nenhuma imagem selecionada</label>
+                <label class="error removePhoto" for="mainPhoto1" targetId="mainPhoto" style="font-size: 1.2em;display: none">Remover foto</label>
+                {% endif %}
+	         </div>
+	         {% endif %}
+            <div class="filder {{ span }}">
+
+            	<ul>
+            		<li class="span">
+            			<h5 class="row {{ maxpspan }} legenda">Dados básicos</h5>
+            		</li>
+
+            		<input type="hidden" id="idLegalBodyType" name="idLegalBodyType" value="1">
+
+            		<li class="span">
+            		  <label class="row span3">Nome:  <font color="red"><b>*</b></font></label>
+            		  <input class="{{ maxinputspan }}" name="name" id="name" type="text" value="{{ entityData.name }}" required="required" minlength="3" maxlength="512">
+            		</li>
+
+            		<li class="span">
+            		  <label class="row span3">CPF: <font color="red"><b>*</b></font></label>
+            		  <input id="personid" name="person[id]" type="hidden" value="{% if entityData.person.id is defined %}{{ entityData.person.id }}{% endif %}">
+            		  <input class="{{ maxinputspan }} cpf" name="person[cpf]" id="cpf" type="text" value="{% if entityData.person.cpf is defined %}{{ entityData.person.cpf }}{% endif %}" required="required">
+
+            	        <img id="cpfLoading" src="{{ asset('bundles/sansiscorebase/images/ico/ajax-loader.gif') }}" style="display: none; margin: 6px;">
+            	        <img id="cpfError" src="{{ asset('bundles/sansiscorebase/images/ico/error.gif') }}" style="display: none; margin: 6px;">
+            	        <img id="cpfOk" src="{{ asset('bundles/sansiscorebase/images/ico/ok.png') }}" style="display: none; margin: 6px;">
+            		</li>
+
+                    <li class="span">
+                        <label class="row span3">Nº Matrícula: <font color="red"><b>*</b></font></label>
+                        <input type="text" name="person[nrMatricula]" value="{% if entityData.person.nrMatricula is defined %}{{ entityData.person.nrMatricula }}{% endif %}" class="{{ maxinputspan }}" required>
+                    </li>
+                    <li>
+            		    <label class="row span3" id="earliestDateLabel">Data de nascimento: <font color="red"><b>*</b></font></label>
+            		    <input class="span2 dateBR notFuture" name="earliestDate" id="earliestDate" type="text" value="{{ entityData.earliestDate ? entityData.earliestDate | date("d/m/Y") : '' }}" required="required">
+            	    </li>
+
+            		<li class="span">
+            		  <label class="row span3">Telefone: <font color="red"><b>*</b></font></label>
+            		  <input class="{{ maxinputspan }} phone" name="phone" id="phone" type="text" value="{{ entityData.phone }}" maxlength="256" required="required">
+            		</li>
+
+            		<li class="span">
+            		  <label class="row span3">E-mail: <font color="red"><b>*</b></font></label>
+            		  <input class="{{ maxinputspan }}" name="email" id="email" type="email" value="{{ entityData.email }}" maxlength="512" required="required">
+            		</li>
+                </ul>
+            </div>
+
+            <div class="filder {{ span }}" id="dadosdeacesso">
+
+                <ul>
+            		<li class="span">
+            			<h5 class="row {{ maxpspan }} legenda">Dados de acesso</h5>
+            		</li>
+
+            		<input type="hidden" id="personuserid" name="person[user][id]" value="{% if entityData.person.user.username is defined %}{{ entityData.person.user.id }}{% endif %}">
+
+            		<li class="span">
+            		  <label class="row span3">Login:  <font color="red"><b>*</b></font></label>
+            		  <input class="{{ maxinputspan }}" name="person[user][username]" id="username" type="text" value="{% if entityData.person.user.username is defined %}{{ entityData.person.user.username }}{% endif %}"
+            		  required="required" minlength="3" maxlength="256"
+            		  {% if entityData.id is defined and entityData.id is not null %} readonly="readonly" {% endif %}>
+
+        	        <img id="usernameLoading" src="{{ asset('bundles/sansiscorebase/images/ico/ajax-loader.gif') }}" style="display: none; margin: 6px;">
+        	        <img id="usernameError" src="{{ asset('bundles/sansiscorebase/images/ico/error.gif') }}" style="display: none; margin: 6px;">
+        	        <img id="usernameOk" src="{{ asset('bundles/sansiscorebase/images/ico/ok.png') }}" style="display: none; margin: 6px;">
+            		</li>
+
+                    {% if entityData.id is defined and entityData.id is not null %}
+                		<li class="span">
+                		  <label class="row span3">Nova senha:</label>
+                		  <input class="{{ maxinputspan }}" name="person[user][password]" id="password" type="password" value="" maxlength="32">
+                		</li>
+                		<li class="span">
+                		  <label class="row span3">Confirme a nova senha:</label>
+                		  <input class="{{ maxinputspan }}" name="person[user][confirmPassword]" id="confirmPassword" equalTo="#password" type="password" value="" maxlength="32">
+                		</li>
+                    {% else %}
+                		<li class="span">
+                		  <label class="row span3">Senha: <font color="red"><b>*</b></font></label>
+                		  <input class="{{ maxinputspan }}" name="person[user][password]" id="password" type="password" required="required" value="" maxlength="32">
+                		</li>
+                		<li class="span">
+                		  <label class="row span3">Confirme a senha: <font color="red"><b>*</b></font></label>
+                		  <input class="{{ maxinputspan }}" name="person[user][confirmPassword]" id="confirmPassword" equalTo="#password" type="password" required="required" value="" maxlength="32">
+                		</li>
+            		{% endif %}
+
+            		<li class="span">
+            		  <label class="row span3">Conta ativa?  <font color="red"><b>*</b></font></label>
+            		  <select class="{{ maxinputspan }}" name="person[user][isActive]" required="required">
+            		      <option value="1" {% if entityData.person.user.isActive is defined and entityData.person.user.isActive == 1 %}selected{% endif %}>Sim</option>
+            		      <option value="0" {% if entityData.person.user.isActive is defined and entityData.person.user.isActive == 0 %}selected{% endif %}>Não</option>
+            		  </select>
+        		    </li>
+            	</ul>
+            </div>
+
+            <div class="filder {{ span }}" id="vinculada">
+            	<ul>
+            		<li class="span">
+            			<h5 class="row {{ maxpspan }} legenda">Informações organizacionais / perfil de acesso</h5>
+            		</li>
+            	</ul>
+            	{% if entityData.person.professionalRelation is defined and entityData.person.professionalRelation | length > 0 %}
+            	    {% for val,item in entityData.person.professionalRelation %}
+                    <ul class="clonable">
+                		<li class="span">
+                			<h5 class="row {{ maxpspan }}">Vínculo profissional / perfil de acesso {{ val + 1 }}</h5>
+                		</li>
+                		<li class="span">
+                		  <label class="row span3">Entidade vinculada: <font color="red"><b>*</b></font></label>
+                		  <input name="person[professionalRelation][{{ val }}][id]" id="professionalRelationId_{{ val }}" type="hidden" value="{{ item.id }}">
+                		  <input name="person[professionalRelation][{{ val }}][idLegalBodyOrganization][id]" id="professionalRelationIdLegalBodyOrganization_{{ val }}" type="hidden" value="{% if item.idLegalBodyOrganization.idLegalBody.id is defined %}{{ item.idLegalBodyOrganization.idLegalBody.id }}{% endif %}"
+                		  {% if multi_organization == false %}
+        		          notCleanable
+        		          {% endif %}>
+                		  <input  sourcePath="{{ path('get_organization_by_name') }}"
+                                  targetId = 'professionalRelationIdLegalBodyOrganization_{{ val }}'
+                		          class="{{ maxinputspan }} autocomplete"
+                		          name="person[professionalRelation][{{ val }}][idLegalBodyOrganization][name]"
+                		          id="professionalRelation_{{ val }}" type="text"
+                		          value="{% if item.idLegalBodyOrganization.idLegalBody.name is defined%}{{ item.idLegalBodyOrganization.idLegalBody.name }}{% endif %}"
+                		          required="required"
+                		          {% if multi_organization == false %}
+                		          readonly
+                		          notCleanable
+                		          {% endif %}>
+        		          {% if multi_organization %}
+
+                          {% endif %}
+                          <a class="icon-minus multi-line" style="font-size:14px;margin-left:5px"></a>
+                          {% if (entityData.person.professionalRelation | length) == (val+1) %}
+            	           <a class="icon-plus multi-line" style="font-size:14px;margin-left:5px"></a>
+            	          {% endif %}
+                		</li>
+
+                        <li class="span">
+                		  <label class="row span3">Tipo de vínculo: <font color="red"><b>*</b></font></label>
+                    		    <select class="{{ maxinputspan }}" name="person[professionalRelation][{{ val }}][idLegalBodyRelationType][id]" id="idLegalBodyRelationType_{{ val }}" required="required">
+                    		        <option value="">Selecione abaixo</option>
+                    	            {% for vall,itemm in formData.legalBodyRelationType %}
+                                    <option value="{{ vall }}" {% if item.idLegalBodyRelationType.id is defined and item.idLegalBodyRelationType.id == vall %}selected{% endif %}>{{ itemm }}</option>
+                                    {% endfor %}
+                    	        </select>
+                		</li>
+
+                		<li class="span">
+                		  <label class="row span3">Posição / Cargo:  <font color="red"><b>*</b></font></label>
+                		  <input class="{{ maxinputspan }}" name="person[professionalRelation][{{ val }}][jobPosition]" id="professionalRelationJobPosition_{{ val }}" type="text" value="{{ item.jobPosition }}" required="required" maxlength="512">
+                		</li>
+
+            	        <li class="span">
+                		    <label class="row span3 visible-phone">Perfil de Acesso: <font color="red"><b>*</b></font></label>
+    		  	            {% for vall,iitem in formData.profile %}
+    		  	            <label class="row span3 hidden-phone">{% if vall == 1 %}Perfil de Acesso: <font color="red"><b>*</b></font>{% else %}&nbsp;{% endif %}</label>
+                            <label  class="{{ maxinputspan }}" for="role_{{ val }}_{{ vall }}">
+                                <input {% if vall == 1 %}onclick="markAllSuper(this)"{% endif %} type="checkbox" value="{{ vall }}" name="person[professionalRelation][{{ val }}][profile][][id]" id="role_{{ val }}_{{ vall }}" required="required"
+                                {% for pval,ptiem in item.profile %}
+                                    {% if ptiem.id == vall  %}
+                                    checked
+                                    {% endif %}
+                                {% endfor %}
+                                > - {{ iitem.term }}
+                            <script>
+                                $('#role_{{ val }}_{{ vall }}').popover({
+                                    title: 'Funcionalidades:',
+                                    content: '{% for func in iitem.functionalities %}{{ func.term }}<br>{% endfor %}',
+                                    placement: 'left'
+                                });
+                            </script>
+                            </label>
+                            {% endfor %}
+                		</li>
+                		<li class="span visible-desktop">&nbsp;</li>
+
+                		<li class="span">
+                		    <label class="row span3" id="professionalRelationEarliestDateLabel_{{ val }}">Data de início do vínculo: <font color="red"><b>*</b></font></label>
+                		    <input class="span2 dateBR noFuture" name="person[professionalRelation][{{ val }}][earliestDate]" dateCompare="#professionalRelationLatestDate_{{ val }}" id="professionalRelationEarliestDate_{{ val }}" type="text" value="{{ item.earliestDate ? item.earliestDate | date("d/m/Y") : '' }}" required="required">
+                		    <!--<input type="checkbox" class="aacr2"> <label for="prodaprox">Aproximada</label>-->
+                	    </li>
+
+                		<li class="span">
+                		    <label class="row span3" id="professionalRelationLatestDateLabel_{{ val }}">Data de fim do vínculo:</label>
+                		    <input class="span2 dateBR" name="person[professionalRelation][{{ val }}][latestDate]" id="professionalRelationLatestDate_{{ val }}" type="text" value="{{ item.latestDate ? item.latestDate | date("d/m/Y") : '' }}">
+                		    <!--<input type="checkbox" class="aacr2"> <label for="prodaprox">Aproximada</label>-->
+                	    </li>
+                    </ul>
+                    {% endfor %}
+                {% else %}
+                 <ul class="clonable">
+            		<li class="span">
+            			<h5 class="row {{ maxpspan }}">Vínculo profissional / perfil de acesso 1</h5>
+            		</li>
+            		<li class="span" class="span">
+            		  <label class="row span3">Entidade vinculada: <font color="red"><b>*</b></font></label>
+            		  <input name="person[professionalRelation][0][id]" id="professionalRelationId_0" type="hidden" value="">
+            		  <input name="person[professionalRelation][0][idLegalBodyOrganization][id]" id="professionalRelationIdLegalBodyOrganization_0" type="hidden" value="{{ formData.idEntity.0.id }}"
+            		  {% if multi_organization == false %}
+    		          notCleanable
+    		          {% endif %}>
+            		  <input  sourcePath="{{ path('get_organization_by_name') }}"
+                              targetId = 'professionalRelationIdLegalBodyOrganization_0'
+            		          class="{{ maxinputspan }} {% if multi_organization == true %}autocomplete{% endif %}"
+            		          name="person[professionalRelation][0][idLegalBodyOrganization][name]"
+            		          id="professionalRelation_0" type="text"
+            		          value="{{ formData.idEntity.0.name }}"
+            		          required="required"
+            		          {% if multi_organization == false %}
+            		          readonly
+            		          notCleanable
+            		          {% endif %}
+            		          >
+                      {% if multi_organization %}
+
+                      {% endif %}
+                      <a class="icon-minus multi-line" style="font-size:14px;margin-left:5px"></a>
+                      <a class="icon-plus multi-line" style="font-size:14px;margin-left:5px"></a>
+            		</li>
+
+                    <li>
+            		  <label class="row span3">Tipo de vínculo: <font color="red"><b>*</b></font></label>
+            		    <select class="{{ maxinputspan }}" name="person[professionalRelation][0][idLegalBodyRelationType][id]" id="idLegalBodyRelationType_0" required="required">
+            		        <option value="">Selecione abaixo</option>
+            	            {% for vall,itemm in formData.legalBodyRelationType %}
+                            <option value="{{ vall }}" {% if item.idLegalBodyRelationType.id is defined and item.idLegalBodyRelationType.id == vall %}selected{% endif %}>{{ itemm }}</option>
+                            {% endfor %}
+            	        </select>
+            		</li>
+
+            		<li>
+            		  <label class="row span3">Posição / Cargo:  <font color="red"><b>*</b></font></label>
+            		  <input class="{{ maxinputspan }}" name="person[professionalRelation][0][jobPosition]" id="professionalRelationJobPosition_0" type="text" value="" required="required" maxlength="512">
+            		</li>
+
+
+            		<li>
+            		    <label class="row span3 visible-phone">Perfil de Acesso: <font color="red"><b>*</b></font></label>
+		  	            {% for val,item in formData.profile %}
+		  	            <label class="row span3 hidden-phone">{% if val == 1 %}Perfil de Acesso: <font color="red"><b>*</b></font>{% else %}&nbsp;{% endif %}</label>
+                        <label class="{{ maxinputspan }}" for="role_0_{{ val }}" id="role_0_{{ val }}_label">
+                            <input {% if val == 1 %}onclick="markAllSuper(this)"{% endif %} type="checkbox" value="{{ val }}" name="person[professionalRelation][0][profile][][id]" id="role_0_{{ val }}" required="required">
+                            - {{ item.term }}
+                            <script>
+                                $('#role_0_{{ val }}').popover({
+                                    title: 'Funcionalidades:',
+                                    content: '{% for func in item.functionalities %}{{ func.term }}<br>{% endfor %}',
+                                    placement: 'left'
+                                });
+                            </script>
+                        </label>
+                        {% endfor %}
+            		</li>
+            		<li class="visible-desktop">&nbsp;</li>
+
+            		<li class="span">
+            		    <label class="row span3" id="professionalRelationEarliestDateLabel_0">Data de início do vínculo: <font color="red"><b>*</b></font></label>
+            		    <input class="span2 dateBR noFuture" name="person[professionalRelation][0][earliestDate]" dateCompare="#professionalRelationLatestDate_0" id="professionalRelationEarliestDate_0" type="text" value="" required="required">
+            		    <!--<input type="checkbox" class="aacr2"> <label for="prodaprox">Aproximada</label>-->
+            	    </li>
+
+            		<li class="span">
+            		    <label class="row span3" id="professionalRelationLatestDateLabel_0">Data de fim do vínculo:</label>
+            		    <input class="span2 dateBR" name="person[professionalRelation][0][latestDate]" id="professionalRelationLatestDate_0" type="text" value="">
+            		    <!--<input type="checkbox" class="aacr2"> <label for="prodaprox">Aproximada</label>-->
+            	    </li>
+                </ul>
+                {% endif %}
+            </div>
+		</div>
+		{% if foto is defined and foto != '' %}
+        <div class="span3 visible-desktop" style="margin: 25px 10px 30px 40px; position:relative; text-align: center ">
+            {% if entityData.actor.mainPhoto is defined and entityData.actor.mainPhoto != '' and entityData.actor.mainPhoto.resource.0 is defined %}
+            <img id="mainPhoto2" targetId="mainPhoto" class="choosePhoto mainPhotoView" src="{{ asset('uploads/') }}{{ entityData.actor.mainPhoto.resource.0.fileName }}" style="width: 100%; border:1px solid #999999; box-shadow: 0px 4px 14px #000000;"/>
+            <br><br>
+            <label class="choosePhoto" for="mainPhoto2" style="display: none" >Nenhuma imagem selecionada</label>
+            <label class="error removePhoto" for="mainPhoto2" targetId="mainPhoto" style="font-size: 1.2em;">Remover foto</label>
+            {% else %}
+            <img id="mainPhoto2" targetId="mainPhoto" class="choosePhoto mainPhotoView" src="{{ asset('bundles/sansiscorebase/images/camera-icon.jpg') }}" title="Imagem principal - clique para fazer o upload" style="width: 100%; border:1px solid #999999; box-shadow: 0px 4px 14px #000000;"/>
+            <br><br>
+            <label class="choosePhoto" for="mainPhoto2" targetId="mainPhoto" >Nenhuma imagem selecionada</label>
+            <label class="error removePhoto" for="mainPhoto2" targetId="mainPhoto" style="font-size: 1.2em;display: none">Remover foto</label>
+            {% endif %}
+        </div>
+        {% endif %}
+
+	   <div class="row-fluid pull-left navigation">
+		    <a id="cancel_bt" style="margin: 0px 20px;" class="btn pull-left">Cancelar</a>
+		    <button type="submit" id="save_bt" class="btn btn-primary pull-right" style="margin: 0px 20px;">Salvar</button>
+		</div>
+</div>
+	</form>
+
+</div>
+
+<script>
+
+    $('.aba').find('.first').addClass('active');
+
+    function fixGrid(grid, pager)
+    {
+    	$('#' + grid).setGridWidth(10);
+        var width = $('#' + pager).parent().parent().width();
+        $('#' + grid).setGridWidth(width);
+    }
+
+    function fixGrids(e)
+    {
+    	fixGrid('arqgrid', 'arqpager');
+    }
+
+    $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', fixGrids);
+
+    $(window).bind('resize', fixGrids);
+
+    function changeLabel()
+    {
+    	var val = $('#idLegalBodyType').val();
+    	if (val == 1){
+    		$('#earliestDateLabel').html('Data de nascimento');
+    		$('#latestDateLabel').html('Data de falecimento');
+    		$('#liCpf').show();
+    		$('#liCnpj').hide();
+    		$('#mantenedora').hide();
+    		//$('#vinculada').show();
+    	}
+    	else if ( val == 2) {
+    		$('#earliestDateLabel').html('Início de existência');
+    		$('#latestDateLabel').html('Fim de existência');
+    		$('#liCpf').hide();
+    		$('#liCnpj').show();
+    		$('#mantenedora').show();
+    		//$('#vinculada').hide();
+    	} else {
+    		$('#earliestDateLabel').html('Início de existência');
+    		$('#latestDateLabel').html('Fim de existência');
+    		$('#liCpf').hide();
+    		$('#liCnpj').hide();
+    		$('#mantenedora').hide();
+    		//$('#vinculada').hide();
+    	}
+    }
+
+    function changeStateprovince()
+    {
+    	if ($(this).val()){
+    		$('#idCity').show();
+    		$.ajax({
+    	           type: "GET",
+    	           url: "{{ path('get_cities_by_state_province') }}",
+    	           data: { idStateProvince: $('#idStateProvince').val() }
+    	       }).success(function(data){
+                $("#idCity").empty();
+                $("#idCity").append('<option value="">Selecione abaixo</option>');
+                $.each(data, function(i, item){
+                    $("#idCity").append('<option value="'+item.id+'">'+item.term+'</option>');
+                });
+            });
+    	} else {
+        	$('#idCity').show();
+        	$("#idCity").empty();
+        	$('#idCity').val();
+        	$("#idCity").append('<option value="">Selecione e estado / província antes</option>');
+        }
+    }
+
+    function changeCountry()
+    {
+    	if ($(this).val() == 1){
+    		showFreeCountry(false);
+    		$.ajax({
+    	           type: "GET",
+    	           url: "{{ path('get_states_provinces_by_country') }}",
+    	           data: { idCountry: $('#idCountry').val() }
+    	       }).success(function(data){
+                   $("#idStateProvince").empty();
+                   $("#idStateProvince").append('<option value="">Selecione abaixo</option>');
+                   $.each(data, function(i, item){
+                       $("#idStateProvince").append('<option value="'+item.id+'">'+item.term+'</option>');
+                   });
+           });
+        } else if ($(this).val()) {
+        	$('#city').show();
+        	$('#stateProvince').show();
+        	$('#city').val();
+        	$('#stateProvince').val();
+
+        	$('#idCity').hide();
+        	$('#idStateProvince').hide();
+        	$('#idCity').val();
+        	$('#idStateProvince').val();
+    	}
+        else {
+        	$('#idCity').show();
+        	$('#idStateProvince').show();
+        	$("#idCity").empty();
+        	$("#idStateProvince").empty();
+        	$('#idCity').val();
+        	$('#idStateProvince').val();
+        	$("#idCity").append('<option value="">Selecione e estado / província antes</option>');
+        	$("#idStateProvince").append('<option value="">Selecione o país antes</option>');
+        	$('#city').hide();
+        	$('#stateProvince').hide();
+        }
+    }
+
+    function showFreeCity(flag){
+    	if (flag) {
+    		$('#idCity').hide();
+    		$('#idCity').val('');
+    		$('#city').show();
+    		$('#freeCity').prop('checked', true);
+    	} else {
+    		$('#idCity').show();
+    		$('#City').val('');
+    		$('#city').hide();
+    		$('#freeCity').prop('checked', false);
+        }
+    }
+
+    function showFreeStateProvince(flag){
+    	showFreeCity(flag);
+    	if (flag) {
+    		$('#idStateProvince').hide();
+    		$('#idStateProvince').val('');
+    		$('#stateProvince').show();
+    		$('#freeCity').attr('disabled', true);
+    		$('#freeStateProvince').prop('checked', true);
+    	} else {
+    		$('#idStateProvince').show();
+    		$('#stateProvince').val('');
+    		$('#stateProvince').hide();
+    		$('#freeCity').attr('disabled', false);
+    		$('#freeStateProvince').prop('checked', false);
+        }
+    }
+
+    function showFreeCountry(flag){
+    	showFreeStateProvince(flag)
+    	if (flag) {
+    		$('#idCountry').hide();
+    		$('#idCountry').val('');
+    		$('#country').show();
+    		$('#freeStateProvince').attr('disabled', true);
+    		$('#freeCountry').prop('checked', true);
+    	} else {
+    		$('#idCountry').show();
+    		$('#country').hide();
+    		$('#country').val('');
+    		$('#freeStateProvince').attr('disabled', false);
+    		$('#freeCountry').prop('checked', false);
+        }
+    }
+
+    function clickFreeCity(){showFreeCity($('#freeCity').is(':checked'))}
+    function clickFreeStateProvince(){showFreeStateProvince($('#freeStateProvince').is(':checked'))}
+    function clickFreeCountry(){showFreeCountry($('#freeCountry').is(':checked'))}
+
+    function markAllSuper(obj)
+    {
+    	if ($("#"+obj.id).is(':checked')) {
+    		$("#"+obj.id).parent().parent().parent().find(':checkbox').attr('disabled', true);
+    		$("#"+obj.id).parent().parent().parent().find(':checkbox').prop('checked', true);
+    	}
+    	else{
+    		$("#"+obj.id).parent().parent().parent().find(':checkbox').attr('disabled', false);
+ 		    $("#"+obj.id).parent().parent().parent().find(':checkbox').prop('checked', false);
+    	}
+
+    	$("#"+obj.id).attr('disabled', false);
+    }
+
+    function markIfSuper(obj)
+    {
+    	if ($("#"+obj.id).is(':checked')) {
+    		$("#"+obj.id).parent().parent().parent().find(':checkbox').attr('disabled', true);
+    		$("#"+obj.id).parent().parent().parent().find(':checkbox').prop('checked', true);
+    	}
+
+    	$("#"+obj.id).attr('disabled', false);
+    }
+
+    function checkUniqueCPF ()
+    {
+        if ($('#cpf').val()) {
+        	$("#waitDialogBody").html('Aguarde, verificando se "CPF" já está cadastrado.');
+        	$("#waitDialog").modal('show');
+        	$('#cpfLoading').show();
+    		$('#cpfError').hide();
+    		$('#cpfOk').hide();
+        	window.setTimeout(function () {
+            	$.ajax({
+                    type: "GET",
+                    url: "{{ path('check_unique_cpf') }}",
+                    data: {
+                        id:  $('#id').val(),
+                        cpf: $('#cpf').val(),
+                    },
+                    dataType: 'json'
+                })
+                .success(function(resp) {
+                	$("#waitDialog").modal('hide');
+                	if (!resp){
+                    	$('#cpfLoading').hide();
+                		$('#cpfError').show();
+                		$('#cpfOk').hide();
+                		if ($('label[for="cpf"]').length == 0)
+                		    errorPlacement($('<label for="cpf" class="error" id="uniqueCpf"><span>&#8593;</span> CPF já cadastrado na base de dados!</label>'), $('#cpf'));
+                		else{
+                			$('label[for="cpf"]').show();
+                			$('label[for="cpf"]').html('<span>&#8593;</span> CPF já cadastrado na base de dados!');
+            	    	}
+                	}
+                	else {
+                    	$('#cpfLoading').hide();
+                		$('#cpfError').hide();
+                		$('#cpfOk').show();
+            	    	if ($('label[for="cpf"]').length > 0) {
+            	    		$('label[id="uniqueCpf"]').remove();
+            	    	}
+            	    	$('label[for="cpf"]:visible').each(function(){
+                	    	if ($(this).prop('id') != 'cpf') {
+                	    		$('#cpfOk').hide();
+                	    		$('#cpfError').show();
+                	    	}
+            	    	});
+                	}
+                }).error(function(data){
+                    $("#waitDialog").modal('hide');
+                });
+        	},500);
+        }
+    }
+
+    function checkUniqueUser()
+	{
+    	if ($('#username').val()) {
+        	$("#waitDialogBody").html('Aguarde, verificando se "Login" já está cadastrado.');
+        	$("#waitDialog").modal('show');
+        	$('#usernameLoading').show();
+    		$('#usernameError').hide();
+    		$('#usernameOk').hide();
+        	window.setTimeout(function () {
+            	$.ajax({
+                    type: "GET",
+                    url: "{{ path('check_unique_username') }}",
+                    data: {
+                        id:       $('#id').val(),
+                        username: $('#username').val(),
+                    },
+                    dataType: 'json'
+                })
+                .success(function(resp) {
+                	$("#waitDialog").modal('hide');
+                	if (!resp){
+                    	$('#usernameLoading').hide();
+                		$('#usernameError').show();
+                		$('#usernameOk').hide();
+            			if ($('label[for="username"]').length == 0)
+                			  errorPlacement($('<label for="username" class="error" id="uniqueUser"><span>&#8593;</span> Login já cadastrado na base de dados!</label>'), $('#username'));
+            			else {
+        	    			$('label[for="username"]').show();
+        	    			$('label[for="username"]').html('<span>&#8593;</span> Login já cadastrado na base de dados!');
+            			}
+        	    	}
+        	    	else {
+        	        	$('#usernameLoading').hide();
+        	    		$('#usernameError').hide();
+        	    		$('#usernameOk').show();
+            	    	if ($('label[for="username"]').length > 0) {
+            	    	    $('label[id="uniqueUser"]').remove();
+            	    	}
+            	    	$('label[for="username"]:visible').each(function(){
+                	    	if ($(this).prop('id') != 'uniqueUser') {
+                	    		$('#usernameOk').hide();
+                	    		$('#usernameError').show();
+                	    	}
+            	    	});
+        	    	}
+                }).error(function(data){
+                    $("#waitDialog").modal('hide');
+                });
+        	},500);
+    	}
+    }
+
+    $('#j_cadastroForm').submit(function(){
+    	checkUniqueCPF();
+    	checkUniqueUser();
+    	var errorCpf = $('label[for="cpf"]')
+    	var errorUsr = $('label[for="username"]')
+    	if (
+	    	(errorCpf.length && errorCpf.css('display') == 'inline')
+    	   	||
+	    	(errorUsr.length && errorUsr.css('display') == 'inline')
+    	){
+      		$("#errorDialogBody").html('Erros encontrados no formulário. Corrija-os para prosseguir.');
+      	    $("#errorDialog").modal('show');
+
+    		return false;
+        }
+    	else{
+        	return true;
+        }
+    });
+
+    $(document).ready(function() {
+    	if ($('.mainPhotoView').attr('src') != "{{ asset('bundles/sansiscorebase/images/camera-icon.jpg') }}") {
+            $('.noImage').hide();
+        }
+
+        $('#idCountry').change(changeCountry);
+        $('#idStateProvince').change(changeStateprovince);
+
+        $('#freeCity').click(clickFreeCity);
+        $('#freeStateProvince').click(clickFreeStateProvince);
+        $('#freeCountry').click(clickFreeCountry);
+
+        {% if entityData.city is not empty %}$('#freeCity').prop('checked', false).trigger('click');{% endif %}
+
+        {% if entityData.stateProvince is not empty %}$('#freeStateProvince').prop('checked', false).trigger('click');{% endif %}
+
+        {% if entityData.country is not empty %}$('#freeCountry').prop('checked', false).trigger('click');{% endif %}
+
+        $('#cpf').keyup(function(e){if(e.keyCode && e.keyCode != 9 && e.keyCode != 16 && (e.keyCode < 37 || e.keyCode > 40) ){$('#cpfOk').hide();$('#cpfError').hide();}});
+        $('#cpf').blur(checkUniqueCPF);
+        $('#username').keyup(function(e){if(e.keyCode && e.keyCode != 9 && e.keyCode != 16 && (e.keyCode < 37 || e.keyCode > 40) ){$('#usernameOk').hide();$('#usernameError').hide();}});
+        $('#username').blur(checkUniqueUser);
+
+        $('#vinculada').find('input[value="1"]:checkbox').each(function (){markIfSuper($(this)[0])});
+
+    });
+    </script>
+
+>>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
 {% endblock %}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
 	"name" : "sansis/basebundle",
 	"description" : "SanSIS Base Bundle for Symfony development",
@@ -22,4 +23,30 @@
 			"dev-master" : "1.0-dev"
 		}
 	}
+=======
+{
+	"name" : "sansis/basebundle",
+	"description" : "SanSIS Base Bundle for Symfony development",
+	"type" : "symfony-bundle",
+	"authors" : [{
+			"name" : "Pablo Santiago Sanchez",
+			"email" : "phackwer@gmail.com"
+		}
+	],
+	"keywords" : [
+		"base bundle symfony development"
+	],
+	"license" : "BSD",
+	"autoload" : {
+		"psr-0" : {
+			"SanSIS\\Core\\BaseBundle" : ""
+		}
+	},
+	"target-dir" : "SanSIS/Core/BaseBundle",
+	"extra" : {
+		"branch-alias" : {
+			"dev-master" : "1.0-dev"
+		}
+	}
+>>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
 }

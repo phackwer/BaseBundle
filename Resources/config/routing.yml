@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 login:
     pattern:  /
     defaults: { _controller: SanSISCoreBaseBundle:Default:login }
@@ -122,4 +123,142 @@ base_check_unique_cpf:
     
 base_check_unique_username:
     pattern: /data/check_unique_username
+=======
+sansis_keep_alive:
+    pattern: /keepalive
+    defaults: { _controller: SanSISCoreBaseBundle:Default:keepAlive  }
+
+login:
+    pattern:  /
+    defaults: { _controller: SanSISCoreBaseBundle:Default:login }
+
+login_check:
+    pattern:  /system/login_check
+
+logout:
+    pattern:  /system/logout
+
+account:
+    pattern:  /account
+    defaults: { _controller: SanSISCoreBaseBundle:Default:account }
+
+account_save:
+    pattern:  /account_save
+    defaults: { _controller: SanSISCoreBaseBundle:Default:save }
+
+overview:
+    pattern:  /overview
+    defaults: { _controller: SanSISCoreBaseBundle:Default:overview }
+
+profile_index:
+    pattern:  /profile
+    defaults: { _controller: SanSISCoreBaseBundle:Profile:index }
+
+profile_search:
+    pattern:  /profile/search
+    defaults: { _controller: SanSISCoreBaseBundle:Profile:search }
+
+profile_save:
+    pattern:  /profile/save
+    defaults: { _controller: SanSISCoreBaseBundle:Profile:save }
+
+profile_create:
+    pattern:  /profile/create
+    defaults: { _controller: SanSISCoreBaseBundle:Profile:create }
+
+profile_edit:
+    pattern:  /profile/edit
+    defaults: { _controller: SanSISCoreBaseBundle:Profile:edit }
+
+profile_view:
+    pattern:  /profile/view
+    defaults: { _controller: SanSISCoreBaseBundle:Profile:view }
+
+profile_delete:
+    pattern:  /profile/delete
+    defaults: { _controller: SanSISCoreBaseBundle:Profile:delete }
+
+user_index:
+    pattern:  /user
+    defaults: { _controller: SanSISCoreBaseBundle:User:index }
+
+user_search:
+    pattern:  /user/search
+    defaults: { _controller: SanSISCoreBaseBundle:User:search }
+
+user_save:
+    pattern:  /user/save
+    defaults: { _controller: SanSISCoreBaseBundle:User:save }
+
+user_create:
+    pattern:  /user/create
+    defaults: { _controller: SanSISCoreBaseBundle:User:create }
+
+user_edit:
+    pattern:  /user/edit
+    defaults: { _controller: SanSISCoreBaseBundle:User:edit }
+
+user_view:
+    pattern:  /user/view
+    defaults: { _controller: SanSISCoreBaseBundle:User:view }
+
+user_delete:
+    pattern:  /user/delete
+    defaults: { _controller: SanSISCoreBaseBundle:User:delete }
+
+entity_index:
+    pattern:  /entity
+    defaults: { _controller: SanSISCoreBaseBundle:Entity:index }
+
+entity_search:
+    pattern:  /entity/search
+    defaults: { _controller: SanSISCoreBaseBundle:Entity:search }
+
+entity_save:
+    pattern:  /entity/save
+    defaults: { _controller: SanSISCoreBaseBundle:Entity:save }
+
+entity_create:
+    pattern:  /entity/create
+    defaults: { _controller: SanSISCoreBaseBundle:Entity:create }
+
+entity_edit:
+    pattern:  /entity/edit
+    defaults: { _controller: SanSISCoreBaseBundle:Entity:edit }
+
+entity_view:
+    pattern:  /entity/view
+    defaults: { _controller: SanSISCoreBaseBundle:Entity:view }
+
+entity_delete:
+    pattern:  /entity/delete
+    defaults: { _controller: SanSISCoreBaseBundle:Entity:delete }
+
+get_states_provinces_by_country:
+    pattern: /data/get_states_provinces_by_country
+    defaults: { _controller: SanSISCoreBaseBundle:Base:getStatesProvincesByCountry }
+
+get_cities_by_state_province:
+    pattern: /data/get_cities_by_state_province
+    defaults: { _controller: SanSISCoreBaseBundle:Base:getCitiesByStateProvince }
+
+get_organization_by_name:
+    pattern: /data/get_entity_by_name
+    defaults: { _controller: SanSISCoreBaseBundle:Base:getOrganizationByName }
+
+get_user_by_name:
+    pattern: /data/get_user_by_name
+    defaults: { _controller: SanSISCoreBaseBundle:Base:getUserByName }
+
+get_entity_by_name:
+    pattern: /data/get_entity_by_name
+    defaults: { _controller: SanSISCoreBaseBundle:Base:getEntityByName }
+
+check_unique_cpf:
+    pattern: /data/check_unique_cpf
+    defaults: { _controller: SanSISCoreBaseBundle:Base:checkUniqueCpf }
+
+check_unique_username:
+    pattern: /data/check_unique_username
+>>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
     defaults: { _controller: SanSISCoreBaseBundle:Base:checkUniqueUsername }

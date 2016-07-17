@@ -134,7 +134,11 @@ function mask()
 {
     $('.dateBR').datepicker({
     	showOn: "button",
+<<<<<<< HEAD
         buttonImage: "../../bundles/sansiscorebase/images/ico/ico-calendar.png",
+=======
+        buttonImage: "bundles/sansiscorebase/images/ico/ico-calendar.png",
+>>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
         buttonImageOnly: true,
         buttonText: "Selecionar data",
         changeMonth: true,
@@ -156,6 +160,10 @@ function mask()
     $('.time').blur(timeBlur);
 
     $('.money').maskMoney({ allowNegative: true, thousands:'.', decimal:','});
+<<<<<<< HEAD
+=======
+    $('.moneyZero').maskMoney({ allowNegative: true, allowZero: true, thousands:'.', decimal:','});
+>>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
     $('.float').maskMoney({ allowNegative: true, thousands:'', decimal:'.'});
     $('.float-br').maskMoney({ allowNegative: true, thousands:'', decimal:','});
     $('.money, .float, .float-br').attr('maxlength', 18);
