@@ -3,25 +3,15 @@ namespace SanSIS\Core\BaseBundle\Service;
 
 use \Doctrine\ORM\EntityManager;
 use \SanSIS\Core\BaseBundle\Doctrine\ORM\Mapping\OracleQuoteStrategy;
-<<<<<<< HEAD
-=======
 use JMS\DiExtraBundle\Annotation as DI;
->>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
 
 abstract class ServiceAbstract
 {
     /**
-<<<<<<< HEAD
-     * @var \Monolog\Logger 
-     */
-    protected $logger;
-    
-=======
      * @var \Monolog\Logger
      */
     protected $logger;
 
->>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
     /**
      * @var \Doctrine\ORM\EntityManager
      */
@@ -41,16 +31,6 @@ abstract class ServiceAbstract
     /**
      * @var \Symfony\Component\DependencyInjection\Container
      */
-<<<<<<< HEAD
-    protected $container = null;    
-    
-    protected $secFactory = null;
-    
-    protected $secContext = null;
-
-    /**
-     * @param EntityManager $entityManager
-=======
     protected $container = null;
 
     protected $secFactory = null;
@@ -61,7 +41,6 @@ abstract class ServiceAbstract
      * @DI\InjectParams({
      *     "entityManager" = @DI\Inject("doctrine.orm.entity_manager"),
      * })
->>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
      */
     public function __construct(EntityManager $entityManager = null)
     {
@@ -69,20 +48,12 @@ abstract class ServiceAbstract
         $this->setEntityManager($entityManager);
         $this->startTimer();
     }
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
     public function setSecFactory(\Symfony\Component\Security\Core\Encoder\EncoderFactory $secFactory)
     {
         $this->secFactory = $secFactory;
     }
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
     public function setSecContext(\Symfony\Component\Security\Core\SecurityContext $secContext)
     {
         $this->secContext = $secContext;
@@ -149,11 +120,7 @@ abstract class ServiceAbstract
     {
         return $this->reportViewRoute;
     }
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
     /**
      * Inicia contador de tempo para verificação de performance
      */
@@ -191,11 +158,7 @@ abstract class ServiceAbstract
     public function setEntityManager($entityManager)
     {
         $this->entityManager = $entityManager;
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
         return $this;
     }
 
@@ -206,11 +169,7 @@ abstract class ServiceAbstract
     {
         return $this->entityManager;
     }
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
     /**
      * @param mixed $val
      * @param string $seqName
@@ -228,20 +187,12 @@ abstract class ServiceAbstract
     }
 
     /**
-<<<<<<< HEAD
-     * @param \Symfony\Component\Security\Core\SecurityContext $securityContext            
-=======
      * @param \Symfony\Component\Security\Core\SecurityContext $securityContext
->>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
      */
     public function setSecurityContext($securityContext)
     {
         $this->securityContext = $securityContext;
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
         return $this;
     }
 
@@ -262,11 +213,7 @@ abstract class ServiceAbstract
             ->getToken()
             ->getUser();
     }
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
     /**
      * @return \AppKernel
      */
@@ -274,11 +221,7 @@ abstract class ServiceAbstract
     {
         return \AppKernel::getInstance();
     }
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
     /**
      * @param \Monolog\Logger $logger
      * @return ServiceAbstract

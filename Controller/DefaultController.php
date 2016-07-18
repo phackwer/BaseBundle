@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-<?php
-
-namespace SanSIS\Core\BaseBundle\Controller;
-
-use Symfony\Component\HttpFoundation\Session\Session;
-
-class DefaultController extends BaseController
-{
-    public function indexAction()
-    {
-        return $this->render('SanSISCoreBaseBundle:Default:index.html.twig');
-    }
-    
-    public function overviewAction()
-    {
-        return $this->render('SanSISCoreBaseBundle:Default:index.html.twig');
-    }
-    
-    public function logoutAction()
-    {
-        $this->getRequest()->getSession()->clear();
-        return $this->redirectByRouteName('sansis_core_base_homepage');
-    }
-}
-=======
 <?php
 
 namespace SanSIS\Core\BaseBundle\Controller;
@@ -95,4 +69,3 @@ class DefaultController extends BaseController
         return $this->renderJson(array("keepAlive" => 1, "time" => $tempo));
     }
 }
->>>>>>> 0567d9a7991222d74a0abbf1de0631919494d6f4
